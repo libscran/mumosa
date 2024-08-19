@@ -92,6 +92,19 @@ It returns a combined matrix of embeddings that can be directly used in any down
 No further transformations beyond scaling are performed, ensuring that population structure within each modality is faithfully represented in the combined embedding.
 Most importantly, **mumosa** is very easy to implement, and that's probably what I like the most about it - keep it simple, stupid. 
 
+Alright, now for some of the caveats.
+The most obvious one is that the distance to a neighbor may not be an accurate relative measure of the within-population variance.
+Even in the simplest cases of i.i.d. noise, the distance is not proportional to the standard deviation at lower dimensions 
+(see analysis [here](tests/R/dimensions.Rmd)), to say nothing of heteroskedasticity across dimensions. 
+Nonetheless, **mumosa** can still be useful for downstream procedures that perform distance calculations between cells,
+as it ensures that each modality contributes equally to the distance between cells from the same subpopulation in the combined embedding.
+
+A more subtle issue with the **mumosa** approach is that it assumes that the density of cells in each subpopulation is comparable across modalities.
+If one modality has all of its cells in a single subpopulation, the median distance to a nearest neighbor will be lower, causing the modality's embedding to be scaled up unnecessarily.
+This is a fundamentally difficult issue to fix as it requires a decision on what a "subpopulation" actually is.
+For example, a big blob of cells may contain further interesting structure, in which case **mumosa**'s upscaling would be appropriate.
+Users who know better (e.g., from control data) can adjust the scaling factors to give appropriate weights to each modality.
+
 ## Building projects
 
 ### CMake with `FetchContent`

@@ -1,0 +1,59 @@
+---
+title: Studying the distance to neighbors
+author: Aaron Lun
+---
+
+This document inspects the distance to the $k$-th nearest neighbor as a function of the number of dimensions in the embedding.
+We'll be considering the simplest example of i.i.d. normal coordinates and take up to $k = 50$.
+
+```{r}
+set.seed(1000)
+library(BiocNeighbors)
+nobs <- 1000
+dim <- 1:80
+output <- vector("list", length(dim))
+for (i in dim) {
+    y <- matrix(rnorm(nobs * i), ncol=i)
+    output[[i]] <- findKNN(y, k = 50, get.index=FALSE)$distance
+}
+```
+
+We now inspect the median distance at several choices of $k$.
+We compute the ratio between the median and the square root of the number of dimensions, as the latter is proportional to the standard deviation,
+i.e., the root of high-dimensional variance (the sum of the squared differences from the origin).
+
+```{r}
+k <- c(5, 10, 20, 50)
+medians <- lapply(k, function(i) vapply(output, function(x) median(x[, i]), 0))
+ratios <- lapply(medians, function(x) log2(x/sqrt(dim)))
+```
+
+The ratio plateaus at higher dimensions ($\ge 10$), indicating that the distance is proportional to the standard deviation.
+This motivates the use of a distance as a relative measure of the spread and as a scaling factor for the embeddings. 
+In fact, the distance is almost equal to the standard deviation at high dimensions;
+I suspect that this is because the distances between different pairs of points become more similar, including the distance from each point to the origin. 
+By comparison, this relationship falls apart at lower dimensions.
+
+```{r}
+plot(0, 0, type='n', xlim=range(dim), ylim=range(unlist(ratios)), xlab='dim', ylab='log2(med/sqrt(dim))')
+
+points(dim, ratios[[1]], col="black", pch=16, cex=0.5)
+lines(dim, ratios[[1]], col="black")
+points(dim, ratios[[2]], col="grey20", pch=16, cex=0.5)
+lines(dim, ratios[[2]], col="grey20")
+points(dim, ratios[[3]], col="grey50", pch=16, cex=0.5)
+lines(dim, ratios[[3]], col="grey50")
+points(dim, ratios[[4]], col="grey80", pch=16, cex=0.5)
+lines(dim, ratios[[4]], col="grey80")
+
+abline(v=10, col="red", lty=2)
+```
+
+Another interesting property is that the actual choice of $k$ doesn't have much effect on these curves.
+Probably because at high dimensions, everything is more-or-less equally far apart from everything else, so extending the search to more neighbors doesn't increase the distance much.
+
+# Session info {-}
+
+```{r}
+sessionInfo()
+```
