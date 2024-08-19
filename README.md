@@ -144,12 +144,12 @@ To install the library, use:
 
 ```sh
 mkdir build && cd build
-cmake .. -DNENESUB_TESTS=OFF
+cmake .. -DMUMOSA_TESTS=OFF
 cmake --build . --target install
 ```
 
 By default, this will use `FetchContent` to fetch all external dependencies.
-If you want to install them manually, use `-DNENESUB_FETCH_EXTERN=OFF`.
+If you want to install them manually, use `-DMUMOSA_FETCH_EXTERN=OFF`.
 See the tags in [`extern/CMakeLists.txt`](extern/CMakeLists.txt) to find compatible versions of each dependency.
 
 ### Manual
