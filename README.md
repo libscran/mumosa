@@ -6,23 +6,19 @@
 
 ## Overview
 
-Multi-modal single-cell experiments generate data of different modalities (e.g., RNA, protein) from the same set of cells.
-In some parts of the analysis, we want to combine data from different modalities to increase the information available for each cell.
-This is most relevant to results that are expressed in terms of cells, like clustering and visualization with t-SNE or UMAP.
+In multi-modal single-cell experiments, we obtain data of different modalities (e.g., RNA, protein) from the same set of cells.
+Naturally, we would like to combine data from different modalities to increase the information available for each cell.
+This is most relevant to analysis steps that yield results in terms of cells, like clustering and visualization with t-SNE or UMAP.
 A simple combining strategy is to just concatenate the per-modality data matrices together into a single matrix for further analysis.
-While convenient and compatible with many downstream procedures, this is complicated by the differences in the variance between modalities - 
-higher noise in one modality might drown out biological signal in another modality that has lower variance.
+While convenient and compatible with many downstream procedures, this is complicated by the differences in the variance between modalities. 
+Higher noise in one modality might drown out biological signal in another modality that has lower variance.
 
-In **mumosa**, we scale embeddings to equalize noise across modalities prior to concatenation.
+The **mumosa** algorithm scales embeddings to equalize noise across modalities prior to concatenation.
 First, we compute the median distance to the $k$-th nearest neighbor in the low-dimensional embedding for each modality (e.g., after PCA).
 This distance is used as a proxy for the modality-specific noise within a subpopulation containing at least $k$ cells.
 We define a scaling factor for each modality as the ratio of the median distances for that modality compared to a "reference" modality.
 We scale the modality's embedding by its factor, removing differences in variance due to irrelevant factors like the scale of expression values, number of features, etc.
 We then concatenate the matrices to form a single embedding for further analysis.
-
-We deliberately use the distance to the nearest neighbors instead of the total variance for each embedding.
-The latter would unnecessarily penalize modalities with strong biological heterogeneity.
-Our approach aims to remove differences in the magnitude of noise while preserving modality-specific biological signal in the concatenation.
 
 ## Quick start
 
@@ -56,13 +52,13 @@ for (int m = 0; m < 3; ++m) {
 }
 ```
 
-We can then compute scaling factors for each modality:
+We then compute scaling factors for each modality:
 
 ```cpp
 auto scale = mumosa::compute_scale(distances);
 ```
 
-And use them to combine the embeddings into a single matrix:
+And combine the scaled per-modality embeddings into a single matrix:
 
 ```cpp
 size_t ntotal = std::accumulate(dimensions.begin(), dimensions.end(), 0);
@@ -83,6 +79,18 @@ mumosa::combine_scaled_embeddings(
 ```
 
 Check out the [reference documentation](https://libscran.github.io/mumosa) for more details.
+
+## Further comments
+
+The key element of the **mumosa** approach is the use of the distance to the nearest neighbors as a measure of (uninteresting) spread.
+We do not use the total variance for each embedding as this includes the biological heterogeneity of interest.
+Scaling by the total variance would reduce the contribution of the most relevant modalities, which is obviously not desirable.
+**mumosa** aims to remove differences in the magnitude of noise while preserving modality-specific biological signal in the concatenated matrix.
+
+The other appealing aspect of **mumosa** lies in its simplicity relative to other approaches (e.g., multi-modal factor analyses, intersection of simplicial sets). 
+It returns a combined matrix of embeddings that can be directly used in any downstream analysis steps like clustering, t-SNE, UMAP, etc. without any issues.
+No further transformations beyond scaling are performed, ensuring that population structure within each modality is faithfully represented in the combined embedding.
+Most importantly, **mumosa** is very easy to implement, and that's probably what I like the most about it - keep it simple, stupid. 
 
 ## Building projects
 
