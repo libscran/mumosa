@@ -33,6 +33,7 @@ struct Options {
 
     /**
      * Number of threads to use.
+     * The parallelization mechanism is determined by `knncolle::parallelize()`.
      */
     int num_threads = 1;
 };
@@ -79,7 +80,7 @@ std::pair<Float_, Float_> compute_distance(const knncolle::Prebuilt<Dim_, Index_
     size_t nobs = prebuilt.num_observations();
     std::vector<double> dist(nobs);
 
-    tatami::parallelize([&](size_t, size_t start, size_t length) -> void {
+    knncolle::parallelize(options.num_threads, nobs, [&](size_t, size_t start, size_t length) -> void {
         auto searcher = prebuilt.initialize();
         std::vector<Float_> distances;
         for (size_t i = start, end = start + length; i < end; ++i) {
@@ -88,7 +89,7 @@ std::pair<Float_, Float_> compute_distance(const knncolle::Prebuilt<Dim_, Index_
                 dist[i] = distances.back();
             }
         }
-    }, nobs, options.num_threads);
+    });
 
     return compute_distance(nobs, dist.data());
 }
