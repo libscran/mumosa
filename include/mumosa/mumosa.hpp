@@ -243,9 +243,6 @@ void combine_scaled_embeddings(const std::vector<Dim_>& num_dims, Index_ num_cel
             }
         } else {
             for (Index_ c = 0; c < num_cells; ++c, in_position += curdim, out_position += ntotal) {
-#ifdef _OPENMP
-                #pragma omp simd
-#endif
                 for (Dim_ d = 0; d < curdim; ++d) {
                     output[out_position + d] = inptr[in_position + d] * s;
                 }
