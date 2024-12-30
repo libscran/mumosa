@@ -155,7 +155,7 @@ template&lt;typename Index_ , typename Float_ &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">distances</td><td>Pointer to an array containing the distances from each cell to its \(k\)-nearest neighbor. It is expected that the same \(k\) was used each cell. On output, the order of values may be altered.</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">distances</td><td>Pointer to an array containing the distances from each cell to its \(k\)-nearest neighbor. It is expected that the same \(k\) was used for each cell. On output, the order of values may be arbitrarily altered during the median calculation; if this is undesirable, users should pass in a copy of the array.</td></tr>
   </table>
   </dd>
 </dl>
