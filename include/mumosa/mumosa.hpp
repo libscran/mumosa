@@ -44,8 +44,9 @@ struct Options {
  *
  * @param num_cells Number of cells.
  * @param[in, out] distances Pointer to an array containing the distances from each cell to its \f$k\f$-nearest neighbor.
- * It is expected that the same \f$k\f$ was used each cell.
- * On output, the order of values may be altered.
+ * It is expected that the same \f$k\f$ was used for each cell.
+ * On output, the order of values may be arbitrarily altered during the median calculation;
+ * if this is undesirable, users should pass in a copy of the array.
  *
  * @return Pair containing the median distance to the nearest neighbor (first)
  * and the root-mean-squared distance across all cells (second).
