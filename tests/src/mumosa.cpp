@@ -8,11 +8,15 @@ class ScaleByNeighborsTest : public ::testing::Test {
 protected:
     static void SetUpTestSuite() {
         first = scran_tests::simulate_vector(ndim * nobs, scran_tests::SimulationParameters());
+        builder.reset(new knncolle::VptreeBuilder<int, double, double>(
+            std::make_shared<knncolle::EuclideanDistance<double, double> >()
+        ));
     }
 
     inline static int ndim = 5;
     inline static int nobs = 1234;
     inline static std::vector<double> first;
+    inline static std::unique_ptr<knncolle::Builder<int, double, double> > builder;
 };
 
 TEST_F(ScaleByNeighborsTest, Basic) {
@@ -21,15 +25,15 @@ TEST_F(ScaleByNeighborsTest, Basic) {
         s *= 2;
     }
 
-    auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), knncolle::VptreeBuilder(), mumosa::Options());
-    auto out2 = mumosa::compute_distance(ndim, nobs, second.data(), knncolle::VptreeBuilder(), mumosa::Options());
+    auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), *builder, mumosa::Options());
+    auto out2 = mumosa::compute_distance(ndim, nobs, second.data(), *builder, mumosa::Options());
     EXPECT_FLOAT_EQ(mumosa::compute_scale(out1, out2), 0.5);
 
     // Works in parallel.
     {
         mumosa::Options opt;
         opt.num_threads = 3;
-        auto pout1 = mumosa::compute_distance(ndim, nobs, first.data(), knncolle::VptreeBuilder(), opt);
+        auto pout1 = mumosa::compute_distance(ndim, nobs, first.data(), *builder, opt);
         EXPECT_EQ(out1, pout1);
     }
 
@@ -37,8 +41,8 @@ TEST_F(ScaleByNeighborsTest, Basic) {
     {
         mumosa::Options opt;
         opt.num_neighbors = 10;
-        auto out10_1 = mumosa::compute_distance(ndim, nobs, first.data(), knncolle::VptreeBuilder(), opt);
-        auto out10_2 = mumosa::compute_distance(ndim, nobs, second.data(), knncolle::VptreeBuilder(), opt);
+        auto out10_1 = mumosa::compute_distance(ndim, nobs, first.data(), *builder, opt);
+        auto out10_2 = mumosa::compute_distance(ndim, nobs, second.data(), *builder, opt);
         EXPECT_LT(out10_1, out1);
         EXPECT_LT(out10_2, out2);
         EXPECT_FLOAT_EQ(mumosa::compute_scale(out10_1, out10_2), 0.5);
@@ -57,8 +61,8 @@ TEST_F(ScaleByNeighborsTest, DifferentlyDimensioned) {
         sIt += ndim;
     }
 
-    auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), knncolle::VptreeBuilder(), mumosa::Options());
-    auto out2 = mumosa::compute_distance(ndim * 2, nobs, second.data(), knncolle::VptreeBuilder(), mumosa::Options());
+    auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), *builder, mumosa::Options());
+    auto out2 = mumosa::compute_distance(ndim * 2, nobs, second.data(), *builder, mumosa::Options());
     EXPECT_FLOAT_EQ(mumosa::compute_scale(out1, out2), 1.0 / std::sqrt(2));
 }
 
@@ -68,8 +72,8 @@ TEST_F(ScaleByNeighborsTest, Zeros) {
         std::vector<double> second(ndim * nobs);
         second[0] = 1;
 
-        auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), knncolle::VptreeBuilder(), mumosa::Options());
-        auto out2 = mumosa::compute_distance(ndim, nobs, second.data(), knncolle::VptreeBuilder(), mumosa::Options());
+        auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), *builder, mumosa::Options());
+        auto out2 = mumosa::compute_distance(ndim, nobs, second.data(), *builder, mumosa::Options());
         auto scale = mumosa::compute_scale(out1, out2);
 
         EXPECT_FALSE(std::isinf(scale));
@@ -80,8 +84,8 @@ TEST_F(ScaleByNeighborsTest, Zeros) {
     {
         std::vector<double> second(ndim * nobs);
 
-        auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), knncolle::VptreeBuilder(), mumosa::Options());
-        auto out2 = mumosa::compute_distance(ndim, nobs, second.data(), knncolle::VptreeBuilder(), mumosa::Options());
+        auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), *builder, mumosa::Options());
+        auto out2 = mumosa::compute_distance(ndim, nobs, second.data(), *builder, mumosa::Options());
 
         auto scale = mumosa::compute_scale(out1, out2);
         EXPECT_TRUE(std::isinf(scale));
@@ -133,11 +137,11 @@ TEST(ScaleByNeighbors, CombineEmbeddings) {
 
     {
         std::vector<double> output(25 * nobs);
-        mumosa::combine_scaled_embeddings<int, int, double, double, double>(
-            { 20, 5 },
+        mumosa::combine_scaled_embeddings(
+            { static_cast<std::size_t>(20), static_cast<std::size_t>(5) },
             nobs,
             std::vector<double*>{ first.data(), second.data() },
-            { 0.5, 1.2 },
+            std::vector<double>{ 0.5, 1.2 },
             output.data()
         );
 
@@ -158,11 +162,11 @@ TEST(ScaleByNeighbors, CombineEmbeddings) {
     // Handles the infinite special case.
     {
         std::vector<double> output(25 * nobs);
-        mumosa::combine_scaled_embeddings<int, int, double, double, double>(
-            { 20, 5 },
+        mumosa::combine_scaled_embeddings(
+            { static_cast<std::size_t>(20), static_cast<std::size_t>(5) },
             nobs,
             std::vector<double*>{ first.data(), second.data() },
-            { 0.5, std::numeric_limits<double>::infinity() },
+            std::vector<double>{ 0.5, std::numeric_limits<double>::infinity() },
             output.data()
         );
 

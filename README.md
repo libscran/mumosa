@@ -27,13 +27,20 @@ Given the embedding coordinates for multiple modalities, we compute the median d
 ```cpp
 #include "mumosa/mumosa.hpp"
 
-// Mocking up some modalities.
+// Mocking up some modalities. For each modality 'm', we have a column-major
+// array of 'embeddings[m]' of size 'dimensions[m] * nobs'. 
 int nobs = 1000;
 std::vector<int> dimensions(3, 20);
 std::vector<std::vector<double> > embeddings(3);
 for (int m = 0; m < 3; ++m) {
     embeddings[m].resize(nobs * dimensions[m]);
 }
+
+// Configuring the neighbor search algorithm; here, we'll be using an exact
+// search based on VP trees with a Euclidean distance metric.
+knncolle::VptreeBuilder<int, double, double> vp_builder(
+    std::make_shared<knncolle::EuclideanDistance<double, double> >()
+);
 
 // Computing distances per modality.
 mumosa::Options opt;
@@ -46,7 +53,7 @@ for (int m = 0; m < 3; ++m) {
         dimensions[m],
         nobs,
         embeddings[m].data(),
-        knncolle::VptreeBuilder<>(), // any NN algorithm can be used here.
+        vp_builder,
         opt
     );
 }
