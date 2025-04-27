@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<tagfile doxygen_version="1.9.8">
+<tagfile doxygen_version="1.12.0">
   <compound kind="file">
     <name>mumosa.hpp</name>
     <path>mumosa/</path>
@@ -30,46 +30,46 @@
     <filename>namespacemumosa.html</filename>
     <class kind="struct">mumosa::Options</class>
     <member kind="function">
-      <type>std::pair&lt; Float_, Float_ &gt;</type>
+      <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a1dd47f25008fcc2d8c1249761a03b466</anchor>
-      <arglist>(Index_ num_cells, Float_ *distances)</arglist>
+      <anchor>ab71e627efbcf8461d6fe044f0be49e72</anchor>
+      <arglist>(Index_ num_cells, Distance_ *distances)</arglist>
     </member>
     <member kind="function">
-      <type>std::pair&lt; Float_, Float_ &gt;</type>
+      <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a8bdd5bb9377ce3e6852eaae388921b89</anchor>
-      <arglist>(const knncolle::Prebuilt&lt; Dim_, Index_, Float_ &gt; &amp;prebuilt, const Options &amp;options)</arglist>
+      <anchor>aa13cd79d1064f517d4e44fce041bb09f</anchor>
+      <arglist>(const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &amp;prebuilt, const Options &amp;options)</arglist>
     </member>
     <member kind="function">
-      <type>std::pair&lt; Float_, Float_ &gt;</type>
+      <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a1759ae6e54125cf6286bb4db2f17eae4</anchor>
-      <arglist>(Dim_ num_dim, Index_ num_cells, const Float_ *data, const knncolle::Builder&lt; knncolle::SimpleMatrix&lt; Dim_, Index_, Float_ &gt;, Float_ &gt; &amp;builder, const Options &amp;options)</arglist>
+      <anchor>a68cc5475d10ed58ef917c60e2f8d90ea</anchor>
+      <arglist>(std::size_t num_dim, Index_ num_cells, const Input_ *data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const Options &amp;options)</arglist>
     </member>
     <member kind="function">
-      <type>Float_</type>
+      <type>Distance_</type>
       <name>compute_scale</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a889cc7f4d99446e2a7dcd1d398763ace</anchor>
-      <arglist>(const std::pair&lt; Float_, Float_ &gt; &amp;ref, const std::pair&lt; Float_, Float_ &gt; &amp;target)</arglist>
+      <anchor>a8227367fe83f0bec0c50156c5f24a3b7</anchor>
+      <arglist>(const std::pair&lt; Distance_, Distance_ &gt; &amp;ref, const std::pair&lt; Distance_, Distance_ &gt; &amp;target)</arglist>
     </member>
     <member kind="function">
-      <type>std::vector&lt; Float_ &gt;</type>
+      <type>std::vector&lt; Distance_ &gt;</type>
       <name>compute_scale</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a9640853d15e0d836bfdf4d54a0874ac5</anchor>
-      <arglist>(const std::vector&lt; std::pair&lt; Float_, Float_ &gt; &gt; &amp;distances)</arglist>
+      <anchor>a26c6d69157bee4c3c7d595570761793b</anchor>
+      <arglist>(const std::vector&lt; std::pair&lt; Distance_, Distance_ &gt; &gt; &amp;distances)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>combine_scaled_embeddings</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a5abe395d9107cd90aa10bba4362f847c</anchor>
-      <arglist>(const std::vector&lt; Dim_ &gt; &amp;num_dims, Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *output)</arglist>
+      <anchor>ab60e690c91ff9808af621f46956644a9</anchor>
+      <arglist>(const std::vector&lt; std::size_t &gt; &amp;num_dims, Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *output)</arglist>
     </member>
   </compound>
   <compound kind="page">

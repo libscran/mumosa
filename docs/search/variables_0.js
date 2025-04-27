@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['initialize_5falgorithm_0',['initialize_algorithm',['https://knncolle.github.io/knncolle/structknncolle_1_1KmknnOptions.html#a01ab1d6e283fa8945723f33942e310c0',1,'knncolle::KmknnOptions']]]
+  ['num_5fneighbors_0',['num_neighbors',['../structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640',1,'mumosa::Options']]],
+  ['num_5fthreads_1',['num_threads',['../structmumosa_1_1Options.html#a390a953ace5a6fa0a172efb8cb691929',1,'mumosa::Options']]]
 ];

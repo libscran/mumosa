@@ -1,8 +1,15 @@
 var searchData=
 [
-  ['l2normalized_2ehpp_0',['L2Normalized.hpp',['https://knncolle.github.io/knncolle/L2Normalized_8hpp.html',1,'']]],
-  ['l2normalizedbuilder_1',['l2normalizedbuilder',['https://knncolle.github.io/knncolle/classknncolle_1_1L2NormalizedBuilder.html',1,'knncolle::L2NormalizedBuilder&lt; class Matrix_, typename Float_ &gt;'],['https://knncolle.github.io/knncolle/classknncolle_1_1L2NormalizedBuilder.html#a7f3702fbbf54bbbaceb925aa2936bd45',1,'knncolle::L2NormalizedBuilder::L2NormalizedBuilder(std::unique_ptr&lt; Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; &gt; builder)'],['https://knncolle.github.io/knncolle/classknncolle_1_1L2NormalizedBuilder.html#a16df727021e97c341b7ef957eb79dd23',1,'knncolle::L2NormalizedBuilder::L2NormalizedBuilder(Builder&lt; L2NormalizedMatrix&lt; Matrix_ &gt;, Float_ &gt; *builder)']]],
-  ['l2normalizedmatrix_2',['L2NormalizedMatrix',['https://knncolle.github.io/knncolle/classknncolle_1_1L2NormalizedMatrix.html',1,'knncolle']]],
-  ['l2normalizedprebuilt_3',['l2normalizedprebuilt',['https://knncolle.github.io/knncolle/classknncolle_1_1L2NormalizedPrebuilt.html',1,'knncolle::L2NormalizedPrebuilt&lt; typename Dim_, typename Index_, typename Float_ &gt;'],['https://knncolle.github.io/knncolle/classknncolle_1_1L2NormalizedPrebuilt.html#a43c889080f754e44c6085cc10a46f32b',1,'knncolle::L2NormalizedPrebuilt::L2NormalizedPrebuilt()']]],
-  ['l2normalizedsearcher_4',['l2normalizedsearcher',['https://knncolle.github.io/knncolle/classknncolle_1_1L2NormalizedSearcher.html',1,'knncolle::L2NormalizedSearcher&lt; typename Index_, typename Float_ &gt;'],['https://knncolle.github.io/knncolle/classknncolle_1_1L2NormalizedSearcher.html#ad97e99e0fd85202cce0357333a78a2a4',1,'knncolle::L2NormalizedSearcher::L2NormalizedSearcher()']]]
+  ['manhattandistance_0',['ManhattanDistance',['https://knncolle.github.io/knncolle/classknncolle_1_1ManhattanDistance.html',1,'knncolle']]],
+  ['matrix_1',['Matrix',['https://knncolle.github.io/knncolle/classknncolle_1_1Matrix.html',1,'knncolle']]],
+  ['matrix_2ehpp_2',['Matrix.hpp',['https://knncolle.github.io/knncolle/Matrix_8hpp.html',1,'']]],
+  ['matrix_3c_20index_5f_2c_20data_5f_20_3e_3',['Matrix&lt; Index_, Data_ &gt;',['https://knncolle.github.io/knncolle/classknncolle_1_1Matrix.html',1,'knncolle']]],
+  ['matrix_3c_20index_5f_2c_20normalized_5f_20_3e_4',['Matrix&lt; Index_, Normalized_ &gt;',['https://knncolle.github.io/knncolle/classknncolle_1_1Matrix.html',1,'knncolle']]],
+  ['matrixextractor_5',['MatrixExtractor',['https://knncolle.github.io/knncolle/classknncolle_1_1MatrixExtractor.html',1,'knncolle']]],
+  ['matrixextractor_3c_20data_5f_20_3e_6',['MatrixExtractor&lt; Data_ &gt;',['https://knncolle.github.io/knncolle/classknncolle_1_1MatrixExtractor.html',1,'knncolle']]],
+  ['matrixextractor_3c_20normalized_5f_20_3e_7',['MatrixExtractor&lt; Normalized_ &gt;',['https://knncolle.github.io/knncolle/classknncolle_1_1MatrixExtractor.html',1,'knncolle']]],
+  ['modal_20single_20cell_20analyses_8',['Multi-modal single-cell analyses',['../index.html',1,'']]],
+  ['multi_20modal_20single_20cell_20analyses_9',['Multi-modal single-cell analyses',['../index.html',1,'']]],
+  ['mumosa_10',['mumosa',['../namespacemumosa.html',1,'']]],
+  ['mumosa_2ehpp_11',['mumosa.hpp',['../mumosa_8hpp.html',1,'']]]
 ];
