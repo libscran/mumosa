@@ -81,13 +81,14 @@ std::pair<Distance_, Distance_> compute_distance(Index_ num_cells, Distance_* di
 template<typename Index_, typename Input_, typename Distance_>
 std::pair<Distance_, Distance_> compute_distance(const knncolle::Prebuilt<Index_, Input_, Distance_>& prebuilt, const Options& options) {
     Index_ nobs = prebuilt.num_observations();
+    auto capped_k = knncolle::cap_k(options.num_neighbors, nobs);
     std::vector<double> dist(nobs);
 
     knncolle::parallelize(options.num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
         auto searcher = prebuilt.initialize();
         std::vector<Distance_> distances;
         for (Index_ i = start, end = start + length; i < end; ++i) {
-            searcher->search(i, options.num_neighbors, NULL, &distances);
+            searcher->search(i, capped_k, NULL, &distances);
             if (distances.size()) {
                 dist[i] = distances.back();
             }
