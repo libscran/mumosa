@@ -141,125 +141,126 @@ $(function(){ initResizable(false); });
 <div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="namespacemumosa.html#aa13cd79d1064f517d4e44fce041bb09f">   82</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#ab71e627efbcf8461d6fe044f0be49e72">compute_distance</a>(<span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt;</a>&amp; prebuilt, <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1Options.html">Options</a>&amp; options) {</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    Index_ nobs = prebuilt.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html#a560fec57d6ec36d288b6cd80e9f4c7bd">num_observations</a>();</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    std::vector&lt;double&gt; dist(nobs);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073">knncolle::parallelize</a>(options.<a class="code hl_variable" href="structmumosa_1_1Options.html#a390a953ace5a6fa0a172efb8cb691929">num_threads</a>, nobs, [&amp;](<span class="keywordtype">int</span>, Index_ start, Index_ length) -&gt; <span class="keywordtype">void</span> {</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        auto searcher = prebuilt.initialize();</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        std::vector&lt;Distance_&gt; distances;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        for (Index_ i = start, end = start + length; i &lt; end; ++i) {</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            searcher-&gt;search(i, options.num_neighbors, NULL, &amp;distances);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            if (distances.size()) {</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                dist[i] = distances.back();</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            }</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        }</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    });</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemumosa.html#ab71e627efbcf8461d6fe044f0be49e72">compute_distance</a>(nobs, dist.data());</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keyword">auto</span> capped_k = <a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/namespaceknncolle.html#a926c81cd626de7081b073a891d352543">knncolle::cap_k</a>(options.<a class="code hl_variable" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">num_neighbors</a>, nobs);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    std::vector&lt;double&gt; dist(nobs);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073">knncolle::parallelize</a>(options.<a class="code hl_variable" href="structmumosa_1_1Options.html#a390a953ace5a6fa0a172efb8cb691929">num_threads</a>, nobs, [&amp;](<span class="keywordtype">int</span>, Index_ start, Index_ length) -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        auto searcher = prebuilt.initialize();</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        std::vector&lt;Distance_&gt; distances;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        for (Index_ i = start, end = start + length; i &lt; end; ++i) {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            searcher-&gt;search(i, capped_k, NULL, &amp;distances);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            if (distances.size()) {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                dist[i] = distances.back();</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        }</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    });</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemumosa.html#ab71e627efbcf8461d6fe044f0be49e72">compute_distance</a>(nobs, dist.data());</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
 </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
-<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a68cc5475d10ed58ef917c60e2f8d90ea">  119</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#ab71e627efbcf8461d6fe044f0be49e72">compute_distance</a>(</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    std::size_t num_dim,</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    Index_ num_cells,</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keyword">const</span> Input_* data,</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder,</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1Options.html">Options</a>&amp; options)</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>{</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keyword">auto</span> prebuilt = builder.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7">build_unique</a>(<a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>(num_dim, num_cells, data));</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemumosa.html#ab71e627efbcf8461d6fe044f0be49e72">compute_distance</a>(*prebuilt, options);</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>}</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
+<div class="foldopen" id="foldopen00120" data-start="{" data-end="}">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a68cc5475d10ed58ef917c60e2f8d90ea">  120</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#ab71e627efbcf8461d6fe044f0be49e72">compute_distance</a>(</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    std::size_t num_dim,</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    Index_ num_cells,</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keyword">const</span> Input_* data,</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder,</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1Options.html">Options</a>&amp; options)</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>{</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keyword">auto</span> prebuilt = builder.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7">build_unique</a>(<a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>(num_dim, num_cells, data));</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemumosa.html#ab71e627efbcf8461d6fe044f0be49e72">compute_distance</a>(*prebuilt, options);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>}</div>
 </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Distance_&gt;</div>
-<div class="foldopen" id="foldopen00149" data-start="{" data-end="}">
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">  149</a></span>Distance_ <a class="code hl_function" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale</a>(<span class="keyword">const</span> std::pair&lt;Distance_, Distance_&gt;&amp; ref, <span class="keyword">const</span> std::pair&lt;Distance_, Distance_&gt;&amp; target) {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordflow">if</span> (target.first == 0 || ref.first == 0) {</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">if</span> (target.second == 0) {</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="keywordflow">return</span> std::numeric_limits&lt;Distance_&gt;::infinity();</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ref.second == 0) {</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            <span class="keywordflow">return</span> ref.second / target.second; </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        }</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">return</span> ref.first / target.first;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    }</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>}</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Distance_&gt;</div>
+<div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">  150</a></span>Distance_ <a class="code hl_function" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale</a>(<span class="keyword">const</span> std::pair&lt;Distance_, Distance_&gt;&amp; ref, <span class="keyword">const</span> std::pair&lt;Distance_, Distance_&gt;&amp; target) {</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordflow">if</span> (target.first == 0 || ref.first == 0) {</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <span class="keywordflow">if</span> (target.second == 0) {</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            <span class="keywordflow">return</span> std::numeric_limits&lt;Distance_&gt;::infinity();</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ref.second == 0) {</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            <span class="keywordflow">return</span> ref.second / target.second; </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        }</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordflow">return</span> ref.first / target.first;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    }</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>}</div>
 </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Distance_&gt;</div>
-<div class="foldopen" id="foldopen00177" data-start="{" data-end="}">
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a26c6d69157bee4c3c7d595570761793b">  177</a></span>std::vector&lt;Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale</a>(<span class="keyword">const</span> std::vector&lt;std::pair&lt;Distance_, Distance_&gt; &gt;&amp; distances) {</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    std::vector&lt;Distance_&gt; output(distances.size());</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="comment">// Use the first entry with a non-zero RMSD as the reference.</span></div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="keywordtype">bool</span> found_ref = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keyword">auto</span> ndist = distances.size();</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keyword">decltype</span>(ndist) ref = 0;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keywordflow">for</span> (<span class="keyword">decltype</span>(ndist) e = 0; e &lt; ndist; ++e) {</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keywordflow">if</span> (distances[e].second) {</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            found_ref = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            ref = e;</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        }</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    }</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="comment">// If all of them have a zero RMSD, then all scalings are zero, because it doesn&#39;t matter.</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="keywordflow">if</span> (found_ref) {</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; dref = distances[ref];</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="keywordflow">for</span> (<span class="keyword">decltype</span>(ndist) e = 0; e &lt; ndist; ++e) {</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            output[e] = (e == ref ? 1 : <a class="code hl_function" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale</a>(dref, distances[e]));</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        }</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    }</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keywordflow">return</span> output;</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>}</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Distance_&gt;</div>
+<div class="foldopen" id="foldopen00178" data-start="{" data-end="}">
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a26c6d69157bee4c3c7d595570761793b">  178</a></span>std::vector&lt;Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale</a>(<span class="keyword">const</span> std::vector&lt;std::pair&lt;Distance_, Distance_&gt; &gt;&amp; distances) {</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    std::vector&lt;Distance_&gt; output(distances.size());</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="comment">// Use the first entry with a non-zero RMSD as the reference.</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <span class="keywordtype">bool</span> found_ref = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keyword">auto</span> ndist = distances.size();</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keyword">decltype</span>(ndist) ref = 0;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keywordflow">for</span> (<span class="keyword">decltype</span>(ndist) e = 0; e &lt; ndist; ++e) {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keywordflow">if</span> (distances[e].second) {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            found_ref = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            ref = e;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        }</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="comment">// If all of them have a zero RMSD, then all scalings are zero, because it doesn&#39;t matter.</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keywordflow">if</span> (found_ref) {</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; dref = distances[ref];</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">for</span> (<span class="keyword">decltype</span>(ndist) e = 0; e &lt; ndist; ++e) {</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            output[e] = (e == ref ? 1 : <a class="code hl_function" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale</a>(dref, distances[e]));</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        }</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    }</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordflow">return</span> output;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>}</div>
 </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Scale_, <span class="keyword">typename</span> Output_&gt;</div>
-<div class="foldopen" id="foldopen00225" data-start="{" data-end="}">
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno"><a class="line" href="namespacemumosa.html#ab60e690c91ff9808af621f46956644a9">  225</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespacemumosa.html#ab60e690c91ff9808af621f46956644a9">combine_scaled_embeddings</a>(<span class="keyword">const</span> std::vector&lt;std::size_t&gt;&amp; num_dims, Index_ num_cells, <span class="keyword">const</span> std::vector&lt;Input_*&gt;&amp; embeddings, <span class="keyword">const</span> std::vector&lt;Scale_&gt;&amp; scaling, Output_* output) {</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <span class="keyword">auto</span> nembed = num_dims.size();</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <span class="keywordflow">if</span> (embeddings.size() != nembed || scaling.size() != nembed) {</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;&#39;num_dims&#39;, &#39;embeddings&#39; and &#39;scale&#39; should have the same length&quot;</span>);</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    }</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    std::size_t ntotal = std::accumulate(num_dims.begin(), num_dims.end(), <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(0));</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    std::size_t offset = 0;</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <span class="keywordflow">for</span> (<span class="keyword">decltype</span>(nembed) e = 0; e &lt; nembed; ++e) {</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        <span class="keyword">auto</span> curdim = num_dims[e];</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        <span class="keyword">auto</span> inptr = embeddings[e];</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keyword">auto</span> s = scaling[e];</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="comment">// We use offsets to avoid forming invalid pointers with strided pointers.</span></div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        std::size_t in_position = 0;</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        std::size_t out_position = offset;</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <span class="keywordflow">if</span> (std::isinf(s)) {</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>            <span class="comment">// If the scaling factor is infinite, it implies that the current</span></div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            <span class="comment">// embedding is all-zero, so we just fill with zeros, and move on.</span></div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            <span class="keywordflow">for</span> (Index_ c = 0; c &lt; num_cells; ++c, in_position += curdim, out_position += ntotal) {</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                std::fill_n(output + out_position, curdim, 0);</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            }</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            <span class="keywordflow">for</span> (Index_ c = 0; c &lt; num_cells; ++c, in_position += curdim, out_position += ntotal) {</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                <span class="keywordflow">for</span> (std::size_t d = 0; d &lt; curdim; ++d) {</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                    output[out_position + d] = inptr[in_position + d] * s;</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                }</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>            }</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        }</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        offset += curdim;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    }</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>}</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Scale_, <span class="keyword">typename</span> Output_&gt;</div>
+<div class="foldopen" id="foldopen00226" data-start="{" data-end="}">
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="namespacemumosa.html#ab60e690c91ff9808af621f46956644a9">  226</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="namespacemumosa.html#ab60e690c91ff9808af621f46956644a9">combine_scaled_embeddings</a>(<span class="keyword">const</span> std::vector&lt;std::size_t&gt;&amp; num_dims, Index_ num_cells, <span class="keyword">const</span> std::vector&lt;Input_*&gt;&amp; embeddings, <span class="keyword">const</span> std::vector&lt;Scale_&gt;&amp; scaling, Output_* output) {</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <span class="keyword">auto</span> nembed = num_dims.size();</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <span class="keywordflow">if</span> (embeddings.size() != nembed || scaling.size() != nembed) {</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;&#39;num_dims&#39;, &#39;embeddings&#39; and &#39;scale&#39; should have the same length&quot;</span>);</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    }</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    std::size_t ntotal = std::accumulate(num_dims.begin(), num_dims.end(), <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(0));</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    std::size_t offset = 0;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="keywordflow">for</span> (<span class="keyword">decltype</span>(nembed) e = 0; e &lt; nembed; ++e) {</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        <span class="keyword">auto</span> curdim = num_dims[e];</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keyword">auto</span> inptr = embeddings[e];</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <span class="keyword">auto</span> s = scaling[e];</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        <span class="comment">// We use offsets to avoid forming invalid pointers with strided pointers.</span></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        std::size_t in_position = 0;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        std::size_t out_position = offset;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        <span class="keywordflow">if</span> (std::isinf(s)) {</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            <span class="comment">// If the scaling factor is infinite, it implies that the current</span></div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            <span class="comment">// embedding is all-zero, so we just fill with zeros, and move on.</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="keywordflow">for</span> (Index_ c = 0; c &lt; num_cells; ++c, in_position += curdim, out_position += ntotal) {</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                std::fill_n(output + out_position, curdim, 0);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            }</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            <span class="keywordflow">for</span> (Index_ c = 0; c &lt; num_cells; ++c, in_position += curdim, out_position += ntotal) {</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                <span class="keywordflow">for</span> (std::size_t d = 0; d &lt; curdim; ++d) {</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                    output[out_position + d] = inptr[in_position + d] * s;</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                }</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>            }</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        }</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        offset += curdim;</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    }</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>}</div>
 </div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>}</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>}</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassknncolle_1_1Builder_html"><div class="ttname"><a href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a></div></div>
 <div class="ttc" id="aclassknncolle_1_1Builder_html_a93cac638de3e4ad31919bc5d677d16b7"><div class="ttname"><a href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a93cac638de3e4ad31919bc5d677d16b7">knncolle::Builder::build_unique</a></div><div class="ttdeci">std::unique_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt; build_unique(const Matrix_ &amp;data) const</div></div>
 <div class="ttc" id="aclassknncolle_1_1Prebuilt_html"><div class="ttname"><a href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></div></div>
@@ -267,9 +268,10 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html"><div class="ttname"><a href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a></div></div>
 <div class="ttc" id="aknncolle_8hpp_html"><div class="ttname"><a href="https://knncolle.github.io/knncolle/knncolle_8hpp.html">knncolle.hpp</a></div></div>
 <div class="ttc" id="anamespaceknncolle_html_a5faf80c12bbfbab853c41f6d001fe073"><div class="ttname"><a href="https://knncolle.github.io/knncolle/namespaceknncolle.html#a5faf80c12bbfbab853c41f6d001fe073">knncolle::parallelize</a></div><div class="ttdeci">void parallelize(int num_workers, Task_ num_tasks, Run_ run_task_range)</div></div>
+<div class="ttc" id="anamespaceknncolle_html_a926c81cd626de7081b073a891d352543"><div class="ttname"><a href="https://knncolle.github.io/knncolle/namespaceknncolle.html#a926c81cd626de7081b073a891d352543">knncolle::cap_k</a></div><div class="ttdeci">int cap_k(int k, Index_ num_observations)</div></div>
 <div class="ttc" id="anamespacemumosa_html"><div class="ttname"><a href="namespacemumosa.html">mumosa</a></div><div class="ttdoc">Scale multi-modal embeddings to adjust for differences in variance.</div></div>
-<div class="ttc" id="anamespacemumosa_html_a8227367fe83f0bec0c50156c5f24a3b7"><div class="ttname"><a href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">mumosa::compute_scale</a></div><div class="ttdeci">Distance_ compute_scale(const std::pair&lt; Distance_, Distance_ &gt; &amp;ref, const std::pair&lt; Distance_, Distance_ &gt; &amp;target)</div><div class="ttdef"><b>Definition</b> mumosa.hpp:149</div></div>
-<div class="ttc" id="anamespacemumosa_html_ab60e690c91ff9808af621f46956644a9"><div class="ttname"><a href="namespacemumosa.html#ab60e690c91ff9808af621f46956644a9">mumosa::combine_scaled_embeddings</a></div><div class="ttdeci">void combine_scaled_embeddings(const std::vector&lt; std::size_t &gt; &amp;num_dims, Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *output)</div><div class="ttdef"><b>Definition</b> mumosa.hpp:225</div></div>
+<div class="ttc" id="anamespacemumosa_html_a8227367fe83f0bec0c50156c5f24a3b7"><div class="ttname"><a href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">mumosa::compute_scale</a></div><div class="ttdeci">Distance_ compute_scale(const std::pair&lt; Distance_, Distance_ &gt; &amp;ref, const std::pair&lt; Distance_, Distance_ &gt; &amp;target)</div><div class="ttdef"><b>Definition</b> mumosa.hpp:150</div></div>
+<div class="ttc" id="anamespacemumosa_html_ab60e690c91ff9808af621f46956644a9"><div class="ttname"><a href="namespacemumosa.html#ab60e690c91ff9808af621f46956644a9">mumosa::combine_scaled_embeddings</a></div><div class="ttdeci">void combine_scaled_embeddings(const std::vector&lt; std::size_t &gt; &amp;num_dims, Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *output)</div><div class="ttdef"><b>Definition</b> mumosa.hpp:226</div></div>
 <div class="ttc" id="anamespacemumosa_html_ab71e627efbcf8461d6fe044f0be49e72"><div class="ttname"><a href="namespacemumosa.html#ab71e627efbcf8461d6fe044f0be49e72">mumosa::compute_distance</a></div><div class="ttdeci">std::pair&lt; Distance_, Distance_ &gt; compute_distance(Index_ num_cells, Distance_ *distances)</div><div class="ttdef"><b>Definition</b> mumosa.hpp:57</div></div>
 <div class="ttc" id="astructmumosa_1_1Options_html"><div class="ttname"><a href="structmumosa_1_1Options.html">mumosa::Options</a></div><div class="ttdoc">Options for compute_distance().</div><div class="ttdef"><b>Definition</b> mumosa.hpp:28</div></div>
 <div class="ttc" id="astructmumosa_1_1Options_html_a390a953ace5a6fa0a172efb8cb691929"><div class="ttname"><a href="structmumosa_1_1Options.html#a390a953ace5a6fa0a172efb8cb691929">mumosa::Options::num_threads</a></div><div class="ttdeci">int num_threads</div><div class="ttdef"><b>Definition</b> mumosa.hpp:39</div></div>
