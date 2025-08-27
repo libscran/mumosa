@@ -11,6 +11,7 @@
 
 #include "knncolle/knncolle.hpp"
 #include "tatami_stats/tatami_stats.hpp"
+#include "sanisizer/sanisizer.hpp"
 
 /**
  * @file mumosa.hpp
@@ -94,7 +95,7 @@ template<typename Index_, typename Input_, typename Distance_>
 std::pair<Distance_, Distance_> compute_distance(const knncolle::Prebuilt<Index_, Input_, Distance_>& prebuilt, const Options& options) {
     const Index_ nobs = prebuilt.num_observations();
     const auto capped_k = knncolle::cap_k(options.num_neighbors, nobs);
-    std::vector<double> dist(nobs);
+    auto dist = sanisizer::create<std::vector<Distance_> >(nobs);
 
     knncolle::parallelize(options.num_threads, nobs, [&](const int, const Index_ start, const Index_ length) -> void {
         const auto searcher = prebuilt.initialize();
@@ -188,11 +189,11 @@ Distance_ compute_scale(const std::pair<Distance_, Distance_>& ref, const std::p
  */
 template<typename Distance_>
 std::vector<Distance_> compute_scale(const std::vector<std::pair<Distance_, Distance_> >& distances) {
-    std::vector<Distance_> output(distances.size());
+    const auto ndist = distances.size();
+    auto output = sanisizer::create<std::vector<Distance_> >(ndist);
 
     // Use the first entry with a non-zero RMSD as the reference.
     bool found_ref = false;
-    const auto ndist = distances.size();
     decltype(I(ndist)) ref = 0;
     for (decltype(I(ndist)) e = 0; e < ndist; ++e) {
         if (distances[e].second) {
@@ -242,32 +243,31 @@ void combine_scaled_embeddings(const std::vector<std::size_t>& num_dims, const I
     }
 
     const std::size_t ntotal = std::accumulate(num_dims.begin(), num_dims.end(), static_cast<std::size_t>(0));
-    std::size_t offset = 0;
+    std::size_t starting_dim = 0;
 
     for (decltype(I(nembed)) e = 0; e < nembed; ++e) {
         const auto curdim = num_dims[e];
         const auto inptr = embeddings[e];
         const auto s = scaling[e];
 
-        // We use offsets to avoid forming invalid pointers with strided pointers.
-        std::size_t in_position = 0;
-        std::size_t out_position = offset;
-
         if (std::isinf(s)) {
             // If the scaling factor is infinite, it implies that the current
             // embedding is all-zero, so we just fill with zeros, and move on.
-            for (Index_ c = 0; c < num_cells; ++c, in_position += curdim, out_position += ntotal) {
-                std::fill_n(output + out_position, curdim, 0);
+            for (Index_ c = 0; c < num_cells; ++c) {
+                const auto out_offset = sanisizer::nd_offset<std::size_t>(starting_dim, ntotal, c);
+                std::fill_n(output + out_offset, curdim, 0);
             }
         } else {
-            for (Index_ c = 0; c < num_cells; ++c, in_position += curdim, out_position += ntotal) {
-                for (std::size_t d = 0; d < curdim; ++d) {
-                    output[out_position + d] = inptr[in_position + d] * s;
+            for (Index_ c = 0; c < num_cells; ++c) {
+                for (decltype(I(curdim)) d = 0; d < curdim; ++d) {
+                    const auto out_offset = sanisizer::nd_offset<std::size_t>(starting_dim + d, ntotal, c);
+                    const auto in_offset = sanisizer::nd_offset<std::size_t>(d, curdim, c);
+                    output[out_offset] = inptr[in_offset] * s;
                 }
             }
         }
 
-        offset += curdim;
+        starting_dim += curdim;
     }
 }
 
