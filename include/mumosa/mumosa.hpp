@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <limits>
 #include <cstddef>
+#include <type_traits>
 
 #include "knncolle/knncolle.hpp"
 #include "tatami_stats/tatami_stats.hpp"
@@ -40,6 +41,17 @@ struct Options {
 };
 
 /**
+ * @cond
+ */
+template<typename Input_>
+std::remove_cv_t<std::remove_reference_t<Input_> > I(Input_ x) {
+    return x;
+}
+/**
+ * @endcond
+ */
+
+/**
  * @tparam Index_ Integer type for the number of cells.
  * @tparam Distance_ Floating-point type for the distances.
  *
@@ -54,11 +66,11 @@ struct Options {
  * These values can be used in `compute_scale()`.
  */
 template<typename Index_, typename Distance_>
-std::pair<Distance_, Distance_> compute_distance(Index_ num_cells, Distance_* distances) {
-    Distance_ med = tatami_stats::medians::direct(distances, num_cells, /* skip_nan = */ false);
+std::pair<Distance_, Distance_> compute_distance(const Index_ num_cells, Distance_* const distances) {
+    const Distance_ med = tatami_stats::medians::direct(distances, num_cells, /* skip_nan = */ false);
     Distance_ rmsd = 0;
     for (Index_ i = 0; i < num_cells; ++i) {
-        auto d = distances[i];
+        const auto d = distances[i];
         rmsd += d * d;
     }
     rmsd = std::sqrt(rmsd);
@@ -80,12 +92,12 @@ std::pair<Distance_, Distance_> compute_distance(Index_ num_cells, Distance_* di
  */
 template<typename Index_, typename Input_, typename Distance_>
 std::pair<Distance_, Distance_> compute_distance(const knncolle::Prebuilt<Index_, Input_, Distance_>& prebuilt, const Options& options) {
-    Index_ nobs = prebuilt.num_observations();
-    auto capped_k = knncolle::cap_k(options.num_neighbors, nobs);
+    const Index_ nobs = prebuilt.num_observations();
+    const auto capped_k = knncolle::cap_k(options.num_neighbors, nobs);
     std::vector<double> dist(nobs);
 
-    knncolle::parallelize(options.num_threads, nobs, [&](int, Index_ start, Index_ length) -> void {
-        auto searcher = prebuilt.initialize();
+    knncolle::parallelize(options.num_threads, nobs, [&](const int, const Index_ start, const Index_ length) -> void {
+        const auto searcher = prebuilt.initialize();
         std::vector<Distance_> distances;
         for (Index_ i = start, end = start + length; i < end; ++i) {
             searcher->search(i, capped_k, NULL, &distances);
@@ -118,13 +130,13 @@ std::pair<Distance_, Distance_> compute_distance(const knncolle::Prebuilt<Index_
  */
 template<typename Index_, typename Input_, typename Distance_, class Matrix_ = knncolle::Matrix<Index_, Input_> >
 std::pair<Distance_, Distance_> compute_distance(
-    std::size_t num_dim,
-    Index_ num_cells,
-    const Input_* data,
+    const std::size_t num_dim,
+    const Index_ num_cells,
+    const Input_* const data,
     const knncolle::Builder<Index_, Input_, Distance_, Matrix_>& builder,
     const Options& options)
 {
-    auto prebuilt = builder.build_unique(knncolle::SimpleMatrix(num_dim, num_cells, data));
+    const auto prebuilt = builder.build_unique(knncolle::SimpleMatrix(num_dim, num_cells, data));
     return compute_distance(*prebuilt, options);
 }
 
@@ -180,9 +192,9 @@ std::vector<Distance_> compute_scale(const std::vector<std::pair<Distance_, Dist
 
     // Use the first entry with a non-zero RMSD as the reference.
     bool found_ref = false;
-    auto ndist = distances.size();
-    decltype(ndist) ref = 0;
-    for (decltype(ndist) e = 0; e < ndist; ++e) {
+    const auto ndist = distances.size();
+    decltype(I(ndist)) ref = 0;
+    for (decltype(I(ndist)) e = 0; e < ndist; ++e) {
         if (distances[e].second) {
             found_ref = true;
             ref = e;
@@ -193,8 +205,8 @@ std::vector<Distance_> compute_scale(const std::vector<std::pair<Distance_, Dist
     // If all of them have a zero RMSD, then all scalings are zero, because it doesn't matter.
     if (found_ref) {
         const auto& dref = distances[ref];
-        for (decltype(ndist) e = 0; e < ndist; ++e) {
-            output[e] = (e == ref ? 1 : compute_scale(dref, distances[e]));
+        for (decltype(I(ndist)) e = 0; e < ndist; ++e) {
+            output[e] = (e == ref ? static_cast<Distance_>(1) : compute_scale(dref, distances[e]));
         }
     }
 
@@ -223,19 +235,19 @@ std::vector<Distance_> compute_scale(const std::vector<std::pair<Distance_, Dist
  * Each row corresponds to a dimension while each column corresponds to a cell.
  */
 template<typename Index_, typename Input_, typename Scale_, typename Output_>
-void combine_scaled_embeddings(const std::vector<std::size_t>& num_dims, Index_ num_cells, const std::vector<Input_*>& embeddings, const std::vector<Scale_>& scaling, Output_* output) {
-    auto nembed = num_dims.size();
+void combine_scaled_embeddings(const std::vector<std::size_t>& num_dims, const Index_ num_cells, const std::vector<Input_*>& embeddings, const std::vector<Scale_>& scaling, Output_* const output) {
+    const auto nembed = num_dims.size();
     if (embeddings.size() != nembed || scaling.size() != nembed) {
         throw std::runtime_error("'num_dims', 'embeddings' and 'scale' should have the same length");
     }
 
-    std::size_t ntotal = std::accumulate(num_dims.begin(), num_dims.end(), static_cast<std::size_t>(0));
+    const std::size_t ntotal = std::accumulate(num_dims.begin(), num_dims.end(), static_cast<std::size_t>(0));
     std::size_t offset = 0;
 
-    for (decltype(nembed) e = 0; e < nembed; ++e) {
-        auto curdim = num_dims[e];
-        auto inptr = embeddings[e];
-        auto s = scaling[e];
+    for (decltype(I(nembed)) e = 0; e < nembed; ++e) {
+        const auto curdim = num_dims[e];
+        const auto inptr = embeddings[e];
+        const auto s = scaling[e];
 
         // We use offsets to avoid forming invalid pointers with strided pointers.
         std::size_t in_position = 0;
