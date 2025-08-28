@@ -155,8 +155,8 @@ template&lt;typename Index_ , typename Distance_ &gt; </div>
 </div><div class="memdoc">
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type for the number of cells. </td></tr>
-    <tr><td class="paramname">Distance_</td><td>Floating-point type for the distances.</td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
   </table>
   </dd>
 </dl>
@@ -193,9 +193,9 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </div>
 </div><div class="memdoc">
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type for the number of cells. </td></tr>
-    <tr><td class="paramname">Input_</td><td>Numeric type for the input data used to build the search index. This is only required to define the <code><a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></code> class and is otherwise ignored. </td></tr>
-    <tr><td class="paramname">Distance_</td><td>Floating-point type for the distances.</td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
+    <tr><td class="paramname">Input_</td><td>Numeric type of the input data used to build the search index. This is only required to define the <code><a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></code> class and is otherwise ignored. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
   </table>
   </dd>
 </dl>
@@ -247,9 +247,9 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matri
 </div><div class="memdoc">
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type for the number of cells. </td></tr>
-    <tr><td class="paramname">Input_</td><td>Numeric type for the input data. </td></tr>
-    <tr><td class="paramname">Distance_</td><td>Floating-point type for the distances. </td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
+    <tr><td class="paramname">Input_</td><td>Numeric type of the input data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances. </td></tr>
     <tr><td class="paramname">Matrix_</td><td>Class of the input data matrix for the neighbor search. This should satisfy the <code><a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Matrix.html">knncolle::Matrix</a></code> interface.</td></tr>
   </table>
   </dd>
@@ -288,22 +288,22 @@ template&lt;typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute the scaling factor to be applied to an embedding of a "target" modality relative to a reference modality. This aims to scale the target so that the within-population variance is equal to that of the reference.</p>
+<p>Compute the scaling factor to be applied to an embedding of a "target" modality relative to a reference modality. This aims to scale the target so that the within-population variance is equal to that of the reference, under the assumption that the median distance to the <code><a class="el" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">Options::num_neighbors</a></code>-th nearest neighbor is approximately proportional to the within-population variance.</p>
 <p>Advanced users may want to scale the target so that its variance is some \(S\)-fold of the reference, e.g., to give more weight to more important modalities. This can be achieved by multiplying the scaling factor by \(\sqrt{S}\).</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Distance_</td><td>Floating-point type for the distances.</td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">ref</td><td>Output of <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code> for the embedding of the reference modality. The first value contains the median distance while the second value contains the root-mean squared distance (RMSD). </td></tr>
-    <tr><td class="paramname">target</td><td>Output of <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code> for the embedding of the target modality.</td></tr>
+    <tr><td class="paramname">ref</td><td>Results of <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code> for the embedding of the reference modality. The first value contains the median distance while the second value contains the root-mean squared distance (RMSD). </td></tr>
+    <tr><td class="paramname">target</td><td>Results of <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code> for the embedding of the target modality.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A scaling factor to apply to the embedding of the target modality, defined as the ratio of the median distances. If either of the median distances is zero, this function instead returns the ratio of the RMSDs. If the reference RMSD is zero, this function will return zero; if the target RMSD is zero, this function will return positive infinity. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A scaling factor to apply to the embedding of the target modality, defined as the ratio of the median distances in <code>ref</code> to <code>target</code>. If either of the median distances is zero, this function instead returns the ratio of the RMSDs. If the reference RMSD is zero, this function will return zero; if the target RMSD is zero, this function will return positive infinity. </dd></dl>
 
 </div>
 </div>
@@ -323,10 +323,10 @@ template&lt;typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute the scaling factors for a group of embeddings, given the neighbor distances computed by <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code>. This aims to scale each embedding so that the within-population variances are equal across embeddings. The "reference" modality is defined as the first embedding with a non-zero RMSD; other than this requirement, the exact choice of reference has no actual impact on the relative values of the scaling factors.</p>
+<p>Compute the scaling factors for a group of embeddings, given the neighbor distances computed by <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code>. This aims to scale each embedding so that the within-population variances are equal across embeddings as described in <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. The "reference" modality is defined as the first embedding with a non-zero RMSD to ensure that the scaling is well-defined for every sample; other than this requirement, the exact choice of reference has no actual impact on the relative values of the scaling factors.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Distance_</td><td>Floating-point type for the distances.</td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
   </table>
   </dd>
 </dl>
@@ -375,13 +375,13 @@ template&lt;typename Index_ , typename Input_ , typename Scale_ , typename Outpu
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Combine multiple embeddings for different modalities into a single embedding matrix, possibly after scaling each embedding. This is done row-wise, i.e., the coordinates are concatenated across embeddings for each column.</p>
+<p>Scale the embedding for each modality and combine all embeddings from different modalities into a single matrix for further analyses. Each cell in the combined matrix will contain a concatenation of the scaled coordinates from all of the individual embeddings.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type for the number of cells. </td></tr>
-    <tr><td class="paramname">Input_</td><td>Floating-point type for the input data. </td></tr>
-    <tr><td class="paramname">Scale_</td><td>Floating-point type for the scaling factor. </td></tr>
-    <tr><td class="paramname">Output_</td><td>Floating-point type for the output data.</td></tr>
+    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
+    <tr><td class="paramname">Input_</td><td>Floating-point type of the input data. </td></tr>
+    <tr><td class="paramname">Scale_</td><td>Floating-point type of the scaling factor. </td></tr>
+    <tr><td class="paramname">Output_</td><td>Floating-point type of the output data.</td></tr>
   </table>
   </dd>
 </dl>
