@@ -288,8 +288,9 @@ template&lt;typename Distance_ &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Compute the scaling factor to be applied to an embedding of a "target" modality relative to a reference modality. This aims to scale the target so that the within-population variance is equal to that of the reference, under the assumption that the median distance to the <code><a class="el" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">Options::num_neighbors</a></code>-th nearest neighbor is approximately proportional to the within-population variance.</p>
-<p>Advanced users may want to scale the target so that its variance is some \(S\)-fold of the reference, e.g., to give more weight to more important modalities. This can be achieved by multiplying the scaling factor by \(\sqrt{S}\).</p>
+<p>Compute the scaling factor to be applied to an embedding of a "target" modality relative to a "reference" modality. The aim is to scale the target so that the within-population variance is equal to that of the reference, to ensure that high noise in one modality does not drown out interesting biology in another modality in downstream analyses.</p>
+<p>Advanced users may want to scale the target so that its variance is some \(S\)-fold of the reference, e.g., to give more weight to more important modalities. This can be achieved by multiplying the returned factor by \(\sqrt{S}\) prior to the actual scaling.</p>
+<p>This approach assumes that the median distance to the <code><a class="el" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">Options::num_neighbors</a></code>-th nearest neighbor is approximately proportional to the within-population variance. The scaling factor is defined as the ratio of the median distances in the reference to the target. If either of the median distances is zero, this function instead returns the ratio of the RMSDs as a fallback.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
@@ -303,7 +304,7 @@ template&lt;typename Distance_ &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A scaling factor to apply to the embedding of the target modality, defined as the ratio of the median distances in <code>ref</code> to <code>target</code>. If either of the median distances is zero, this function instead returns the ratio of the RMSDs. If the reference RMSD is zero, this function will return zero; if the target RMSD is zero, this function will return positive infinity. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A scaling factor to multiply the embedding coordinates of the target modality. </dd></dl>
 
 </div>
 </div>
