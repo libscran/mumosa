@@ -53,8 +53,8 @@ std::remove_cv_t<std::remove_reference_t<Input_> > I(Input_ x) {
  */
 
 /**
- * @tparam Index_ Integer type for the number of cells.
- * @tparam Distance_ Floating-point type for the distances.
+ * @tparam Index_ Integer type of the number of cells.
+ * @tparam Distance_ Floating-point type of the distances.
  *
  * @param num_cells Number of cells.
  * @param[in, out] distances Pointer to an array containing the distances from each cell to its \f$k\f$-nearest neighbor.
@@ -79,10 +79,10 @@ std::pair<Distance_, Distance_> compute_distance(const Index_ num_cells, Distanc
 }
 
 /**
- * @tparam Index_ Integer type for the number of cells.
- * @tparam Input_ Numeric type for the input data used to build the search index.
+ * @tparam Index_ Integer type of the number of cells.
+ * @tparam Input_ Numeric type of the input data used to build the search index.
  * This is only required to define the `knncolle::Prebuilt` class and is otherwise ignored.
- * @tparam Distance_ Floating-point type for the distances.
+ * @tparam Distance_ Floating-point type of the distances.
  *
  * @param prebuilt A prebuilt neighbor search index for a modality-specifi embedding.
  * @param options Further options.
@@ -112,9 +112,9 @@ std::pair<Distance_, Distance_> compute_distance(const knncolle::Prebuilt<Index_
 }
 
 /**
- * @tparam Index_ Integer type for the number of cells.
- * @tparam Input_ Numeric type for the input data.
- * @tparam Distance_ Floating-point type for the distances.
+ * @tparam Index_ Integer type of the number of cells.
+ * @tparam Input_ Numeric type of the input data.
+ * @tparam Distance_ Floating-point type of the distances.
  * @tparam Matrix_ Class of the input data matrix for the neighbor search.
  * This should satisfy the `knncolle::Matrix` interface.
  *
@@ -142,22 +142,24 @@ std::pair<Distance_, Distance_> compute_distance(
 }
 
 /**
- * Compute the scaling factor to be applied to an embedding of a "target" modality relative to a reference modality.
- * This aims to scale the target so that the within-population variance is equal to that of the reference.
+ * Compute the scaling factor to be applied to an embedding of a "target" modality relative to a "reference" modality.
+ * The aim is to scale the target so that the within-population variance is equal to that of the reference,
+ * to ensure that high noise in one modality does not drown out interesting biology in another modality in downstream analyses.
  *
  * Advanced users may want to scale the target so that its variance is some \f$S\f$-fold of the reference, e.g., to give more weight to more important modalities.
- * This can be achieved by multiplying the scaling factor by \f$\sqrt{S}\f$. 
+ * This can be achieved by multiplying the returned factor by \f$\sqrt{S}\f$ prior to the actual scaling.
  *
- * @tparam Distance_ Floating-point type for the distances.
+ * This approach assumes that the median distance to the `Options::num_neighbors`-th nearest neighbor is approximately proportional to the within-population variance.
+ * The scaling factor is defined as the ratio of the median distances in the reference to the target.
+ * If either of the median distances is zero, this function instead returns the ratio of the RMSDs as a fallback.
  *
- * @param ref Output of `compute_distance()` for the embedding of the reference modality.
+ * @tparam Distance_ Floating-point type of the distances.
+ *
+ * @param ref Results of `compute_distance()` for the embedding of the reference modality.
  * The first value contains the median distance while the second value contains the root-mean squared distance (RMSD).
- * @param target Output of `compute_distance()` for the embedding of the target modality.
+ * @param target Results of `compute_distance()` for the embedding of the target modality.
  *
- * @return A scaling factor to apply to the embedding of the target modality, defined as the ratio of the median distances.
- * If either of the median distances is zero, this function instead returns the ratio of the RMSDs.
- * If the reference RMSD is zero, this function will return zero;
- * if the target RMSD is zero, this function will return positive infinity.
+ * @return A scaling factor to multiply the embedding coordinates of the target modality.
  */
 template<typename Distance_>
 Distance_ compute_scale(const std::pair<Distance_, Distance_>& ref, const std::pair<Distance_, Distance_>& target) {
@@ -176,11 +178,11 @@ Distance_ compute_scale(const std::pair<Distance_, Distance_>& ref, const std::p
 
 /**
  * Compute the scaling factors for a group of embeddings, given the neighbor distances computed by `compute_distance()`.
- * This aims to scale each embedding so that the within-population variances are equal across embeddings.
- * The "reference" modality is defined as the first embedding with a non-zero RMSD; 
+ * This aims to scale each embedding so that the within-population variances are equal across embeddings as described in `compute_scale()`.
+ * The "reference" modality is defined as the first embedding with a non-zero RMSD to ensure that the scaling is well-defined for every sample; 
  * other than this requirement, the exact choice of reference has no actual impact on the relative values of the scaling factors.
  *
- * @tparam Distance_ Floating-point type for the distances.
+ * @tparam Distance_ Floating-point type of the distances.
  *
  * @param distances Vector of distances for embeddings, as computed by `compute_distance()` on each embedding.
  *
@@ -215,13 +217,13 @@ std::vector<Distance_> compute_scale(const std::vector<std::pair<Distance_, Dist
 }
 
 /**
- * Combine multiple embeddings for different modalities into a single embedding matrix, possibly after scaling each embedding.
- * This is done row-wise, i.e., the coordinates are concatenated across embeddings for each column.
+ * Scale the embedding for each modality and combine all embeddings from different modalities into a single matrix for further analyses.
+ * Each cell in the combined matrix will contain a concatenation of the scaled coordinates from all of the individual embeddings.
  * 
- * @tparam Index_ Integer type for the number of cells.
- * @tparam Input_ Floating-point type for the input data.
- * @tparam Scale_ Floating-point type for the scaling factor.
- * @tparam Output_ Floating-point type for the output data.
+ * @tparam Index_ Integer type of the number of cells.
+ * @tparam Input_ Floating-point type of the input data.
+ * @tparam Scale_ Floating-point type of the scaling factor.
+ * @tparam Output_ Floating-point type of the output data.
  * 
  * @param num_dims Vector containing the number of dimensions in each embedding.
  * @param num_cells Number of cells in each embedding.

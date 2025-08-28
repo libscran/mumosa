@@ -7,9 +7,9 @@
 ## Overview
 
 In multi-modal single-cell experiments, we obtain data of different modalities (e.g., RNA, protein) from the same set of cells.
-Naturally, we would like to combine data from different modalities to increase the information available for each cell.
-This is most relevant to analysis steps that yield results in terms of cells, like clustering and visualization with t-SNE or UMAP.
-A simple combining strategy is to just concatenate the per-modality data matrices together into a single matrix for further analysis.
+Naturally, we would like to combine data from different modalities to increase the information available for each cell in further analyses.
+This is most relevant to analysis steps that operate on cells, e.g., clustering, visualization with t-SNE or UMAP.
+The simplest combining strategy is to just concatenate the per-modality data matrices together into a single matrix for further analysis.
 While convenient and compatible with many downstream procedures, this is complicated by the differences in the variance between modalities. 
 Higher noise in one modality might drown out biological signal in another modality that has lower variance.
 
@@ -59,16 +59,16 @@ for (int m = 0; m < 3; ++m) {
 }
 ```
 
-We then compute scaling factors for each modality:
+We compute scaling factors for each modality:
 
 ```cpp
 auto scale = mumosa::compute_scale(distances);
 ```
 
-And combine the scaled per-modality embeddings into a single matrix:
+And combine the scaled per-modality embeddings into a single matrix, which can be used for downstream steps like k-means clustering:
 
 ```cpp
-size_t ntotal = std::accumulate(dimensions.begin(), dimensions.end(), 0);
+std::size_t ntotal = std::accumulate(dimensions.begin(), dimensions.end(), 0);
 std::vector<double> combined(ntotal * nobs);
 
 std::vector<const double*> inputs;
@@ -89,15 +89,21 @@ Check out the [reference documentation](https://libscran.github.io/mumosa) for m
 
 ## Further comments
 
-The key element of the **mumosa** approach is the use of the distance to the nearest neighbors as a measure of (uninteresting) spread.
+The premise of the **mumosa** approach is that the distance to the nearest neighbors is a suitable measure of (uninteresting) variation.
 We do not use the total variance for each embedding as this includes the biological heterogeneity of interest.
 Scaling by the total variance would reduce the contribution of the most relevant modalities, which is obviously not desirable.
 **mumosa** aims to remove differences in the magnitude of noise while preserving modality-specific biological signal in the concatenated matrix.
 
 The other appealing aspect of **mumosa** lies in its simplicity relative to other approaches (e.g., multi-modal factor analyses, intersection of simplicial sets). 
-It returns a combined matrix of embeddings that can be directly used in any downstream analysis steps like clustering, t-SNE, UMAP, etc. without any issues.
 No further transformations beyond scaling are performed, ensuring that population structure within each modality is faithfully represented in the combined embedding.
-Most importantly, **mumosa** is very easy to implement, and that's probably what I like the most about it - keep it simple, stupid. 
+It is very easy to implement and the result is directly compatible with any downstream analysis step that can operate on an embedding matrix.
+In fact, we only care about the median distance so we could save even more time by only performing the neighbor search for a subset of cells.
+
+<!--- 
+By comparison, if we did some probabilistic graph intersection, we'd be limited to algorithms that operate on weighted graphs.
+And not all of these algorithms have the same interpretation of the weights, e.g., the t-SNE and UMAP probabilities are not the same.
+So that would be a headache to recocile.
+-->
 
 Alright, now for some of the caveats.
 The most obvious one is that the distance to a neighbor may not be an accurate relative measure of the within-population variance.
