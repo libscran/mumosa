@@ -74,8 +74,8 @@
       <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>aa13cd79d1064f517d4e44fce041bb09f</anchor>
-      <arglist>(const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &amp;prebuilt, const Options &amp;options)</arglist>
+      <anchor>aae9909a1adc9470d2689046b7dab20df</anchor>
+      <arglist>(const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &amp;prebuilt, Distance_ *const distances, const Options &amp;options)</arglist>
     </member>
     <member kind="function">
       <type>std::pair&lt; Distance_, Distance_ &gt;</type>

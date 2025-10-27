@@ -123,9 +123,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ab9bb10478b865f21008d5b87e5d8cf4a" id="r_ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance</a> (const Index_ num_cells, Distance_ *const distances)</td></tr>
 <tr class="separator:ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa13cd79d1064f517d4e44fce041bb09f" id="r_aa13cd79d1064f517d4e44fce041bb09f"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </td></tr>
-<tr class="memitem:aa13cd79d1064f517d4e44fce041bb09f"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa13cd79d1064f517d4e44fce041bb09f">compute_distance</a> (const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &amp;prebuilt, const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;options)</td></tr>
-<tr class="separator:aa13cd79d1064f517d4e44fce041bb09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae9909a1adc9470d2689046b7dab20df" id="r_aae9909a1adc9470d2689046b7dab20df"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </td></tr>
+<tr class="memitem:aae9909a1adc9470d2689046b7dab20df"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aae9909a1adc9470d2689046b7dab20df">compute_distance</a> (const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &amp;prebuilt, Distance_ *const distances, const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;options)</td></tr>
+<tr class="separator:aae9909a1adc9470d2689046b7dab20df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5544f59301aea3947788e64190009d1" id="r_ad5544f59301aea3947788e64190009d1"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </td></tr>
 <tr class="memitem:ad5544f59301aea3947788e64190009d1"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad5544f59301aea3947788e64190009d1">compute_distance</a> (const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;options)</td></tr>
 <tr class="separator:ad5544f59301aea3947788e64190009d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -294,7 +294,7 @@ template&lt;typename Index_ , typename Distance_ &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">distances</td><td>Pointer to an array containing the distances from each cell to its \(k\)-nearest neighbor. It is expected that the same \(k\) was used for each cell. On output, the order of values may be arbitrarily altered during the median calculation; if this is undesirable, users should pass in a copy of the array.</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">distances</td><td>Pointer to an array of length <code>num_cells</code>, containing the distances from each cell to its \(k\)-nearest neighbor. It is expected that the same \(k\) was used for each cell. On output, the order of values may be arbitrarily altered during the median calculation; if this is undesirable, users should pass in a copy of the array.</td></tr>
   </table>
   </dd>
 </dl>
@@ -302,8 +302,8 @@ template&lt;typename Index_ , typename Distance_ &gt; </div>
 
 </div>
 </div>
-<a id="aa13cd79d1064f517d4e44fce041bb09f" name="aa13cd79d1064f517d4e44fce041bb09f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa13cd79d1064f517d4e44fce041bb09f">&#9670;&#160;</a></span>compute_distance() <span class="overload">[2/3]</span></h2>
+<a id="aae9909a1adc9470d2689046b7dab20df" name="aae9909a1adc9470d2689046b7dab20df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae9909a1adc9470d2689046b7dab20df">&#9670;&#160;</a></span>compute_distance() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -314,6 +314,11 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </div>
           <td class="memname">std::pair&lt; Distance_, Distance_ &gt; mumosa::compute_distance </td>
           <td>(</td>
           <td class="paramtype">const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>prebuilt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Distance_ *const</td>          <td class="paramname"><span class="paramname"><em>distances</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -333,8 +338,9 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">prebuilt</td><td>A prebuilt neighbor search index for a modality-specifi embedding. </td></tr>
-    <tr><td class="paramname">options</td><td>Further options.</td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">prebuilt</td><td>A prebuilt neighbor search index for a modality-specifi embedding. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">distances</td><td>Pointer to an array of length <code>prebuilt.num_observations()</code>, containing the distances from each cell to its \(k\)-nearest neighbor. This may not be ordered on output. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">options</td><td>Further options.</td></tr>
   </table>
   </dd>
 </dl>
