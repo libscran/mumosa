@@ -14,7 +14,7 @@
 
 /**
  * @file blocked.hpp
- * @brief Compute within-subpopulation distances with blocking.
+ * @brief Compute distances to nearest neighbors with blocking.
  */
 
 namespace mumosa {
@@ -25,7 +25,8 @@ namespace mumosa {
 struct BlockedOptions {
     /**
      * Number of neighbors for the nearest neighbor search.
-     * This can be interpreted as the minimum size of each subpopulation.
+     * Larger values improve stability at the risk of including biological heterogeneity into the distance.
+     * `num_neighbors + 1` can also be interpreted as the expected minimum size of each subpopulation.
      */
     int num_neighbors = 20;
 
@@ -93,18 +94,30 @@ BlockedWorkspace<Distance_> create_workspace(const std::vector<Index_>& block_si
 }
 
 /**
- * Systematic differences between blocks can artificially inflate the distances to the nearest neighbors.
- * Specifically, strong batch effects reduce the density of the local neighborhood by shifting cells elsewhere.
- * This increases the distance to the nearest neighbors compared to an embedding without any batch effects,
- * even if the within-subpopulation variance is the same across embeddings.
+ * NOTES:
  *
+ * The local neighborhood variance can be considered as the variance within a particular region of the high-dimensional space.
+ * The expectation of this variance should not be affected by the number of cells, but the distance to the neighbors will be affected if the density of cells changes.
+ *
+ * We do not apply block-specific scaling factors as we don't want to alter the relative values within the same modality.
+ * We shouldn't have to do it in the first place - as it's the same modality! - but more importantly, we could introduce spurious differences between blocks.
+ * In the simplest case, two blocks have the same subpopulation structure but the number of cells is different.
+ * We would get different distances in each block due to density, causing us to scale each block differently.
+ * More generally, we could expect differences in subpopulation structure between blocks, leading to different distances even in the absence of any batch effects.
+ * (Mind you, differences in subpopulation structure also interfere with accurate scaling between modalities,
+ * but any errors in scaling modalities are much less obvious than those from scaling blocks.)
+ */
+
+/**
+ * Systematic differences between blocks can artificially inflate the distances to the nearest neighbors within a modality's embedding.
+ * Specifically, strong batch effects can reduce the density of the local neighborhood by shifting cells elsewhere.
+ * This increases the distance to the nearest neighbors compared to a modality without any batch effects,
+ * even if the variance in the local neighborhood is the same between modalities.
+ *
+ * If the magnitude of the batch effects differ between modalities, this may introduce spurious differences in the median distance-to-neighbor.
  * To improve accuracy in the presence of blocks, this function calls `compute_distance()` on each entry of `prebuilts` separately.
  * It then computes a weighted average of the median distance and RMSDs across blocks (see `scran_blocks::compute_weights()` for details).
- * This ensures that any shifts in location between blocks have no effect on the estimate of the within-subpopulation variance.
- *
- * As with `compute_distance()`, the output of this function can be converted to a single scaling factor for each embedding via `compute_scale()`.
- * We do not apply block-specific scaling factors as the distances may not be comparable between blocks,
- * e.g., if the number of cells or subpopulation structure are different between blocks.
+ * This ensures that arbitrary shifts in location between blocks have no effect on the distances to the nearest neighbors for each modality.
  *
  * @tparam Index_ Integer type of the number of cells.
  * @tparam Input_ Numeric type of the input data used to build the search index.

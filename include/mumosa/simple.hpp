@@ -17,7 +17,7 @@
 
 /**
  * @file simple.hpp
- * @brief Compute within-subpopulation distances.
+ * @brief Compute distances to nearest neighbors.
  */
 
 namespace mumosa {
@@ -28,7 +28,8 @@ namespace mumosa {
 struct Options {
     /**
      * Number of neighbors for the nearest neighbor search.
-     * This can be interpreted as the minimum size of each subpopulation.
+     * Larger values improve stability at the risk of including biological heterogeneity into the distance.
+     * `num_neighbors + 1` can also be interpreted as the expected minimum size of each subpopulation.
      */
     int num_neighbors = 20;
 

@@ -16,15 +16,15 @@ namespace mumosa {
 
 /**
  * Compute the scaling factor to be applied to an embedding of a "target" modality relative to a "reference" modality.
- * The aim is to scale the target so that the within-population variance is equal to that of the reference,
+ * The aim is to scale the target so that the average variance in the local neighborhood is equal to that of the reference,
  * to ensure that high noise in one modality does not drown out interesting biology in another modality in downstream analyses.
+ *
+ * This approach assumes that the median distance to the `Options::num_neighbors`-th nearest neighbor is proportional to the neighborhood variance.
+ * The scaling factor is defined as the ratio of the median distances in the reference to the target.
+ * If either of the median distances is zero, this function instead returns the ratio of the RMSDs as a fallback.
  *
  * Advanced users may want to scale the target so that its variance is some \f$S\f$-fold of the reference, e.g., to give more weight to more important modalities.
  * This can be achieved by multiplying the returned factor by \f$\sqrt{S}\f$ prior to the actual scaling.
- *
- * This approach assumes that the median distance to the `Options::num_neighbors`-th nearest neighbor is approximately proportional to the within-population variance.
- * The scaling factor is defined as the ratio of the median distances in the reference to the target.
- * If either of the median distances is zero, this function instead returns the ratio of the RMSDs as a fallback.
  *
  * @tparam Distance_ Floating-point type of the distances.
  *
@@ -51,7 +51,7 @@ Distance_ compute_scale(const std::pair<Distance_, Distance_>& ref, const std::p
 
 /**
  * Compute the scaling factors for a group of embeddings, given the neighbor distances computed by `compute_distance()`.
- * This aims to scale each embedding so that the within-population variances are equal across embeddings as described in `compute_scale()`.
+ * This aims to scale each embedding so that the neighborhood variances are equal across embeddings as described in `compute_scale()`.
  * The "reference" modality is defined as the first embedding with a non-zero RMSD to ensure that the scaling is well-defined for every sample; 
  * other than this requirement, the exact choice of reference has no actual impact on the relative values of the scaling factors.
  *

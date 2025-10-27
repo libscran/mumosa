@@ -13,15 +13,16 @@ The simplest combining strategy is to just concatenate the per-modality data mat
 While convenient and compatible with many downstream procedures, this is complicated by the differences in the variance between modalities. 
 Higher noise in one modality might drown out biological signal in another modality that has lower variance.
 
-The **mumosa** algorithm scales embeddings to equalize noise across modalities prior to concatenation.
-First, we compute the median distance to the $k$-th nearest neighbor in the low-dimensional embedding for each modality (e.g., after PCA).
-This distance is used as a proxy for the modality-specific noise within a subpopulation containing at least $k$ cells.
+The **mumosa** algorithm scales the data from each modality to equalize "uninteresting" noise to concatenation.
+First, we compute the median distance to the $k$-th nearest neighbor across all cells for each modality. 
+This distance is used to as a measure of the modality-specific variance within each cell's local neighborhood.
 We define a scaling factor for each modality as the ratio of the median distances for that modality compared to a "reference" modality.
-We scale the modality's embedding by its factor, removing differences in variance due to irrelevant factors like the scale of expression values, number of features, etc.
-We then concatenate the matrices to form a single embedding for further analysis.
+We scale the modality's coordinates by this factor, removing differences in variance due to irrelevant factors like the scale of expression values, dimensionality, etc.
+We then concatenate data across modalities into a single matrix for further analysis.
 
 ## Quick start
 
+Each modality should be represented as a low-dimensional embedding (e.g., after PCA) for more efficient neighbor searches.
 Given the embedding coordinates for multiple modalities, we compute the median distance to the $k$-nearest neighbor for each modality: 
 
 ```cpp
@@ -89,12 +90,28 @@ Check out the [reference documentation](https://libscran.github.io/mumosa) for m
 
 ## Further comments
 
-The premise of the **mumosa** approach is that the distance to the nearest neighbors is a suitable measure of (uninteresting) variation.
-We do not use the total variance for each embedding as this includes the biological heterogeneity of interest.
-Scaling by the total variance would reduce the contribution of the most relevant modalities, which is obviously not desirable.
-**mumosa** aims to remove differences in the magnitude of noise while preserving modality-specific biological signal in the concatenated matrix.
+The premise of the **mumosa** approach is that the distance to the $k$-nearest neighbor is a suitable measure of (uninteresting) variation.
+By quantifying the spread of cells in each local neighborhood, we capture the effects of dimensionality, scale, etc. without much contribution from biological variance. 
+Scaling by this distance removes differences in the magnitude of noise while preserving modality-specific biological signal in the concatenated matrix.
+In contrast, the total variance for each embedding includes the biological heterogeneity of interest.
+Scaling by the total variance would reduce the contribution of the most informative modalities, which is obviously not desirable.
 
-The other appealing aspect of **mumosa** lies in its simplicity relative to other approaches (e.g., multi-modal factor analyses, intersection of simplicial sets). 
+Ideally, the median distance-to-neighbor would serve as a proxy for the average variance within subpopulations of at least $k + 1$ cells.
+This provides an intuitive rationale for scaling each modality to equalize the within-population variance.
+However, this interpretation has several caveats:
+
+- Each modality may have a different subpopulation structure.
+  A modality with a small number of large subpopulations will have a lower median distance-to-neighbor than a modality with a large number of small subpopulations,
+  even if the variance within each subpopulation is the same - this would result in inappropriate upscaling of the former.
+  In practice, this is not too problematic as the definition of a "subpopulation" is so vague that it's hard to say that our scaling is obviously wrong.
+  For example, a big blob of cells may contain further interesting structure, in which case **mumosa**'s upscaling would be appropriate.
+  Users who know better (e.g., from control data) can adjust the scaling factors to give appropriate weights to each modality.
+- The median distance-to-neighbor is not an accurate relative measure of the variance at lower dimensions.
+  Even in the simplest cases of i.i.d. noise, the distance is not proportional to the standard deviation at lower dimensions (see analysis [here](tests/R/dimensions.Rmd)). 
+  Nonetheless, **mumosa** can still be useful for downstream procedures that perform distance calculations between cells,
+  as it ensures that each modality contributes equally to the distance between cells from the same subpopulation in the combined embedding.
+
+One appeal of **mumosa** is its simplicity relative to other approaches, e.g., multi-modal factor analyses, intersection of simplicial sets. 
 No further transformations beyond scaling are performed, ensuring that population structure within each modality is faithfully represented in the combined embedding.
 It is very easy to implement and the result is directly compatible with any downstream analysis step that can operate on an embedding matrix.
 In fact, we only care about the median distance so we could save even more time by only performing the neighbor search for a subset of cells.
@@ -104,19 +121,6 @@ By comparison, if we did some probabilistic graph intersection, we'd be limited 
 And not all of these algorithms have the same interpretation of the weights, e.g., the t-SNE and UMAP probabilities are not the same.
 So that would be a headache to recocile.
 -->
-
-Alright, now for some of the caveats.
-The most obvious one is that the distance to a neighbor may not be an accurate relative measure of the within-population variance.
-Even in the simplest cases of i.i.d. noise, the distance is not proportional to the standard deviation at lower dimensions 
-(see analysis [here](tests/R/dimensions.Rmd)), to say nothing of heteroskedasticity across dimensions. 
-Nonetheless, **mumosa** can still be useful for downstream procedures that perform distance calculations between cells,
-as it ensures that each modality contributes equally to the distance between cells from the same subpopulation in the combined embedding.
-
-A more subtle issue with the **mumosa** approach is that it assumes that the density of cells in each subpopulation is comparable across modalities.
-If one modality has all of its cells in a single subpopulation, the median distance to a nearest neighbor will be lower, causing the modality's embedding to be scaled up unnecessarily.
-This is a fundamentally difficult issue to fix as it requires a decision on what a "subpopulation" actually is.
-For example, a big blob of cells may contain further interesting structure, in which case **mumosa**'s upscaling would be appropriate.
-Users who know better (e.g., from control data) can adjust the scaling factors to give appropriate weights to each modality.
 
 ## Building projects
 
