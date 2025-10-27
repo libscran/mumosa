@@ -1,10 +1,11 @@
 #include "scran_tests/scran_tests.hpp"
 
-#include "mumosa/mumosa.hpp"
+#include "mumosa/simple.hpp"
+#include "mumosa/compute_scale.hpp"
 
 #include <vector>
 
-class ScaleByNeighborsTest : public ::testing::Test {
+class ComputeDistanceTest : public ::testing::Test {
 protected:
     static void SetUpTestSuite() {
         first = scran_tests::simulate_vector(ndim * nobs, scran_tests::SimulationParameters());
@@ -19,7 +20,7 @@ protected:
     inline static std::unique_ptr<knncolle::Builder<int, double, double> > builder;
 };
 
-TEST_F(ScaleByNeighborsTest, Basic) {
+TEST_F(ComputeDistanceTest, Basic) {
     auto second = first;
     for (auto& s : second) {
         s *= 2;
@@ -49,7 +50,7 @@ TEST_F(ScaleByNeighborsTest, Basic) {
     }
 }
 
-TEST_F(ScaleByNeighborsTest, DifferentlyDimensioned) {
+TEST_F(ComputeDistanceTest, DifferentlyDimensioned) {
     std::vector<double> second(ndim*2*nobs);
     auto fIt = first.begin();
     auto sIt = second.begin();
@@ -66,7 +67,7 @@ TEST_F(ScaleByNeighborsTest, DifferentlyDimensioned) {
     EXPECT_FLOAT_EQ(mumosa::compute_scale(out1, out2), 1.0 / std::sqrt(2));
 }
 
-TEST_F(ScaleByNeighborsTest, Zeros) {
+TEST_F(ComputeDistanceTest, Zeros) {
     // Switches to the RMSD.
     {
         std::vector<double> second(ndim * nobs);
@@ -95,7 +96,7 @@ TEST_F(ScaleByNeighborsTest, Zeros) {
     }
 }
 
-TEST(ScaleByNeighbors, ComputeDistances) {
+TEST(ComputeDistance, ComputeDistances) {
     {
         std::vector<std::pair<double, double> > distances{ {3, 3}, { 2, 2 }, { 1, 1 } };
         auto output = mumosa::compute_scale(distances);
@@ -119,68 +120,5 @@ TEST(ScaleByNeighbors, ComputeDistances) {
         std::vector<double> expected(3);
         EXPECT_EQ(output, expected);
 
-    }
-}
-
-TEST(ScaleByNeighbors, CombineEmbeddings) {
-    size_t nobs = 123;
-    auto first = scran_tests::simulate_vector(20 * nobs, [&]{
-        scran_tests::SimulationParameters sparams;
-        sparams.seed = 1000;
-        return sparams;
-    }());
-    auto second = scran_tests::simulate_vector(5 * nobs, [&]{
-        scran_tests::SimulationParameters sparams;
-        sparams.seed = 2000;
-        return sparams;
-    }());
-
-    {
-        std::vector<double> output(25 * nobs);
-        mumosa::combine_scaled_embeddings(
-            { static_cast<std::size_t>(20), static_cast<std::size_t>(5) },
-            nobs,
-            std::vector<double*>{ first.data(), second.data() },
-            std::vector<double>{ 0.5, 1.2 },
-            output.data()
-        );
-
-        // Interleaving is done correctly.
-        EXPECT_EQ(output[0], first[0] * 0.5);
-        EXPECT_EQ(output[19], first[19] * 0.5);
-        EXPECT_EQ(output[25], first[20] * 0.5);
-        EXPECT_EQ(output[25 * (nobs - 1)], first[20 * (nobs - 1)] * 0.5);
-        EXPECT_EQ(output[25 * (nobs - 1) + 19], first[20 * nobs - 1] * 0.5);
-
-        EXPECT_EQ(output[20], second[0] * 1.2);
-        EXPECT_EQ(output[24], second[4] * 1.2);
-        EXPECT_EQ(output[45], second[5] * 1.2);
-        EXPECT_EQ(output[25 * (nobs - 1) + 20], second[5 * (nobs - 1)] * 1.2);
-        EXPECT_EQ(output[25 * nobs - 1], second[5 * nobs - 1] * 1.2);
-    }
-
-    // Handles the infinite special case.
-    {
-        std::vector<double> output(25 * nobs);
-        mumosa::combine_scaled_embeddings(
-            { static_cast<std::size_t>(20), static_cast<std::size_t>(5) },
-            nobs,
-            std::vector<double*>{ first.data(), second.data() },
-            std::vector<double>{ 0.5, std::numeric_limits<double>::infinity() },
-            output.data()
-        );
-
-        // Interleaving is done correctly.
-        EXPECT_EQ(output[0], first[0] * 0.5);
-        EXPECT_EQ(output[19], first[19] * 0.5);
-        EXPECT_EQ(output[25], first[20] * 0.5);
-        EXPECT_EQ(output[25 * (nobs - 1)], first[20 * (nobs - 1)] * 0.5);
-        EXPECT_EQ(output[25 * (nobs - 1) + 19], first[20 * nobs - 1] * 0.5);
-
-        EXPECT_EQ(output[20], 0);
-        EXPECT_EQ(output[24], 0);
-        EXPECT_EQ(output[45], 0);
-        EXPECT_EQ(output[25 * (nobs - 1) + 20], 0);
-        EXPECT_EQ(output[25 * nobs - 1], 0);
     }
 }

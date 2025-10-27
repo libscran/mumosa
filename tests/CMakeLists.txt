@@ -8,7 +8,8 @@ FetchContent_MakeAvailable(scran_tests)
 
 add_executable(
     libtest 
-    src/mumosa.cpp
+    src/simple.cpp
+    src/combine_scaled_embeddings.cpp
 )
 
 target_link_libraries(
