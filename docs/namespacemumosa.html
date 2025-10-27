@@ -105,6 +105,9 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmumosa_1_1BlockedIndicesFactory.html">BlockedIndicesFactory</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factory for creating nearest-neighbor search indices for each block.  <a href="classmumosa_1_1BlockedIndicesFactory.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structmumosa_1_1Options.html" title="Options for compute_distance().">Options</a> for <code><a class="el" href="#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked()</a></code>.  <a href="structmumosa_1_1BlockedOptions.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,9 +126,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a865e2bcb5ff9ae07f7f4d9c762720f29" id="r_a865e2bcb5ff9ae07f7f4d9c762720f29"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:a865e2bcb5ff9ae07f7f4d9c762720f29"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a> (const std::vector&lt; std::shared_ptr&lt; const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;prebuilts, <a class="el" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace</a>&lt; Distance_ &gt; &amp;workspace, const <a class="el" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a> &amp;options)</td></tr>
 <tr class="separator:a865e2bcb5ff9ae07f7f4d9c762720f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a887e1be44c8a685030f24f1095ca6f03" id="r_a887e1be44c8a685030f24f1095ca6f03"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </td></tr>
-<tr class="memitem:a887e1be44c8a685030f24f1095ca6f03"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a887e1be44c8a685030f24f1095ca6f03">compute_distance_blocked</a> (const std::size_t num_dim, const std::vector&lt; Index_ &gt; block_sizes, const Input_ *const data, const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const <a class="el" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a> &amp;options)</td></tr>
-<tr class="separator:a887e1be44c8a685030f24f1095ca6f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd487dda75494406f5e8b66e5d2d68f1" id="r_abd487dda75494406f5e8b66e5d2d68f1"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </td></tr>
+<tr class="memitem:abd487dda75494406f5e8b66e5d2d68f1"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abd487dda75494406f5e8b66e5d2d68f1">build_blocked_indices</a> (const std::size_t num_dim, const std::vector&lt; Index_ &gt; block_sizes, const Input_ *const data, const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder)</td></tr>
+<tr class="separator:abd487dda75494406f5e8b66e5d2d68f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91388ad0732cac79997e01d9b9875372" id="r_a91388ad0732cac79997e01d9b9875372"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </td></tr>
+<tr class="memitem:a91388ad0732cac79997e01d9b9875372"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a91388ad0732cac79997e01d9b9875372">compute_distance_blocked</a> (const std::size_t num_dim, const std::vector&lt; Index_ &gt; &amp;block_sizes, const Input_ *const data, const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const <a class="el" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a> &amp;options)</td></tr>
+<tr class="separator:a91388ad0732cac79997e01d9b9875372"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8510a19aca6de4983bcfbef0b97cf940" id="r_a8510a19aca6de4983bcfbef0b97cf940"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Block_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </td></tr>
 <tr class="memitem:a8510a19aca6de4983bcfbef0b97cf940"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8510a19aca6de4983bcfbef0b97cf940">compute_distance_blocked</a> (const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const Block_ *const block, const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const <a class="el" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a> &amp;options)</td></tr>
 <tr class="separator:a8510a19aca6de4983bcfbef0b97cf940"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,7 +191,7 @@ template&lt;typename Distance_ , typename Index_ &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A workspace that can be re-used across multiple <code><a class="el" href="#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked()</a></code> calls. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A workspace that can be re-used across multiple <code><a class="el" href="#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked()</a></code> calls with the same <code>block_sizes</code>. </dd></dl>
 
 </div>
 </div>
@@ -216,8 +222,8 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </div>
 </div><div class="memdoc">
 <p>NOTES:</p>
 <p>The local neighborhood variance can be considered as the variance within a particular region of the high-dimensional space. The expectation of this variance should not be affected by the number of cells, but the distance to the neighbors will be affected if the density of cells changes.</p>
-<p>We do not apply block-specific scaling factors as we don't want to alter the relative values within the same modality. We shouldn't have to do it in the first place - as it's the same modality! - but more importantly, we could introduce spurious differences between blocks. In the simplest case, two blocks have the same subpopulation structure but the number of cells is different. We would get different distances in each block due to density, causing us to scale each block differently. More generally, we could expect differences in subpopulation structure between blocks, leading to different distances even in the absence of any batch effects. (Mind you, differences in subpopulation structure also interfere with accurate scaling between modalities, but any errors in scaling modalities are much less obvious than those from scaling blocks.) Systematic differences between blocks can artificially inflate the distances to the nearest neighbors within a modality's embedding. Specifically, strong batch effects in one modality can reduce the density of the local neighborhood by shifting cells elsewhere. This increases the distance to the nearest neighbors compared to a modality without any batch effects, even if the variance in the local neighborhood is the same across embeddings.</p>
-<p>To improve accuracy in the presence of blocks, this function calls <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code> on each entry of <code>prebuilts</code> separately. It then computes a weighted average of the median distance and RMSDs across blocks (see <code>scran_blocks::compute_weights()</code> for details). This ensures that arbitrary shifts in location between blocks have no effect on the distances to the nearest neighbors for each modality.</p>
+<p>We do not apply block-specific scaling factors as we don't want to alter the relative values within the same modality. We shouldn't have to do it in the first place - as it's the same modality! - but more importantly, we could introduce spurious differences between blocks. In the simplest case, two blocks have the same subpopulation structure but the number of cells is different. We would get different distances in each block due to density, causing us to scale each block differently. More generally, we could expect differences in subpopulation structure between blocks, leading to different distances even in the absence of any batch effects. (Mind you, differences in subpopulation structure also interfere with accurate scaling between modalities, but any errors in scaling modalities are much less obvious than those from scaling blocks.) Systematic differences between blocks can artificially inflate the distances to the nearest neighbors within a modality's embedding. Specifically, strong batch effects can reduce the density of the local neighborhood by shifting cells elsewhere. This increases the distance to the nearest neighbors compared to a modality without any batch effects, even if the variance in the local neighborhood is the same between modalities.</p>
+<p>If the magnitude of the batch effects differ between modalities, this may introduce spurious differences in the median distance-to-neighbor. To improve accuracy in the presence of blocks, this function calls <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code> on each entry of <code>prebuilts</code> separately. It then computes a weighted average of the median distance and RMSDs across blocks (see <code>scran_blocks::compute_weights()</code> for details). This ensures that arbitrary shifts in location between blocks have no effect on the distances to the nearest neighbors for each modality.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
@@ -229,7 +235,7 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">prebuilts</td><td>Vector of length equal to the number of blocks. Each entry contains a prebuilt neighbor search index for a single block. A block with no observations may be represented by a null pointer. </td></tr>
-    <tr><td class="paramname">workspace</td><td>Workspace object, constructed with <code>block_sizes</code> that contain the number of observations in each entry of <code>prebuilts</code>. This can be re-used across multiple <code><a class="el" href="#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked()</a></code> calls with the same block sizes. </td></tr>
+    <tr><td class="paramname">workspace</td><td>Workspace object, constructed with block sizes that match the number of observations in each entry of <code>prebuilts</code>. This can be re-used across multiple <code><a class="el" href="#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked()</a></code> calls with the same block sizes. </td></tr>
     <tr><td class="paramname">options</td><td>Further options.</td></tr>
   </table>
   </dd>
@@ -238,8 +244,61 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </div>
 
 </div>
 </div>
-<a id="a887e1be44c8a685030f24f1095ca6f03" name="a887e1be44c8a685030f24f1095ca6f03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a887e1be44c8a685030f24f1095ca6f03">&#9670;&#160;</a></span>compute_distance_blocked() <span class="overload">[2/3]</span></h2>
+<a id="abd487dda75494406f5e8b66e5d2d68f1" name="abd487dda75494406f5e8b66e5d2d68f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd487dda75494406f5e8b66e5d2d68f1">&#9670;&#160;</a></span>build_blocked_indices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::shared_ptr&lt; const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &gt; &gt; mumosa::build_blocked_indices </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t</td>          <td class="paramname"><span class="paramname"><em>num_dim</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; Index_ &gt;</td>          <td class="paramname"><span class="paramname"><em>block_sizes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Input_ *const</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>builder</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Build nearest-neighbor search indices from an embedding where cells from the same block occupy contiguous columns.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
+    <tr><td class="paramname">Input_</td><td>Numeric type of the input data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances. </td></tr>
+    <tr><td class="paramname">Matrix_</td><td>Class of the input data matrix for the neighbor search. This should satisfy the <code><a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Matrix.html">knncolle::Matrix</a></code> interface.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">num_dim</td><td>Number of dimensions in the embedding. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">block_sizes</td><td>Number of cells in each block. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to an array containing the embedding matrix for a modality. This should be stored in column-major layout where each row is a dimension and each column is a cell. The number of rows should be equal to <code>num_dim</code> and the number of columns should be equal to the sum of <code>block_sizes</code>. Cells from the first block should be stored in the first <code>block_sizes[0]</code> columns, cells from the second block should be stored in the next <code>block_sizes[1]</code> columns, and so on. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">builder</td><td>Algorithm to use for the neighbor search.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector of prebuilt nearest-neighbor search indices to be used in <code><a class="el" href="#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked()</a></code>. Empty blocks will be represented by null pointers. </dd></dl>
+
+</div>
+</div>
+<a id="a91388ad0732cac79997e01d9b9875372" name="a91388ad0732cac79997e01d9b9875372"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91388ad0732cac79997e01d9b9875372">&#9670;&#160;</a></span>compute_distance_blocked() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,7 +313,7 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matri
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; Index_ &gt;</td>          <td class="paramname"><span class="paramname"><em>block_sizes</em></span>, </td>
+          <td class="paramtype">const std::vector&lt; Index_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>block_sizes</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -287,7 +346,7 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matri
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">num_dim</td><td>Number of dimensions in the embedding. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">block_sizes</td><td>Number of cells in each block. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to an array containing the embedding matrix for a modality. This should be stored in column-major layout where each row is a dimension and each column is a cell. The number of rows should be equal to <code>num_dim</code> and the number of columns should be equal to the sum of <code>block_sizes</code>. Cells from the first block should be stored in the first <code>block_sizes[0]</code> columns, cells from the second block should be stored in the next <code>block_sizes[1]</code> columns, and so on. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to an array containing the embedding matrix for a modality. This should be stored in column-major layout where each row is a dimension and each column is a cell, see <code><a class="el" href="#abd487dda75494406f5e8b66e5d2d68f1">build_blocked_indices()</a></code> for details. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">builder</td><td>Algorithm to use for the neighbor search. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">options</td><td>Further options.</td></tr>
   </table>
@@ -351,8 +410,8 @@ template&lt;typename Index_ , typename Input_ , typename Block_ , typename Dista
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">num_dim</td><td>Number of dimensions in the embedding. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to an array containing the embedding matrix for a modality. This should be stored in column-major layout where each row is a dimension and each column is a cell. The number of rows should be equal to <code>num_dim</code> and <code>num_cells</code>. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">block</td><td>Pointer to an array of length equal to <code>num_cells</code>, containing the block assignment for each column of <code>data</code>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to an array containing the embedding matrix for a modality. This should be stored in column-major layout where each row is a dimension and each column is a cell. The number of rows and columns should be equal to <code>num_dim</code> and <code>num_cells</code>, respectively. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">block</td><td>Pointer to an array of length equal to <code>num_cells</code>, containing the block assignment for each column of <code>data</code>. Each value should be a non-negative integer in \([0, B)\) where \(B\) is the number of blocks. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">builder</td><td>Algorithm to use for the neighbor search. </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">options</td><td>Further options.</td></tr>
   </table>
