@@ -1,0 +1,5 @@
+<map id="mumosa/compute_scale.hpp" name="mumosa/compute_scale.hpp">
+<area shape="rect" id="Node000001" title="Compute scaling factors for embeddings." alt="" coords="5,5,193,31"/>
+<area shape="rect" id="Node000002" href="$mumosa_8hpp.html" title="Scale multi&#45;modal embeddings based on their relative variance." alt="" coords="24,79,174,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,46,102,79,96,79,96,46"/>
+</map>

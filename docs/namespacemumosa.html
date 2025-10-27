@@ -111,6 +111,15 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:adc1aa9b1eba884ed114f58fdb9fd3b19" id="r_adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Scale_ , typename Output_ &gt; </td></tr>
+<tr class="memitem:adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#adc1aa9b1eba884ed114f58fdb9fd3b19">combine_scaled_embeddings</a> (const std::vector&lt; std::size_t &gt; &amp;num_dims, const Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *const output)</td></tr>
+<tr class="separator:adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8227367fe83f0bec0c50156c5f24a3b7" id="r_a8227367fe83f0bec0c50156c5f24a3b7"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ &gt; </td></tr>
+<tr class="memitem:a8227367fe83f0bec0c50156c5f24a3b7"><td class="memTemplItemLeft" align="right" valign="top">Distance_&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale</a> (const std::pair&lt; Distance_, Distance_ &gt; &amp;ref, const std::pair&lt; Distance_, Distance_ &gt; &amp;target)</td></tr>
+<tr class="separator:a8227367fe83f0bec0c50156c5f24a3b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26c6d69157bee4c3c7d595570761793b" id="r_a26c6d69157bee4c3c7d595570761793b"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ &gt; </td></tr>
+<tr class="memitem:a26c6d69157bee4c3c7d595570761793b"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a26c6d69157bee4c3c7d595570761793b">compute_scale</a> (const std::vector&lt; std::pair&lt; Distance_, Distance_ &gt; &gt; &amp;distances)</td></tr>
+<tr class="separator:a26c6d69157bee4c3c7d595570761793b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9bb10478b865f21008d5b87e5d8cf4a" id="r_ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Distance_ &gt; </td></tr>
 <tr class="memitem:ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance</a> (const Index_ num_cells, Distance_ *const distances)</td></tr>
 <tr class="separator:ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,108 +129,22 @@ Functions</h2></td></tr>
 <tr class="memitem:ad5544f59301aea3947788e64190009d1" id="r_ad5544f59301aea3947788e64190009d1"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </td></tr>
 <tr class="memitem:ad5544f59301aea3947788e64190009d1"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad5544f59301aea3947788e64190009d1">compute_distance</a> (const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;options)</td></tr>
 <tr class="separator:ad5544f59301aea3947788e64190009d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8227367fe83f0bec0c50156c5f24a3b7" id="r_a8227367fe83f0bec0c50156c5f24a3b7"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ &gt; </td></tr>
-<tr class="memitem:a8227367fe83f0bec0c50156c5f24a3b7"><td class="memTemplItemLeft" align="right" valign="top">Distance_&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale</a> (const std::pair&lt; Distance_, Distance_ &gt; &amp;ref, const std::pair&lt; Distance_, Distance_ &gt; &amp;target)</td></tr>
-<tr class="separator:a8227367fe83f0bec0c50156c5f24a3b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26c6d69157bee4c3c7d595570761793b" id="r_a26c6d69157bee4c3c7d595570761793b"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ &gt; </td></tr>
-<tr class="memitem:a26c6d69157bee4c3c7d595570761793b"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a26c6d69157bee4c3c7d595570761793b">compute_scale</a> (const std::vector&lt; std::pair&lt; Distance_, Distance_ &gt; &gt; &amp;distances)</td></tr>
-<tr class="separator:a26c6d69157bee4c3c7d595570761793b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc1aa9b1eba884ed114f58fdb9fd3b19" id="r_adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Scale_ , typename Output_ &gt; </td></tr>
-<tr class="memitem:adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#adc1aa9b1eba884ed114f58fdb9fd3b19">combine_scaled_embeddings</a> (const std::vector&lt; std::size_t &gt; &amp;num_dims, const Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *const output)</td></tr>
-<tr class="separator:adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Scale multi-modal embeddings to adjust for differences in variance. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ab9bb10478b865f21008d5b87e5d8cf4a" name="ab9bb10478b865f21008d5b87e5d8cf4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9bb10478b865f21008d5b87e5d8cf4a">&#9670;&#160;</a></span>compute_distance() <span class="overload">[1/3]</span></h2>
+<a id="adc1aa9b1eba884ed114f58fdb9fd3b19" name="adc1aa9b1eba884ed114f58fdb9fd3b19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc1aa9b1eba884ed114f58fdb9fd3b19">&#9670;&#160;</a></span>combine_scaled_embeddings()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Index_ , typename Distance_ &gt; </div>
+template&lt;typename Index_ , typename Input_ , typename Scale_ , typename Output_ &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::pair&lt; Distance_, Distance_ &gt; mumosa::compute_distance </td>
+          <td class="memname">void mumosa::combine_scaled_embeddings </td>
           <td>(</td>
-          <td class="paramtype">const Index_</td>          <td class="paramname"><span class="paramname"><em>num_cells</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Distance_ *const</td>          <td class="paramname"><span class="paramname"><em>distances</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
-    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">distances</td><td>Pointer to an array containing the distances from each cell to its \(k\)-nearest neighbor. It is expected that the same \(k\) was used for each cell. On output, the order of values may be arbitrarily altered during the median calculation; if this is undesirable, users should pass in a copy of the array.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Pair containing the median distance to the nearest neighbor (first) and the root-mean-squared distance across all cells (second). These values can be used in <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. </dd></dl>
-
-</div>
-</div>
-<a id="aa13cd79d1064f517d4e44fce041bb09f" name="aa13cd79d1064f517d4e44fce041bb09f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa13cd79d1064f517d4e44fce041bb09f">&#9670;&#160;</a></span>compute_distance() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::pair&lt; Distance_, Distance_ &gt; mumosa::compute_distance </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>prebuilt</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
-    <tr><td class="paramname">Input_</td><td>Numeric type of the input data used to build the search index. This is only required to define the <code><a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></code> class and is otherwise ignored. </td></tr>
-    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">prebuilt</td><td>A prebuilt neighbor search index for a modality-specifi embedding. </td></tr>
-    <tr><td class="paramname">options</td><td>Further options.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Pair containing the median distance to the <code><a class="el" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">Options::num_neighbors</a></code>-th nearest neighbor (first) and the root-mean-squared distance across all cells (second). These values can be used in <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. </dd></dl>
-
-</div>
-</div>
-<a id="ad5544f59301aea3947788e64190009d1" name="ad5544f59301aea3947788e64190009d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5544f59301aea3947788e64190009d1">&#9670;&#160;</a></span>compute_distance() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::pair&lt; Distance_, Distance_ &gt; mumosa::compute_distance </td>
-          <td>(</td>
-          <td class="paramtype">const std::size_t</td>          <td class="paramname"><span class="paramname"><em>num_dim</em></span>, </td>
+          <td class="paramtype">const std::vector&lt; std::size_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>num_dims</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -231,40 +154,40 @@ template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matri
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const Input_ *const</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+          <td class="paramtype">const std::vector&lt; Input_ * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>embeddings</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>builder</em></span>, </td>
+          <td class="paramtype">const std::vector&lt; Scale_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>scaling</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
+          <td class="paramtype">Output_ *const</td>          <td class="paramname"><span class="paramname"><em>output</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Scale the embedding for each modality and combine all embeddings from different modalities into a single matrix for further analyses. Each cell in the combined matrix will contain a concatenation of the scaled coordinates from all of the individual embeddings.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
-    <tr><td class="paramname">Input_</td><td>Numeric type of the input data. </td></tr>
-    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances. </td></tr>
-    <tr><td class="paramname">Matrix_</td><td>Class of the input data matrix for the neighbor search. This should satisfy the <code><a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Matrix.html">knncolle::Matrix</a></code> interface.</td></tr>
+    <tr><td class="paramname">Input_</td><td>Floating-point type of the input data. </td></tr>
+    <tr><td class="paramname">Scale_</td><td>Floating-point type of the scaling factor. </td></tr>
+    <tr><td class="paramname">Output_</td><td>Floating-point type of the output data.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">num_dim</td><td>Number of dimensions in the embedding. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells in the embedding. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to an array containing the embedding matrix for a modality. This should be stored in column-major layout where each row is a dimension and each column is a cell. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">builder</td><td>Algorithm to use for the neighbor search. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">options</td><td>Further options.</td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">num_dims</td><td>Vector containing the number of dimensions in each embedding. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells in each embedding. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">embeddings</td><td>Vector of pointers of length equal to that of <code>num_dims</code>. Each pointer refers to an array containing an embedding matrix for a single modality, which should be in column-major format with dimensions in rows and cells in columns. The number of rows of the <code>i</code>-th matrix should be equal to <code>num_dims[i]</code> and the number of columns should be equal to <code>num_cells</code>. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">scaling</td><td>Scaling to apply to each embedding, usually from <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. This should be of length equal to that of <code>num_dims</code>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to the output array. This should be of length equal to the product of <code>num_cells</code> and the sum of <code>num_dims</code>. On completion, <code>output</code> is filled with the combined embeddings in column-major format. Each row corresponds to a dimension while each column corresponds to a cell. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Pair containing the median distance to the <code><a class="el" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">Options::num_neighbors</a></code>-th nearest neighbor (first) and the root-mean-squared distance across all cells (second). These values can be used in <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. </dd></dl>
 
 </div>
 </div>
@@ -341,18 +264,96 @@ template&lt;typename Distance_ &gt; </div>
 
 </div>
 </div>
-<a id="adc1aa9b1eba884ed114f58fdb9fd3b19" name="adc1aa9b1eba884ed114f58fdb9fd3b19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc1aa9b1eba884ed114f58fdb9fd3b19">&#9670;&#160;</a></span>combine_scaled_embeddings()</h2>
+<a id="ab9bb10478b865f21008d5b87e5d8cf4a" name="ab9bb10478b865f21008d5b87e5d8cf4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9bb10478b865f21008d5b87e5d8cf4a">&#9670;&#160;</a></span>compute_distance() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Index_ , typename Input_ , typename Scale_ , typename Output_ &gt; </div>
+template&lt;typename Index_ , typename Distance_ &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void mumosa::combine_scaled_embeddings </td>
+          <td class="memname">std::pair&lt; Distance_, Distance_ &gt; mumosa::compute_distance </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::size_t &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>num_dims</em></span>, </td>
+          <td class="paramtype">const Index_</td>          <td class="paramname"><span class="paramname"><em>num_cells</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Distance_ *const</td>          <td class="paramname"><span class="paramname"><em>distances</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">distances</td><td>Pointer to an array containing the distances from each cell to its \(k\)-nearest neighbor. It is expected that the same \(k\) was used for each cell. On output, the order of values may be arbitrarily altered during the median calculation; if this is undesirable, users should pass in a copy of the array.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pair containing the median distance to the nearest neighbor (first) and the root-mean-squared distance across all cells (second). These values can be used in <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="aa13cd79d1064f517d4e44fce041bb09f" name="aa13cd79d1064f517d4e44fce041bb09f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa13cd79d1064f517d4e44fce041bb09f">&#9670;&#160;</a></span>compute_distance() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; Distance_, Distance_ &gt; mumosa::compute_distance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>prebuilt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Overload of <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code> that accepts a pre-built neighbor search index.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
+    <tr><td class="paramname">Input_</td><td>Numeric type of the input data used to build the search index. This is only required to define the <code><a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></code> class and is otherwise ignored. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">prebuilt</td><td>A prebuilt neighbor search index for a modality-specifi embedding. </td></tr>
+    <tr><td class="paramname">options</td><td>Further options.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pair containing the median distance to the <code><a class="el" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">Options::num_neighbors</a></code>-th nearest neighbor (first) and the root-mean-squared distance across all cells (second). These values can be used in <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="ad5544f59301aea3947788e64190009d1" name="ad5544f59301aea3947788e64190009d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5544f59301aea3947788e64190009d1">&#9670;&#160;</a></span>compute_distance() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; Distance_, Distance_ &gt; mumosa::compute_distance </td>
+          <td>(</td>
+          <td class="paramtype">const std::size_t</td>          <td class="paramname"><span class="paramname"><em>num_dim</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -362,40 +363,41 @@ template&lt;typename Index_ , typename Input_ , typename Scale_ , typename Outpu
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; Input_ * &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>embeddings</em></span>, </td>
+          <td class="paramtype">const Input_ *const</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; Scale_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>scaling</em></span>, </td>
+          <td class="paramtype">const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>builder</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Output_ *const</td>          <td class="paramname"><span class="paramname"><em>output</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Scale the embedding for each modality and combine all embeddings from different modalities into a single matrix for further analyses. Each cell in the combined matrix will contain a concatenation of the scaled coordinates from all of the individual embeddings.</p>
+<p>Overload of <code><a class="el" href="#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code> that accepts an embedding matrix.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Index_</td><td>Integer type of the number of cells. </td></tr>
-    <tr><td class="paramname">Input_</td><td>Floating-point type of the input data. </td></tr>
-    <tr><td class="paramname">Scale_</td><td>Floating-point type of the scaling factor. </td></tr>
-    <tr><td class="paramname">Output_</td><td>Floating-point type of the output data.</td></tr>
+    <tr><td class="paramname">Input_</td><td>Numeric type of the input data. </td></tr>
+    <tr><td class="paramname">Distance_</td><td>Floating-point type of the distances. </td></tr>
+    <tr><td class="paramname">Matrix_</td><td>Class of the input data matrix for the neighbor search. This should satisfy the <code><a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Matrix.html">knncolle::Matrix</a></code> interface.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">num_dims</td><td>Vector containing the number of dimensions in each embedding. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells in each embedding. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">embeddings</td><td>Vector of pointers of length equal to that of <code>num_dims</code>. Each pointer refers to an array containing an embedding matrix for a single modality, which should be in column-major format with dimensions in rows and cells in columns. The number of rows of the <code>i</code>-th matrix should be equal to <code>num_dims[i]</code> and the number of columns should be equal to <code>num_cells</code>. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">scaling</td><td>Scaling to apply to each embedding, usually from <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. This should be of length equal to that of <code>num_dims</code>. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to the output array. This should be of length equal to the product of <code>num_cells</code> and the sum of <code>num_dims</code>. On completion, <code>output</code> is filled with the combined embeddings in column-major format. Each row corresponds to a dimension while each column corresponds to a cell. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">num_dim</td><td>Number of dimensions in the embedding. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">num_cells</td><td>Number of cells in the embedding. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to an array containing the embedding matrix for a modality. This should be stored in column-major layout where each row is a dimension and each column is a cell. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">builder</td><td>Algorithm to use for the neighbor search. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">options</td><td>Further options.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Pair containing the median distance to the <code><a class="el" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">Options::num_neighbors</a></code>-th nearest neighbor (first) and the root-mean-squared distance across all cells (second). These values can be used in <code><a class="el" href="#a8227367fe83f0bec0c50156c5f24a3b7">compute_scale()</a></code>. </dd></dl>
 
 </div>
 </div>

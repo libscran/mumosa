@@ -98,88 +98,73 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle"><div class="title">mumosa.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Scale multi-modal embeddings based on their relative variance.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;stdexcept&gt;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
-<code>#include &lt;algorithm&gt;</code><br />
-<code>#include &lt;limits&gt;</code><br />
-<code>#include &lt;cstddef&gt;</code><br />
-<code>#include &lt;type_traits&gt;</code><br />
-<code>#include &quot;<a class="elRef" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html">knncolle/knncolle.hpp</a>&quot;</code><br />
-<code>#include &quot;tatami_stats/tatami_stats.hpp&quot;</code><br />
-<code>#include &quot;sanisizer/sanisizer.hpp&quot;</code><br />
+<div class="textblock"><code>#include &quot;simple.hpp&quot;</code><br />
+<code>#include &quot;<a class="el" href="compute__scale_8hpp_source.html">compute_scale.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="combine__scaled__embeddings_8hpp_source.html">combine_scaled_embeddings.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for mumosa.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="mumosa_8hpp__incl.png" border="0" usemap="#amumosa_2mumosa_8hpp" alt=""/></div>
 <map name="amumosa_2mumosa_8hpp" id="amumosa_2mumosa_8hpp">
-<area shape="rect" title="Scale multi&#45;modal embeddings based on their relative variance." alt="" coords="362,5,511,31"/>
-<area shape="rect" title=" " alt="" coords="5,86,63,112"/>
-<area shape="poly" title=" " alt="" coords="362,29,227,47,151,62,76,82,72,83,71,78,75,76,150,57,226,42,361,23"/>
-<area shape="rect" title=" " alt="" coords="87,86,165,112"/>
-<area shape="poly" title=" " alt="" coords="374,34,280,54,177,82,171,84,170,78,176,76,279,49,372,29"/>
-<area shape="rect" title=" " alt="" coords="189,86,247,112"/>
-<area shape="poly" title=" " alt="" coords="397,34,259,81,257,82,255,77,257,77,395,29"/>
-<area shape="rect" title=" " alt="" coords="270,86,344,112"/>
-<area shape="poly" title=" " alt="" coords="418,34,341,80,339,76,416,29"/>
-<area shape="rect" title=" " alt="" coords="369,86,422,112"/>
-<area shape="poly" title=" " alt="" coords="433,33,411,74,406,71,428,30"/>
-<area shape="rect" title=" " alt="" coords="446,86,510,112"/>
-<area shape="poly" title=" " alt="" coords="445,30,467,71,462,74,441,33"/>
-<area shape="rect" title=" " alt="" coords="535,86,616,112"/>
-<area shape="poly" title=" " alt="" coords="459,29,542,76,540,81,456,34"/>
-<area shape="rect" target="_parent" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html" title=" " alt="" coords="640,86,785,112"/>
-<area shape="poly" title=" " alt="" coords="480,29,656,79,655,84,478,34"/>
-<area shape="rect" title=" " alt="" coords="810,79,943,120"/>
-<area shape="poly" title=" " alt="" coords="512,28,640,48,795,76,794,81,639,53,511,33"/>
-<area shape="rect" title=" " alt="" coords="968,86,1119,112"/>
-<area shape="poly" title=" " alt="" coords="512,23,713,43,956,76,977,80,976,86,955,82,712,49,511,28"/>
+<area shape="rect" title="Scale multi&#45;modal embeddings based on their relative variance." alt="" coords="461,5,610,31"/>
+<area shape="rect" href="simple_8hpp_source.html" title=" " alt="" coords="494,79,578,105"/>
+<area shape="poly" title=" " alt="" coords="538,31,538,63,533,63,533,31"/>
+<area shape="rect" href="compute__scale_8hpp.html" title="Compute scaling factors for embeddings." alt="" coords="814,79,948,105"/>
+<area shape="poly" title=" " alt="" coords="595,29,808,73,807,78,594,34"/>
+<area shape="rect" href="combine__scaled__embeddings_8hpp.html" title="Scale and combine embeddings." alt="" coords="236,79,452,105"/>
+<area shape="poly" title=" " alt="" coords="504,34,392,76,390,71,502,29"/>
+<area shape="rect" title=" " alt="" coords="852,160,910,186"/>
+<area shape="poly" title=" " alt="" coords="579,95,698,114,771,130,842,150,845,151,844,156,840,155,769,135,697,120,578,101"/>
+<area shape="rect" title=" " alt="" coords="285,160,362,186"/>
+<area shape="poly" title=" " alt="" coords="504,108,371,157,370,152,502,103"/>
+<area shape="rect" title=" " alt="" coords="387,160,444,186"/>
+<area shape="poly" title=" " alt="" coords="519,107,448,154,445,149,516,103"/>
+<area shape="rect" title=" " alt="" coords="5,160,80,186"/>
+<area shape="poly" title=" " alt="" coords="494,103,464,107,359,119,277,125,195,134,92,155,85,157,84,152,91,150,195,129,276,120,359,114,463,102,493,97"/>
+<area shape="rect" title=" " alt="" coords="1103,160,1155,186"/>
+<area shape="poly" title=" " alt="" coords="578,93,841,113,987,130,1092,150,1096,151,1094,156,1091,155,986,135,841,119,578,98"/>
+<area shape="rect" title=" " alt="" coords="104,160,168,186"/>
+<area shape="poly" title=" " alt="" coords="494,103,180,155,176,157,174,152,179,150,493,97"/>
+<area shape="rect" title=" " alt="" coords="392,241,474,267"/>
+<area shape="poly" title=" " alt="" coords="564,103,593,123,606,136,617,151,624,174,617,195,590,220,558,238,523,248,489,254,489,248,522,243,556,233,587,216,612,192,619,174,612,154,602,139,590,127,561,108"/>
+<area shape="rect" target="_parent" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html" title=" " alt="" coords="934,160,1079,186"/>
+<area shape="poly" title=" " alt="" coords="578,96,730,118,923,150,942,154,941,159,922,155,730,123,577,101"/>
+<area shape="rect" title=" " alt="" coords="469,153,602,193"/>
+<area shape="poly" title=" " alt="" coords="538,105,538,137,533,137,533,105"/>
+<area shape="rect" title=" " alt="" coords="678,160,829,186"/>
+<area shape="poly" title=" " alt="" coords="570,103,706,152,704,157,568,108"/>
+<area shape="rect" href="utils_8hpp_source.html" title=" " alt="" coords="192,160,261,186"/>
+<area shape="poly" title=" " alt="" coords="494,103,393,124,274,155,269,157,267,152,272,150,392,119,493,98"/>
+<area shape="poly" title=" " alt="" coords="257,184,274,191,387,233,385,238,272,196,255,189"/>
+<area shape="poly" title=" " alt="" coords="884,105,884,144,878,144,878,105"/>
+<area shape="poly" title=" " alt="" coords="936,103,1011,123,1093,150,1095,151,1093,156,1091,155,1009,128,934,108"/>
+<area shape="poly" title=" " alt="" coords="863,107,787,154,784,149,860,103"/>
+<area shape="rect" title=" " alt="" coords="1180,160,1231,186"/>
+<area shape="poly" title=" " alt="" coords="948,99,1053,118,1112,133,1169,150,1171,151,1169,156,1167,155,1110,138,1052,124,948,105"/>
+<area shape="poly" title=" " alt="" coords="453,99,667,121,769,135,842,150,846,151,844,156,840,155,768,140,667,126,452,105"/>
+<area shape="poly" title=" " alt="" coords="343,106,333,146,328,145,338,104"/>
+<area shape="poly" title=" " alt="" coords="357,103,397,147,393,150,353,107"/>
+<area shape="poly" title=" " alt="" coords="283,108,192,128,93,155,87,157,85,152,91,150,191,123,282,103"/>
+<area shape="poly" title=" " alt="" coords="309,108,181,155,178,156,176,151,179,150,307,103"/>
+<area shape="poly" title=" " alt="" coords="407,103,676,154,675,159,406,108"/>
+<area shape="poly" title=" " alt="" coords="327,107,259,153,256,149,325,103"/>
 </map>
 </div>
 </div>
 <p><a href="mumosa_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmumosa_1_1Options.html">mumosa::Options</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structmumosa_1_1Options.html" title="Options for compute_distance().">Options</a> for <code><a class="el" href="namespacemumosa.html#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance()</a></code>.  <a href="structmumosa_1_1Options.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemumosa.html">mumosa</a></td></tr>
 <tr class="memdesc:namespacemumosa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scale multi-modal embeddings to adjust for differences in variance. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ab9bb10478b865f21008d5b87e5d8cf4a" id="r_ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Distance_ &gt; </td></tr>
-<tr class="memitem:ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemumosa.html#ab9bb10478b865f21008d5b87e5d8cf4a">mumosa::compute_distance</a> (const Index_ num_cells, Distance_ *const distances)</td></tr>
-<tr class="separator:ab9bb10478b865f21008d5b87e5d8cf4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa13cd79d1064f517d4e44fce041bb09f" id="r_aa13cd79d1064f517d4e44fce041bb09f"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ &gt; </td></tr>
-<tr class="memitem:aa13cd79d1064f517d4e44fce041bb09f"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemumosa.html#aa13cd79d1064f517d4e44fce041bb09f">mumosa::compute_distance</a> (const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a>&lt; Index_, Input_, Distance_ &gt; &amp;prebuilt, const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;options)</td></tr>
-<tr class="separator:aa13cd79d1064f517d4e44fce041bb09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5544f59301aea3947788e64190009d1" id="r_ad5544f59301aea3947788e64190009d1"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Distance_ , class Matrix_  = knncolle::Matrix&lt;Index_, Input_&gt;&gt; </td></tr>
-<tr class="memitem:ad5544f59301aea3947788e64190009d1"><td class="memTemplItemLeft" align="right" valign="top">std::pair&lt; Distance_, Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemumosa.html#ad5544f59301aea3947788e64190009d1">mumosa::compute_distance</a> (const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const <a class="elRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a>&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const <a class="el" href="structmumosa_1_1Options.html">Options</a> &amp;options)</td></tr>
-<tr class="separator:ad5544f59301aea3947788e64190009d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8227367fe83f0bec0c50156c5f24a3b7" id="r_a8227367fe83f0bec0c50156c5f24a3b7"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ &gt; </td></tr>
-<tr class="memitem:a8227367fe83f0bec0c50156c5f24a3b7"><td class="memTemplItemLeft" align="right" valign="top">Distance_&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemumosa.html#a8227367fe83f0bec0c50156c5f24a3b7">mumosa::compute_scale</a> (const std::pair&lt; Distance_, Distance_ &gt; &amp;ref, const std::pair&lt; Distance_, Distance_ &gt; &amp;target)</td></tr>
-<tr class="separator:a8227367fe83f0bec0c50156c5f24a3b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26c6d69157bee4c3c7d595570761793b" id="r_a26c6d69157bee4c3c7d595570761793b"><td class="memTemplParams" colspan="2">template&lt;typename Distance_ &gt; </td></tr>
-<tr class="memitem:a26c6d69157bee4c3c7d595570761793b"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; Distance_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemumosa.html#a26c6d69157bee4c3c7d595570761793b">mumosa::compute_scale</a> (const std::vector&lt; std::pair&lt; Distance_, Distance_ &gt; &gt; &amp;distances)</td></tr>
-<tr class="separator:a26c6d69157bee4c3c7d595570761793b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc1aa9b1eba884ed114f58fdb9fd3b19" id="r_adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memTemplParams" colspan="2">template&lt;typename Index_ , typename Input_ , typename Scale_ , typename Output_ &gt; </td></tr>
-<tr class="memitem:adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemumosa.html#adc1aa9b1eba884ed114f58fdb9fd3b19">mumosa::combine_scaled_embeddings</a> (const std::vector&lt; std::size_t &gt; &amp;num_dims, const Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *const output)</td></tr>
-<tr class="separator:adc1aa9b1eba884ed114f58fdb9fd3b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Scale multi-modal embeddings based on their relative variance. </p>

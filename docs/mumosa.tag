@@ -1,10 +1,23 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <tagfile doxygen_version="1.12.0">
   <compound kind="file">
+    <name>combine_scaled_embeddings.hpp</name>
+    <path>mumosa/</path>
+    <filename>combine__scaled__embeddings_8hpp.html</filename>
+    <namespace>mumosa</namespace>
+  </compound>
+  <compound kind="file">
+    <name>compute_scale.hpp</name>
+    <path>mumosa/</path>
+    <filename>compute__scale_8hpp.html</filename>
+    <namespace>mumosa</namespace>
+  </compound>
+  <compound kind="file">
     <name>mumosa.hpp</name>
     <path>mumosa/</path>
     <filename>mumosa_8hpp.html</filename>
-    <class kind="struct">mumosa::Options</class>
+    <includes id="compute__scale_8hpp" name="compute_scale.hpp" local="yes" import="no" module="no" objc="no">compute_scale.hpp</includes>
+    <includes id="combine__scaled__embeddings_8hpp" name="combine_scaled_embeddings.hpp" local="yes" import="no" module="no" objc="no">combine_scaled_embeddings.hpp</includes>
     <namespace>mumosa</namespace>
   </compound>
   <compound kind="struct">
@@ -30,6 +43,27 @@
     <filename>namespacemumosa.html</filename>
     <class kind="struct">mumosa::Options</class>
     <member kind="function">
+      <type>void</type>
+      <name>combine_scaled_embeddings</name>
+      <anchorfile>namespacemumosa.html</anchorfile>
+      <anchor>adc1aa9b1eba884ed114f58fdb9fd3b19</anchor>
+      <arglist>(const std::vector&lt; std::size_t &gt; &amp;num_dims, const Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *const output)</arglist>
+    </member>
+    <member kind="function">
+      <type>Distance_</type>
+      <name>compute_scale</name>
+      <anchorfile>namespacemumosa.html</anchorfile>
+      <anchor>a8227367fe83f0bec0c50156c5f24a3b7</anchor>
+      <arglist>(const std::pair&lt; Distance_, Distance_ &gt; &amp;ref, const std::pair&lt; Distance_, Distance_ &gt; &amp;target)</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; Distance_ &gt;</type>
+      <name>compute_scale</name>
+      <anchorfile>namespacemumosa.html</anchorfile>
+      <anchor>a26c6d69157bee4c3c7d595570761793b</anchor>
+      <arglist>(const std::vector&lt; std::pair&lt; Distance_, Distance_ &gt; &gt; &amp;distances)</arglist>
+    </member>
+    <member kind="function">
       <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance</name>
       <anchorfile>namespacemumosa.html</anchorfile>
@@ -49,27 +83,6 @@
       <anchorfile>namespacemumosa.html</anchorfile>
       <anchor>ad5544f59301aea3947788e64190009d1</anchor>
       <arglist>(const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const Options &amp;options)</arglist>
-    </member>
-    <member kind="function">
-      <type>Distance_</type>
-      <name>compute_scale</name>
-      <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a8227367fe83f0bec0c50156c5f24a3b7</anchor>
-      <arglist>(const std::pair&lt; Distance_, Distance_ &gt; &amp;ref, const std::pair&lt; Distance_, Distance_ &gt; &amp;target)</arglist>
-    </member>
-    <member kind="function">
-      <type>std::vector&lt; Distance_ &gt;</type>
-      <name>compute_scale</name>
-      <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a26c6d69157bee4c3c7d595570761793b</anchor>
-      <arglist>(const std::vector&lt; std::pair&lt; Distance_, Distance_ &gt; &gt; &amp;distances)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>combine_scaled_embeddings</name>
-      <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>adc1aa9b1eba884ed114f58fdb9fd3b19</anchor>
-      <arglist>(const std::vector&lt; std::size_t &gt; &amp;num_dims, const Index_ num_cells, const std::vector&lt; Input_ * &gt; &amp;embeddings, const std::vector&lt; Scale_ &gt; &amp;scaling, Output_ *const output)</arglist>
     </member>
   </compound>
   <compound kind="page">
