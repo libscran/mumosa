@@ -9,6 +9,7 @@ FetchContent_MakeAvailable(scran_tests)
 add_executable(
     libtest 
     src/simple.cpp
+    src/blocked.cpp
     src/combine_scaled_embeddings.cpp
 )
 

@@ -2,6 +2,7 @@
 #define MUMOSA_HPP
 
 #include "simple.hpp"
+#include "blocked.hpp"
 #include "compute_scale.hpp"
 #include "combine_scaled_embeddings.hpp"
 
