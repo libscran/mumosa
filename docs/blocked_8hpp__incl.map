@@ -1,5 +1,5 @@
 <map id="mumosa/blocked.hpp" name="mumosa/blocked.hpp">
-<area shape="rect" id="Node000001" title="Compute within&#45;subpopulation distances with blocking." alt="" coords="331,5,476,31"/>
+<area shape="rect" id="Node000001" title="Compute distances to nearest neighbors with blocking." alt="" coords="331,5,476,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,175,63,201"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="357,34,290,54,219,81,135,126,66,168,63,164,132,121,217,77,289,49,355,29"/>
 <area shape="rect" id="Node000003" title=" " alt="" coords="86,175,160,201"/>
@@ -12,7 +12,7 @@
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="412,30,467,118,500,161,496,165,462,121,408,33"/>
 <area shape="rect" id="Node000007" title=" " alt="" coords="634,79,768,120"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="450,29,619,74,618,79,448,34"/>
-<area shape="rect" id="Node000008" href="$simple_8hpp.html" title="Compute within&#45;subpopulation distances." alt="" coords="476,86,560,112"/>
+<area shape="rect" id="Node000008" href="$simple_8hpp.html" title="Compute distances to nearest neighbors." alt="" coords="476,86,560,112"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="422,29,490,75,487,80,419,34"/>
 <area shape="rect" id="Node000014" href="$utils_8hpp_source.html" title=" " alt="" coords="1086,175,1155,201"/>
 <area shape="poly" id="edge20_Node000001_Node000014" title=" " alt="" coords="452,29,511,49,573,77,588,88,598,99,608,109,623,117,686,139,740,150,790,154,837,154,937,151,994,154,1061,165,1073,168,1071,173,1060,170,994,160,937,156,837,159,790,160,740,156,684,144,621,122,605,113,594,102,584,92,570,81,509,54,450,34"/>

@@ -1,8 +1,8 @@
 <map id="mumosa/mumosa.hpp" name="mumosa/mumosa.hpp">
 <area shape="rect" id="Node000001" title="Scale multi&#45;modal embeddings based on their relative variance." alt="" coords="516,5,666,31"/>
-<area shape="rect" id="Node000002" href="$simple_8hpp.html" title="Compute within&#45;subpopulation distances." alt="" coords="617,160,701,186"/>
+<area shape="rect" id="Node000002" href="$simple_8hpp.html" title="Compute distances to nearest neighbors." alt="" coords="617,160,701,186"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="599,30,650,145,645,147,594,33"/>
-<area shape="rect" id="Node000014" href="$blocked_8hpp.html" title="Compute within&#45;subpopulation distances with blocking." alt="" coords="692,79,783,105"/>
+<area shape="rect" id="Node000014" href="$blocked_8hpp.html" title="Compute distances to nearest neighbors with blocking." alt="" coords="692,79,783,105"/>
 <area shape="poly" id="edge14_Node000001_Node000014" title=" " alt="" coords="617,29,700,69,698,74,615,34"/>
 <area shape="rect" id="Node000016" href="$compute__scale_8hpp.html" title="Compute scaling factors for embeddings." alt="" coords="119,160,252,186"/>
 <area shape="poly" id="edge23_Node000001_Node000016" title=" " alt="" coords="560,34,233,157,231,152,558,29"/>
