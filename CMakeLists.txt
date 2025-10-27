@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 
 project(mumosa
-    VERSION 0.2.0
+    VERSION 0.2.1
     DESCRIPTION "Multi-modal analyses of single-cell data"
     LANGUAGES CXX)
 

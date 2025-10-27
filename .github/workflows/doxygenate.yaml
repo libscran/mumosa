@@ -21,6 +21,11 @@ jobs:
       with:
         args: -O docs/knncolle.tag https://knncolle.github.io/knncolle/knncolle.tag
 
+    - name: Add blocks tagfile
+      uses: wei/wget@v1
+      with:
+        args: -O docs/scran_blocks.tag https://libscran.github.io/scran_blocks/scran_blocks.tag
+
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@v1
       with:
