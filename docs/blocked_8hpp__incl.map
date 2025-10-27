@@ -10,7 +10,7 @@
 <area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="402,32,357,161,352,160,397,31"/>
 <area shape="rect" id="Node000006" title=" " alt="" coords="442,175,594,201"/>
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="412,30,467,118,500,161,496,165,462,121,408,33"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="634,79,768,120"/>
+<area shape="rect" id="Node000007" href="/github/workspace/docs/scran_blocks.tag$scran__blocks_8hpp.html" title=" " alt="" coords="634,79,768,120"/>
 <area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="450,29,619,74,618,79,448,34"/>
 <area shape="rect" id="Node000008" href="$simple_8hpp.html" title="Compute distances to nearest neighbors." alt="" coords="476,86,560,112"/>
 <area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="422,29,490,75,487,80,419,34"/>

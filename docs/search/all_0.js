@@ -1,5 +1,8 @@
 var searchData=
 [
   ['add_0',['add',['https://knncolle.github.io/knncolle/classknncolle_1_1NeighborQueue.html#ac0add776502ad89cc532ede0da9e7559',1,'knncolle::NeighborQueue']]],
-  ['analyses_1',['Multi-modal single-cell analyses',['../index.html',1,'']]]
+  ['analyses_1',['Multi-modal single-cell analyses',['../index.html',1,'']]],
+  ['average_5fvectors_2',['average_vectors',['https://libscran.github.io/scran_blocks/namespacescran__blocks.html#ad102233b847d4004e03035c29f243130',1,'scran_blocks::average_vectors(const std::size_t n, std::vector&lt; Stat_ * &gt; in, Output_ *const out, const bool skip_nan)'],['https://libscran.github.io/scran_blocks/namespacescran__blocks.html#afd9262136b3895afe8b0217cfc51337c',1,'scran_blocks::average_vectors(const std::size_t n, std::vector&lt; Stat_ * &gt; in, const bool skip_nan)']]],
+  ['average_5fvectors_2ehpp_3',['average_vectors.hpp',['https://libscran.github.io/scran_blocks/average__vectors_8hpp.html',1,'']]],
+  ['average_5fvectors_5fweighted_4',['average_vectors_weighted',['https://libscran.github.io/scran_blocks/namespacescran__blocks.html#afa41c174fefddebe4fc45c593f4edd2e',1,'scran_blocks::average_vectors_weighted(const std::size_t n, std::vector&lt; Stat_ * &gt; in, const Weight_ *const w, Output_ *const out, const bool skip_nan)'],['https://libscran.github.io/scran_blocks/namespacescran__blocks.html#ac681cdd5f36d39f2e26f7a155551d259',1,'scran_blocks::average_vectors_weighted(const std::size_t n, std::vector&lt; Stat_ * &gt; in, const Weight_ *const w, const bool skip_nan)']]]
 ];
