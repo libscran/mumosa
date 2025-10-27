@@ -26,6 +26,7 @@
     <path>mumosa/</path>
     <filename>mumosa_8hpp.html</filename>
     <includes id="simple_8hpp" name="simple.hpp" local="yes" import="no" module="no" objc="no">simple.hpp</includes>
+    <includes id="blocked_8hpp" name="blocked.hpp" local="yes" import="no" module="no" objc="no">blocked.hpp</includes>
     <includes id="compute__scale_8hpp" name="compute_scale.hpp" local="yes" import="no" module="no" objc="no">compute_scale.hpp</includes>
     <includes id="combine__scaled__embeddings_8hpp" name="combine_scaled_embeddings.hpp" local="yes" import="no" module="no" objc="no">combine_scaled_embeddings.hpp</includes>
     <namespace>mumosa</namespace>

@@ -1,7 +1,8 @@
 <map id="mumosa/simple.hpp" name="mumosa/simple.hpp">
-<area shape="rect" id="Node000001" title="Compute within&#45;subpopulation distances." alt="" coords="94,5,232,31"/>
+<area shape="rect" id="Node000001" title="Compute within&#45;subpopulation distances." alt="" coords="64,5,201,31"/>
 <area shape="rect" id="Node000002" href="$blocked_8hpp.html" title="Compute within&#45;subpopulation distances with blocking." alt="" coords="5,79,150,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="139,43,93,81,90,77,135,39"/>
-<area shape="rect" id="Node000003" href="$mumosa_8hpp.html" title="Scale multi&#45;modal embeddings based on their relative variance." alt="" coords="174,79,323,105"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="191,39,236,77,232,81,187,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,45,89,80,85,77,112,41"/>
+<area shape="rect" id="Node000003" href="$mumosa_8hpp.html" title="Scale multi&#45;modal embeddings based on their relative variance." alt="" coords="58,153,207,178"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="150,44,164,78,165,100,160,121,143,153,138,151,155,119,160,99,159,80,145,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="98,115,125,151,121,154,94,118"/>
 </map>

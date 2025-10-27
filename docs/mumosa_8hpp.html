@@ -106,6 +106,7 @@ $(function(){ initResizable(false); });
 <p>Scale multi-modal embeddings based on their relative variance.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="simple_8hpp_source.html">simple.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="blocked_8hpp_source.html">blocked.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="compute__scale_8hpp_source.html">compute_scale.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="combine__scaled__embeddings_8hpp_source.html">combine_scaled_embeddings.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -113,48 +114,59 @@ Include dependency graph for mumosa.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="mumosa_8hpp__incl.png" border="0" usemap="#amumosa_2mumosa_8hpp" alt=""/></div>
 <map name="amumosa_2mumosa_8hpp" id="amumosa_2mumosa_8hpp">
-<area shape="rect" title="Scale multi&#45;modal embeddings based on their relative variance." alt="" coords="461,5,610,31"/>
-<area shape="rect" href="simple_8hpp.html" title="Compute within&#45;subpopulation distances." alt="" coords="494,79,578,105"/>
-<area shape="poly" title=" " alt="" coords="538,31,538,63,533,63,533,31"/>
-<area shape="rect" href="compute__scale_8hpp.html" title="Compute scaling factors for embeddings." alt="" coords="814,79,948,105"/>
-<area shape="poly" title=" " alt="" coords="595,29,808,73,807,78,594,34"/>
-<area shape="rect" href="combine__scaled__embeddings_8hpp.html" title="Scale and combine embeddings." alt="" coords="236,79,452,105"/>
-<area shape="poly" title=" " alt="" coords="504,34,392,76,390,71,502,29"/>
-<area shape="rect" title=" " alt="" coords="852,160,910,186"/>
-<area shape="poly" title=" " alt="" coords="579,95,698,114,771,130,842,150,845,151,844,156,840,155,769,135,697,120,578,101"/>
-<area shape="rect" title=" " alt="" coords="285,160,362,186"/>
-<area shape="poly" title=" " alt="" coords="504,108,371,157,370,152,502,103"/>
-<area shape="rect" title=" " alt="" coords="387,160,444,186"/>
-<area shape="poly" title=" " alt="" coords="519,107,448,154,445,149,516,103"/>
-<area shape="rect" title=" " alt="" coords="5,160,80,186"/>
-<area shape="poly" title=" " alt="" coords="494,103,464,107,359,119,277,125,195,134,92,155,85,157,84,152,91,150,195,129,276,120,359,114,463,102,493,97"/>
-<area shape="rect" title=" " alt="" coords="1103,160,1155,186"/>
-<area shape="poly" title=" " alt="" coords="578,93,841,113,987,130,1092,150,1096,151,1094,156,1091,155,986,135,841,119,578,98"/>
-<area shape="rect" title=" " alt="" coords="104,160,168,186"/>
-<area shape="poly" title=" " alt="" coords="494,103,180,155,176,157,174,152,179,150,493,97"/>
-<area shape="rect" title=" " alt="" coords="392,241,474,267"/>
-<area shape="poly" title=" " alt="" coords="564,103,593,123,606,136,617,151,624,174,617,195,590,220,558,238,523,248,489,254,489,248,522,243,556,233,587,216,612,192,619,174,612,154,602,139,590,127,561,108"/>
-<area shape="rect" target="_parent" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html" title=" " alt="" coords="934,160,1079,186"/>
-<area shape="poly" title=" " alt="" coords="578,96,730,118,923,150,942,154,941,159,922,155,730,123,577,101"/>
-<area shape="rect" title=" " alt="" coords="469,153,602,193"/>
-<area shape="poly" title=" " alt="" coords="538,105,538,137,533,137,533,105"/>
-<area shape="rect" title=" " alt="" coords="678,160,829,186"/>
-<area shape="poly" title=" " alt="" coords="570,103,706,152,704,157,568,108"/>
-<area shape="rect" href="utils_8hpp_source.html" title=" " alt="" coords="192,160,261,186"/>
-<area shape="poly" title=" " alt="" coords="494,103,393,124,274,155,269,157,267,152,272,150,392,119,493,98"/>
-<area shape="poly" title=" " alt="" coords="257,184,274,191,387,233,385,238,272,196,255,189"/>
-<area shape="poly" title=" " alt="" coords="884,105,884,144,878,144,878,105"/>
-<area shape="poly" title=" " alt="" coords="936,103,1011,123,1093,150,1095,151,1093,156,1091,155,1009,128,934,108"/>
-<area shape="poly" title=" " alt="" coords="863,107,787,154,784,149,860,103"/>
-<area shape="rect" title=" " alt="" coords="1180,160,1231,186"/>
-<area shape="poly" title=" " alt="" coords="948,99,1053,118,1112,133,1169,150,1171,151,1169,156,1167,155,1110,138,1052,124,948,105"/>
-<area shape="poly" title=" " alt="" coords="453,99,667,121,769,135,842,150,846,151,844,156,840,155,768,140,667,126,452,105"/>
-<area shape="poly" title=" " alt="" coords="343,106,333,146,328,145,338,104"/>
-<area shape="poly" title=" " alt="" coords="357,103,397,147,393,150,353,107"/>
-<area shape="poly" title=" " alt="" coords="283,108,192,128,93,155,87,157,85,152,91,150,191,123,282,103"/>
-<area shape="poly" title=" " alt="" coords="309,108,181,155,178,156,176,151,179,150,307,103"/>
-<area shape="poly" title=" " alt="" coords="407,103,676,154,675,159,406,108"/>
-<area shape="poly" title=" " alt="" coords="327,107,259,153,256,149,325,103"/>
+<area shape="rect" title="Scale multi&#45;modal embeddings based on their relative variance." alt="" coords="516,5,666,31"/>
+<area shape="rect" href="simple_8hpp.html" title="Compute within&#45;subpopulation distances." alt="" coords="617,160,701,186"/>
+<area shape="poly" title=" " alt="" coords="599,30,650,145,645,147,594,33"/>
+<area shape="rect" href="blocked_8hpp.html" title="Compute within&#45;subpopulation distances with blocking." alt="" coords="692,79,783,105"/>
+<area shape="poly" title=" " alt="" coords="617,29,700,69,698,74,615,34"/>
+<area shape="rect" href="compute__scale_8hpp.html" title="Compute scaling factors for embeddings." alt="" coords="119,160,252,186"/>
+<area shape="poly" title=" " alt="" coords="560,34,233,157,231,152,558,29"/>
+<area shape="rect" href="combine__scaled__embeddings_8hpp.html" title="Scale and combine embeddings." alt="" coords="378,160,594,186"/>
+<area shape="poly" title=" " alt="" coords="585,33,505,149,500,146,581,30"/>
+<area shape="rect" title=" " alt="" coords="332,249,389,274"/>
+<area shape="poly" title=" " alt="" coords="628,189,606,196,549,210,504,218,459,227,402,244,399,245,398,240,401,239,458,222,503,213,548,205,605,191,626,184"/>
+<area shape="rect" title=" " alt="" coords="495,249,572,274"/>
+<area shape="poly" title=" " alt="" coords="643,188,565,242,562,237,640,184"/>
+<area shape="rect" title=" " alt="" coords="413,249,470,274"/>
+<area shape="poly" title=" " alt="" coords="627,189,484,244,482,245,480,240,482,239,625,184"/>
+<area shape="rect" title=" " alt="" coords="828,249,903,274"/>
+<area shape="poly" title=" " alt="" coords="689,184,824,240,822,245,687,189"/>
+<area shape="rect" title=" " alt="" coords="256,249,308,274"/>
+<area shape="poly" title=" " alt="" coords="629,189,606,196,526,212,462,217,400,224,321,244,318,245,316,240,320,239,399,219,462,212,525,206,605,191,627,184"/>
+<area shape="rect" title=" " alt="" coords="596,249,660,274"/>
+<area shape="poly" title=" " alt="" coords="657,187,640,235,635,233,652,185"/>
+<area shape="rect" title=" " alt="" coords="693,330,774,356"/>
+<area shape="poly" title=" " alt="" coords="667,185,725,315,720,317,662,187"/>
+<area shape="rect" target="_parent" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html" title=" " alt="" coords="1085,249,1230,274"/>
+<area shape="poly" title=" " alt="" coords="701,178,864,202,1073,239,1091,242,1090,248,1072,244,863,208,700,183"/>
+<area shape="rect" title=" " alt="" coords="927,241,1060,282"/>
+<area shape="poly" title=" " alt="" coords="702,183,913,237,911,242,700,188"/>
+<area shape="rect" title=" " alt="" coords="81,249,232,274"/>
+<area shape="poly" title=" " alt="" coords="630,189,606,196,505,216,425,224,345,230,243,244,223,248,222,243,243,239,345,225,425,218,504,210,605,191,628,184"/>
+<area shape="rect" href="utils_8hpp_source.html" title=" " alt="" coords="735,249,804,274"/>
+<area shape="poly" title=" " alt="" coords="676,184,744,237,741,241,673,188"/>
+<area shape="poly" title=" " alt="" coords="767,276,748,317,743,315,762,274"/>
+<area shape="poly" title=" " alt="" coords="728,107,684,151,680,147,724,103"/>
+<area shape="poly" title=" " alt="" coords="692,96,609,100,512,109,423,126,390,139,368,154,357,172,353,192,356,233,350,234,348,192,352,170,364,151,387,134,421,121,511,103,609,94,692,91"/>
+<area shape="poly" title=" " alt="" coords="749,104,850,235,845,238,745,107"/>
+<area shape="poly" title=" " alt="" coords="740,106,734,147,726,172,715,195,691,221,665,242,662,238,688,218,710,192,721,170,728,146,734,105"/>
+<area shape="poly" title=" " alt="" coords="757,103,825,145,916,191,994,216,1094,242,1093,247,993,221,914,196,823,150,754,108"/>
+<area shape="poly" title=" " alt="" coords="692,97,624,102,537,112,441,129,347,155,273,193,189,243,186,238,270,188,345,150,440,124,536,107,623,97,692,92"/>
+<area shape="poly" title=" " alt="" coords="745,105,759,152,770,233,765,233,754,153,740,106"/>
+<area shape="rect" title=" " alt="" coords="926,153,1061,193"/>
+<area shape="poly" title=" " alt="" coords="778,103,916,145,915,150,776,108"/>
+<area shape="poly" title=" " alt="" coords="211,184,323,239,321,244,209,189"/>
+<area shape="poly" title=" " alt="" coords="201,184,259,237,256,241,197,188"/>
+<area shape="poly" title=" " alt="" coords="184,187,168,235,163,233,179,185"/>
+<area shape="rect" title=" " alt="" coords="5,249,57,274"/>
+<area shape="poly" title=" " alt="" coords="165,189,67,243,65,238,163,184"/>
+<area shape="poly" title=" " alt="" coords="470,188,392,242,389,237,467,184"/>
+<area shape="poly" title=" " alt="" coords="495,185,522,234,517,236,490,188"/>
+<area shape="poly" title=" " alt="" coords="482,188,457,236,452,234,477,185"/>
+<area shape="poly" title=" " alt="" coords="565,184,684,206,817,239,823,241,822,246,816,244,683,211,564,189"/>
+<area shape="poly" title=" " alt="" coords="507,184,597,238,594,243,504,189"/>
+<area shape="poly" title=" " alt="" coords="440,189,218,247,217,242,439,184"/>
+<area shape="poly" title=" " alt="" coords="527,184,721,243,719,248,525,189"/>
 </map>
 </div>
 </div>
