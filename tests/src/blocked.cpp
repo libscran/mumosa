@@ -9,7 +9,7 @@
 class ComputeDistanceBlockedTest : public ::testing::Test {
 protected:
     static void SetUpTestSuite() {
-        first = scran_tests::simulate_vector(ndim * nobs, scran_tests::SimulationParameters());
+        first = scran_tests::simulate_vector(ndim * nobs, scran_tests::SimulateVectorParameters());
         builder.reset(new knncolle::VptreeBuilder<int, double, double>(
             std::make_shared<knncolle::EuclideanDistance<double, double> >()
         ));

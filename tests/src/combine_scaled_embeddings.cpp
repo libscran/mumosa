@@ -7,12 +7,12 @@
 TEST(CombineScaledEmbeddings, Basic) {
     size_t nobs = 123;
     auto first = scran_tests::simulate_vector(20 * nobs, [&]{
-        scran_tests::SimulationParameters sparams;
+        scran_tests::SimulateVectorParameters sparams;
         sparams.seed = 1000;
         return sparams;
     }());
     auto second = scran_tests::simulate_vector(5 * nobs, [&]{
-        scran_tests::SimulationParameters sparams;
+        scran_tests::SimulateVectorParameters sparams;
         sparams.seed = 2000;
         return sparams;
     }());
