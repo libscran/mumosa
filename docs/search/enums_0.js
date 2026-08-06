@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['weightpolicy_0',['WeightPolicy',['https://libscran.github.io/scran_blocks/namespacescran__blocks.html#ac2412948da94055ff438267ba089ba97',1,'scran_blocks']]]
+  ['numerictype_0',['NumericType',['https://knncolle.github.io/knncolle/namespaceknncolle.html#a9aa73a4ad540791a911eb9fa64b51de3',1,'knncolle']]]
 ];

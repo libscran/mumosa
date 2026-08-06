@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['weightpolicy_0',['WeightPolicy',['https://libscran.github.io/scran_blocks/namespacescran__blocks.html#ac2412948da94055ff438267ba089ba97',1,'scran_blocks']]]
+  ['upper_5fbound_0',['upper_bound',['https://libscran.github.io/scran_blocks/structscran__blocks_1_1VariableWeightParameters.html#a865b484b6fc8611048fcadab863de6bf',1,'scran_blocks::VariableWeightParameters']]],
+  ['utils_2ehpp_1',['utils.hpp',['https://knncolle.github.io/knncolle/utils_8hpp.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['upper_5fbound_0',['upper_bound',['https://libscran.github.io/scran_blocks/structscran__blocks_1_1VariableWeightParameters.html#a865b484b6fc8611048fcadab863de6bf',1,'scran_blocks::VariableWeightParameters']]]
+  ['seed_0',['seed',['https://knncolle.github.io/knncolle/structknncolle_1_1VptreeOptions.html#aa55f3dff5e333fe1d34dcfd98fe78aed',1,'knncolle::VptreeOptions']]]
 ];

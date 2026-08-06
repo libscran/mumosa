@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['can_5fsearch_5fall_0',['can_search_all',['https://knncolle.github.io/knncolle/classknncolle_1_1BruteforceSearcher.html#a7ae415a6fa177b498359371211c007a1',1,'knncolle::BruteforceSearcher::can_search_all()'],['https://knncolle.github.io/knncolle/classknncolle_1_1Searcher.html#a175ab05c339e3aa39b974f1ceebc21a3',1,'knncolle::Searcher::can_search_all()'],['https://knncolle.github.io/knncolle/classknncolle_1_1VptreeSearcher.html#a8df5ca5cd6c2f305da615f7839ba7894',1,'knncolle::VptreeSearcher::can_search_all()']]],
+  ['can_5fsearch_5fall_0',['can_search_all',['https://knncolle.github.io/knncolle/classknncolle_1_1Searcher.html#a175ab05c339e3aa39b974f1ceebc21a3',1,'knncolle::Searcher']]],
   ['cap_5fk_1',['cap_k',['https://knncolle.github.io/knncolle/namespaceknncolle.html#a926c81cd626de7081b073a891d352543',1,'knncolle']]],
   ['cap_5fk_5fquery_2',['cap_k_query',['https://knncolle.github.io/knncolle/namespaceknncolle.html#a918d96e82ead9e67d7c008bde1e22505',1,'knncolle']]],
   ['cell_20analyses_3',['Multi-modal single-cell analyses',['../index.html',1,'']]],
@@ -14,5 +14,6 @@ var searchData=
   ['compute_5fweights_11',['compute_weights',['https://libscran.github.io/scran_blocks/namespacescran__blocks.html#a2eb0ccb73289d97436afd94824ec0fae',1,'scran_blocks::compute_weights(const std::size_t num_blocks, const Size_ *const sizes, const WeightPolicy policy, const VariableWeightParameters &amp;variable, Weight_ *const weights)'],['https://libscran.github.io/scran_blocks/namespacescran__blocks.html#a182b74f7588264fae43fa06015f045c7',1,'scran_blocks::compute_weights(const std::vector&lt; Size_ &gt; &amp;sizes, const WeightPolicy policy, const VariableWeightParameters &amp;variable)']]],
   ['count_5fall_5fneighbors_5fwithout_5fself_12',['count_all_neighbors_without_self',['https://knncolle.github.io/knncolle/namespaceknncolle.html#ab636bced615a3a669ef0e207b5d848cc',1,'knncolle']]],
   ['create_5fbuffers_13',['create_buffers',['../classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970',1,'mumosa::BlockedIndicesFactory']]],
-  ['create_5fworkspace_14',['create_workspace',['../namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548',1,'mumosa']]]
+  ['create_5fworkspace_14',['create_workspace',['../namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548',1,'mumosa']]],
+  ['custom_5fsave_5ffor_5fl2normalized_5fnormalized_15',['custom_save_for_l2normalized_normalized',['https://knncolle.github.io/knncolle/namespaceknncolle.html#addf5942d7b462be001619860d8b4b158',1,'knncolle']]]
 ];

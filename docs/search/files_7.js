@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['matrix_2ehpp_0',['Matrix.hpp',['https://knncolle.github.io/knncolle/Matrix_8hpp.html',1,'']]],
-  ['mumosa_2ehpp_1',['mumosa.hpp',['../mumosa_8hpp.html',1,'']]]
+  ['neighborqueue_2ehpp_0',['NeighborQueue.hpp',['https://knncolle.github.io/knncolle/NeighborQueue_8hpp.html',1,'']]],
+  ['numerictype_2ehpp_1',['NumericType.hpp',['https://knncolle.github.io/knncolle/NumericType_8hpp.html',1,'']]]
 ];

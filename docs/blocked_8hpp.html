@@ -113,6 +113,7 @@ $(function(){ initResizable(false); });
 <code>#include &quot;<a class="elRef" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html">knncolle/knncolle.hpp</a>&quot;</code><br />
 <code>#include &quot;sanisizer/sanisizer.hpp&quot;</code><br />
 <code>#include &quot;<a class="elRef" href="https://libscran.github.io/scran_blocks/scran__blocks_8hpp.html">scran_blocks/scran_blocks.hpp</a>&quot;</code><br />
+<code>#include &quot;quickstats/quickstats.hpp&quot;</code><br />
 <code>#include &quot;<a class="el" href="simple_8hpp_source.html">simple.hpp</a>&quot;</code><br />
 <code>#include &quot;utils.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -120,40 +121,41 @@ Include dependency graph for blocked.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="blocked_8hpp__incl.png" border="0" usemap="#amumosa_2blocked_8hpp" alt=""/></div>
 <map name="amumosa_2blocked_8hpp" id="amumosa_2blocked_8hpp">
-<area shape="rect" title="Compute distances to nearest neighbors with blocking." alt="" coords="331,5,476,31"/>
-<area shape="rect" title=" " alt="" coords="5,175,63,201"/>
-<area shape="poly" title=" " alt="" coords="357,34,290,54,219,81,135,126,66,168,63,164,132,121,217,77,289,49,355,29"/>
-<area shape="rect" title=" " alt="" coords="86,175,160,201"/>
-<area shape="poly" title=" " alt="" coords="379,34,289,81,154,168,151,164,286,77,377,29"/>
-<area shape="rect" title=" " alt="" coords="184,175,249,201"/>
-<area shape="poly" title=" " alt="" coords="392,34,243,167,239,163,388,30"/>
-<area shape="rect" target="_parent" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html" title=" " alt="" coords="273,175,419,201"/>
-<area shape="poly" title=" " alt="" coords="402,32,357,161,352,160,397,31"/>
-<area shape="rect" title=" " alt="" coords="442,175,594,201"/>
-<area shape="poly" title=" " alt="" coords="412,30,467,118,500,161,496,165,462,121,408,33"/>
-<area shape="rect" target="_parent" href="https://libscran.github.io/scran_blocks/scran__blocks_8hpp.html" title=" " alt="" coords="634,79,768,120"/>
-<area shape="poly" title=" " alt="" coords="450,29,619,74,618,79,448,34"/>
-<area shape="rect" href="simple_8hpp.html" title="Compute distances to nearest neighbors." alt="" coords="476,86,560,112"/>
-<area shape="poly" title=" " alt="" coords="422,29,490,75,487,80,419,34"/>
-<area shape="rect" href="utils_8hpp_source.html" title=" " alt="" coords="1086,175,1155,201"/>
-<area shape="poly" title=" " alt="" coords="452,29,511,49,573,77,588,88,598,99,608,109,623,117,686,139,740,150,790,154,837,154,937,151,994,154,1061,165,1073,168,1071,173,1060,170,994,160,937,156,837,159,790,160,740,156,684,144,621,122,605,113,594,102,584,92,570,81,509,54,450,34"/>
-<area shape="poly" title=" " alt="" coords="476,106,400,112,299,123,187,142,75,170,71,171,69,166,73,165,186,137,299,118,399,106,476,100"/>
-<area shape="poly" title=" " alt="" coords="476,109,341,132,257,149,173,170,167,172,166,167,172,165,256,144,340,126,476,104"/>
-<area shape="poly" title=" " alt="" coords="476,112,378,136,263,170,259,172,257,167,261,165,377,131,475,107"/>
-<area shape="poly" title=" " alt="" coords="495,115,385,170,382,166,493,110"/>
-<area shape="poly" title=" " alt="" coords="521,113,521,159,515,159,515,113"/>
-<area shape="rect" title=" " alt="" coords="775,175,853,201"/>
-<area shape="poly" title=" " alt="" coords="555,110,579,117,672,140,764,165,770,167,769,172,763,170,670,145,577,122,554,115"/>
-<area shape="rect" title=" " alt="" coords="877,175,935,201"/>
-<area shape="poly" title=" " alt="" coords="554,110,579,117,659,132,722,138,786,146,865,165,869,166,868,171,864,170,785,151,722,143,658,137,577,122,553,115"/>
-<area shape="rect" title=" " alt="" coords="958,175,1011,201"/>
-<area shape="poly" title=" " alt="" coords="553,110,579,117,634,127,682,133,764,136,846,142,893,150,948,165,951,166,949,171,947,170,892,156,845,147,764,141,681,138,633,133,577,122,552,115"/>
-<area shape="rect" title=" " alt="" coords="1044,256,1125,282"/>
-<area shape="poly" title=" " alt="" coords="553,110,579,117,622,123,677,126,806,129,932,138,985,149,1025,165,1043,181,1059,201,1078,240,1074,243,1054,203,1040,185,1022,170,983,154,932,143,806,134,677,131,621,128,577,122,551,115"/>
-<area shape="rect" title=" " alt="" coords="618,168,751,208"/>
-<area shape="poly" title=" " alt="" coords="543,110,635,158,632,163,540,115"/>
-<area shape="poly" title=" " alt="" coords="553,110,579,117,652,130,715,136,823,140,931,144,994,151,1068,165,1077,167,1075,172,1067,170,993,156,931,149,823,145,715,142,651,135,577,122,551,115"/>
-<area shape="poly" title=" " alt="" coords="1118,202,1099,243,1094,241,1113,200"/>
+<area shape="rect" title="Compute distances to nearest neighbors with blocking." alt="" coords="406,5,550,31"/>
+<area shape="rect" title=" " alt="" coords="5,168,63,193"/>
+<area shape="poly" title=" " alt="" coords="407,34,320,53,228,81,140,122,67,162,65,157,137,117,226,77,319,48,406,29"/>
+<area shape="rect" title=" " alt="" coords="86,168,160,193"/>
+<area shape="poly" title=" " alt="" coords="440,34,379,55,312,81,228,123,158,162,155,157,226,118,310,77,377,50,438,29"/>
+<area shape="rect" title=" " alt="" coords="184,168,249,193"/>
+<area shape="poly" title=" " alt="" coords="460,34,251,161,248,157,457,29"/>
+<area shape="rect" target="_parent" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html" title=" " alt="" coords="273,168,419,193"/>
+<area shape="poly" title=" " alt="" coords="470,33,368,157,364,154,466,30"/>
+<area shape="rect" title=" " alt="" coords="442,168,594,193"/>
+<area shape="poly" title=" " alt="" coords="484,31,514,152,509,153,478,32"/>
+<area shape="rect" target="_parent" href="https://libscran.github.io/scran_blocks/scran__blocks_8hpp.html" title=" " alt="" coords="723,79,857,120"/>
+<area shape="poly" title=" " alt="" coords="527,29,708,75,707,80,525,34"/>
+<area shape="rect" title=" " alt="" coords="1023,168,1192,193"/>
+<area shape="poly" title=" " alt="" coords="530,29,593,48,659,77,675,88,686,98,697,108,712,117,754,127,829,140,1008,164,1007,169,828,145,753,132,710,122,694,113,682,102,672,92,657,81,591,53,529,34"/>
+<area shape="rect" href="simple_8hpp.html" title="Compute distances to nearest neighbors." alt="" coords="515,86,598,112"/>
+<area shape="poly" title=" " alt="" coords="492,30,536,74,532,77,488,33"/>
+<area shape="rect" href="utils_8hpp_source.html" title=" " alt="" coords="929,168,998,193"/>
+<area shape="poly" title=" " alt="" coords="510,29,559,50,611,77,640,98,652,108,668,117,770,141,914,168,913,173,769,146,666,122,649,112,636,103,609,81,556,55,508,34"/>
+<area shape="poly" title=" " alt="" coords="515,107,329,128,206,146,78,170,77,165,205,141,328,123,514,102"/>
+<area shape="poly" title=" " alt="" coords="515,110,369,134,176,170,175,165,368,129,514,105"/>
+<area shape="poly" title=" " alt="" coords="515,112,265,169,264,164,514,107"/>
+<area shape="poly" title=" " alt="" coords="525,115,393,164,391,159,523,110"/>
+<area shape="poly" title=" " alt="" coords="553,114,533,155,528,152,548,111"/>
+<area shape="poly" title=" " alt="" coords="599,106,668,117,1007,164,1007,169,667,122,598,111"/>
+<area shape="rect" title=" " alt="" coords="618,168,695,193"/>
+<area shape="poly" title=" " alt="" coords="574,110,631,156,628,160,570,115"/>
+<area shape="rect" title=" " alt="" coords="720,168,777,193"/>
+<area shape="poly" title=" " alt="" coords="587,110,706,159,704,164,585,115"/>
+<area shape="rect" title=" " alt="" coords="801,168,854,193"/>
+<area shape="poly" title=" " alt="" coords="595,110,617,117,787,164,785,169,616,122,593,115"/>
+<area shape="rect" title=" " alt="" coords="887,241,968,267"/>
+<area shape="poly" title=" " alt="" coords="593,110,617,117,655,125,689,128,747,129,774,130,803,136,834,147,868,166,897,194,918,226,913,229,893,197,864,170,831,152,802,141,774,136,747,134,688,133,655,130,616,122,592,115"/>
+<area shape="poly" title=" " alt="" coords="593,110,617,117,699,134,763,143,828,151,910,165,914,166,913,171,910,170,827,157,762,149,698,139,616,122,591,115"/>
+<area shape="poly" title=" " alt="" coords="960,195,943,229,938,226,955,192"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">

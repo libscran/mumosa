@@ -110,328 +110,332 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="codeRef" href="https://knncolle.github.io/knncolle/knncolle_8hpp.html">knncolle/knncolle.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;sanisizer/sanisizer.hpp&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="codeRef" href="https://libscran.github.io/scran_blocks/scran__blocks_8hpp.html">scran_blocks/scran_blocks.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="simple_8hpp.html">simple.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;utils.hpp&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="foldopen" id="foldopen00020" data-start="{" data-end="}">
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespacemumosa.html">   20</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacemumosa.html">mumosa</a> {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html">   25</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a> {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html#af5844d64ee5524d9074f97a8d6cbc237">   31</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#af5844d64ee5524d9074f97a8d6cbc237">num_neighbors</a> = 20;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559">   36</a></span>    <a class="code hl_enumerationRef" href="https://libscran.github.io/scran_blocks/namespacescran__blocks.html#ac2412948da94055ff438267ba089ba97">scran_blocks::WeightPolicy</a> <a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559">block_weight_policy</a> = scran_blocks::WeightPolicy::VARIABLE;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html#a3da1b340177201902deb499edf632218">   42</a></span>    <a class="code hl_structRef" href="https://libscran.github.io/scran_blocks/structscran__blocks_1_1VariableWeightParameters.html">scran_blocks::VariableWeightParameters</a> <a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#a3da1b340177201902deb499edf632218">variable_block_weight_parameters</a>; </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html#abf104360e28bdb625b49ab062d9066bc">   48</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#abf104360e28bdb625b49ab062d9066bc">num_threads</a> = 1;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>};</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;quickstats/quickstats.hpp&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="simple_8hpp.html">simple.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;utils.hpp&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="}">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="namespacemumosa.html">   21</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacemumosa.html">mumosa</a> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html">   26</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a> {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html#af5844d64ee5524d9074f97a8d6cbc237">   32</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#af5844d64ee5524d9074f97a8d6cbc237">num_neighbors</a> = 20;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559">   37</a></span>    <a class="code hl_enumerationRef" href="https://libscran.github.io/scran_blocks/namespacescran__blocks.html#ac2412948da94055ff438267ba089ba97">scran_blocks::WeightPolicy</a> <a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559">block_weight_policy</a> = scran_blocks::WeightPolicy::VARIABLE;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html#a3da1b340177201902deb499edf632218">   43</a></span>    <a class="code hl_structRef" href="https://libscran.github.io/scran_blocks/structscran__blocks_1_1VariableWeightParameters.html">scran_blocks::VariableWeightParameters</a> <a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#a3da1b340177201902deb499edf632218">variable_block_weight_parameters</a>; </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedOptions.html#abf104360e28bdb625b49ab062d9066bc">   49</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#abf104360e28bdb625b49ab062d9066bc">num_threads</a> = 1;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>};</div>
 </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Distance_&gt;</div>
-<div class="foldopen" id="foldopen00059" data-start="{" data-end="};">
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedWorkspace.html">   59</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace</a> {</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    std::vector&lt;Distance_&gt; weights;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    Distance_ total_weight;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    std::vector&lt;Distance_&gt; distance_buffer;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>};</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Distance_&gt;</div>
+<div class="foldopen" id="foldopen00060" data-start="{" data-end="};">
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedWorkspace.html">   60</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace</a> {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    std::vector&lt;Distance_&gt; weights;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    Distance_ total_weight;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    std::vector&lt;Distance_&gt; distance_buffer;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>};</div>
 </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Distance_, <span class="keyword">typename</span> Index_&gt;</div>
-<div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">   82</a></span><a class="code hl_struct" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace&lt;Distance_&gt;</a> <a class="code hl_function" href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">create_workspace</a>(<span class="keyword">const</span> std::vector&lt;Index_&gt;&amp; block_sizes, <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a>&amp; options) {</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <a class="code hl_struct" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace&lt;Distance_&gt;</a> output;</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    output.weights = <a class="code hl_functionRef" href="https://libscran.github.io/scran_blocks/namespacescran__blocks.html#a2eb0ccb73289d97436afd94824ec0fae">scran_blocks::compute_weights&lt;Distance_&gt;</a>(block_sizes, options.<a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559">block_weight_policy</a>, options.<a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#a3da1b340177201902deb499edf632218">variable_block_weight_parameters</a>);</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    output.total_weight = std::accumulate(output.weights.begin(), output.weights.end(), <span class="keyword">static_cast&lt;</span>Distance_<span class="keyword">&gt;</span>(0));</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Distance_, <span class="keyword">typename</span> Index_&gt;</div>
+<div class="foldopen" id="foldopen00083" data-start="{" data-end="}">
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">   83</a></span><a class="code hl_struct" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace&lt;Distance_&gt;</a> <a class="code hl_function" href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">create_workspace</a>(<span class="keyword">const</span> std::vector&lt;Index_&gt;&amp; block_sizes, <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a>&amp; options) {</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <a class="code hl_struct" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace&lt;Distance_&gt;</a> output;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    output.weights = <a class="code hl_functionRef" href="https://libscran.github.io/scran_blocks/namespacescran__blocks.html#a2eb0ccb73289d97436afd94824ec0fae">scran_blocks::compute_weights&lt;Distance_&gt;</a>(block_sizes, options.<a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559">block_weight_policy</a>, options.<a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#a3da1b340177201902deb499edf632218">variable_block_weight_parameters</a>);</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    Index_ max_size = 0;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordflow">if</span> (block_sizes.size()) {</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        max_size = *std::max_element(block_sizes.begin(), block_sizes.end());</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    }</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    sanisizer::resize(output.distance_buffer, max_size);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordflow">return</span> output;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    quickstats::PairwiseSumWorkspace&lt;Distance_&gt; pswrk;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    quickstats::PairwiseSumOptions psopt;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    output.total_weight = quickstats::pairwise_sum(output.weights.size(), output.weights.data(), pswrk, psopt);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    Index_ max_size = 0;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordflow">if</span> (block_sizes.size()) {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        max_size = *std::max_element(block_sizes.begin(), block_sizes.end());</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    }</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    sanisizer::resize(output.distance_buffer, max_size);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordflow">return</span> output;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
 </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_&gt;</div>
-<div class="foldopen" id="foldopen00139" data-start="{" data-end="}">
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">  139</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;<span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt;</a> &gt; &gt;&amp; prebuilts,</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <a class="code hl_struct" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace&lt;Distance_&gt;</a>&amp; workspace,</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a>&amp; options</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>) {</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <a class="code hl_struct" href="structmumosa_1_1Options.html">Options</a> simple_opt;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    simple_opt.<a class="code hl_variable" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">num_neighbors</a> = options.<a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#af5844d64ee5524d9074f97a8d6cbc237">num_neighbors</a>;</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    simple_opt.<a class="code hl_variable" href="structmumosa_1_1Options.html#a390a953ace5a6fa0a172efb8cb691929">num_threads</a> = options.<a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#abf104360e28bdb625b49ab062d9066bc">num_threads</a>;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    std::pair&lt;Distance_, Distance_&gt; output(0, 0);</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keyword">const</span> <span class="keyword">auto</span> nblocks = prebuilts.size();</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordflow">for</span> (I&lt;<span class="keyword">decltype</span>(nblocks)&gt; b = 0; b &lt; nblocks; ++b) {</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <span class="keyword">const</span> <span class="keyword">auto</span> curweight = workspace.weights[b];</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; pbptr = prebuilts[b];</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <span class="keywordflow">if</span> (curweight &amp;&amp; pbptr &amp;&amp; pbptr-&gt;num_observations()) {</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            <span class="keyword">const</span> <span class="keyword">auto</span> curdist = <a class="code hl_function" href="namespacemumosa.html#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance</a>(*pbptr, workspace.distance_buffer.data(), simple_opt);</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            output.first += curdist.first * curweight;</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            output.second += curdist.second * curweight;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        }</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    }</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keywordflow">if</span> (workspace.total_weight) {</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        output.first /= workspace.total_weight;</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        output.second /= workspace.total_weight;</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    }</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordflow">return</span> output;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>}</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_&gt;</div>
+<div class="foldopen" id="foldopen00143" data-start="{" data-end="}">
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">  143</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;<span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt;</a> &gt; &gt;&amp; prebuilts,</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <a class="code hl_struct" href="structmumosa_1_1BlockedWorkspace.html">BlockedWorkspace&lt;Distance_&gt;</a>&amp; workspace,</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a>&amp; options</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>) {</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <a class="code hl_struct" href="structmumosa_1_1Options.html">Options</a> simple_opt;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    simple_opt.<a class="code hl_variable" href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">num_neighbors</a> = options.<a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#af5844d64ee5524d9074f97a8d6cbc237">num_neighbors</a>;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    simple_opt.<a class="code hl_variable" href="structmumosa_1_1Options.html#a390a953ace5a6fa0a172efb8cb691929">num_threads</a> = options.<a class="code hl_variable" href="structmumosa_1_1BlockedOptions.html#abf104360e28bdb625b49ab062d9066bc">num_threads</a>;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    std::pair&lt;Distance_, Distance_&gt; output(0, 0);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keyword">const</span> <span class="keyword">auto</span> nblocks = prebuilts.size();</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordflow">for</span> (I&lt;<span class="keyword">decltype</span>(nblocks)&gt; b = 0; b &lt; nblocks; ++b) {</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keyword">const</span> <span class="keyword">auto</span> curweight = workspace.weights[b];</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; pbptr = prebuilts[b];</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordflow">if</span> (curweight &amp;&amp; pbptr &amp;&amp; pbptr-&gt;num_observations()) {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <span class="keyword">const</span> <span class="keyword">auto</span> curdist = <a class="code hl_function" href="namespacemumosa.html#ab9bb10478b865f21008d5b87e5d8cf4a">compute_distance</a>(*pbptr, workspace.distance_buffer.data(), simple_opt);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            output.first += curdist.first * curweight;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            output.second += curdist.second * curweight;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    }</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="keywordflow">if</span> (workspace.total_weight) {</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        output.first /= workspace.total_weight;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        output.second /= workspace.total_weight;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    }</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keywordflow">return</span> output;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>}</div>
 </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
-<div class="foldopen" id="foldopen00192" data-start="{" data-end="}">
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1">  192</a></span>std::vector&lt;std::shared_ptr&lt;const knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt; &gt; &gt; <a class="code hl_function" href="namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1">build_blocked_indices</a>(</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="keyword">const</span> std::size_t num_dim,</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keyword">const</span> std::vector&lt;Index_&gt; block_sizes,</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>) {</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keyword">const</span> <span class="keyword">auto</span> num_blocks = block_sizes.size();</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="keyword">auto</span> prebuilts = sanisizer::create&lt;std::vector&lt;std::shared_ptr&lt;const knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt; &gt; &gt; &gt;(num_blocks);</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    Index_ sofar = 0;</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keywordflow">for</span> (I&lt;<span class="keyword">decltype</span>(num_blocks)&gt; b = 0; b &lt; num_blocks; ++b) {</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keyword">const</span> <span class="keyword">auto</span> cursize = block_sizes[b];</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordflow">if</span> (cursize) {</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>            prebuilts[b] = builder.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90">build_shared</a>(<a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>(num_dim, cursize, data + sanisizer::product_unsafe&lt;std::size_t&gt;(sofar, num_dim)));</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        }</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        sofar += cursize;</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    }</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="keywordflow">return</span> prebuilts;</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>}</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
+<div class="foldopen" id="foldopen00196" data-start="{" data-end="}">
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1">  196</a></span>std::vector&lt;std::shared_ptr&lt;const knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt; &gt; &gt; <a class="code hl_function" href="namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1">build_blocked_indices</a>(</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="keyword">const</span> std::size_t num_dim,</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="keyword">const</span> std::vector&lt;Index_&gt; block_sizes,</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>) {</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keyword">const</span> <span class="keyword">auto</span> num_blocks = block_sizes.size();</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keyword">auto</span> prebuilts = sanisizer::create&lt;std::vector&lt;std::shared_ptr&lt;const knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt; &gt; &gt; &gt;(num_blocks);</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    Index_ sofar = 0;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="keywordflow">for</span> (I&lt;<span class="keyword">decltype</span>(num_blocks)&gt; b = 0; b &lt; num_blocks; ++b) {</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keyword">const</span> <span class="keyword">auto</span> cursize = block_sizes[b];</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keywordflow">if</span> (cursize) {</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            prebuilts[b] = builder.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90">build_shared</a>(<a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>(num_dim, cursize, data + sanisizer::product_unsafe&lt;std::size_t&gt;(sofar, num_dim)));</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        }</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        sofar += cursize;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    }</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keywordflow">return</span> prebuilts;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>}</div>
 </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
-<div class="foldopen" id="foldopen00235" data-start="{" data-end="}">
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a91388ad0732cac79997e01d9b9875372">  235</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <span class="keyword">const</span> std::size_t num_dim,</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keyword">const</span> std::vector&lt;Index_&gt;&amp; block_sizes,</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder,</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a>&amp; options</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>) {</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keyword">const</span> <span class="keyword">auto</span> prebuilts = <a class="code hl_function" href="namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1">build_blocked_indices</a>(num_dim, block_sizes, data, builder);</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <span class="keyword">auto</span> workspace = <a class="code hl_function" href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">create_workspace&lt;Distance_&gt;</a>(block_sizes, options);</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(prebuilts, workspace, options);</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>}</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
+<div class="foldopen" id="foldopen00239" data-start="{" data-end="}">
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a91388ad0732cac79997e01d9b9875372">  239</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    <span class="keyword">const</span> std::size_t num_dim,</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keyword">const</span> std::vector&lt;Index_&gt;&amp; block_sizes,</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder,</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a>&amp; options</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>) {</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    <span class="keyword">const</span> <span class="keyword">auto</span> prebuilts = <a class="code hl_function" href="namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1">build_blocked_indices</a>(num_dim, block_sizes, data, builder);</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    <span class="keyword">auto</span> workspace = <a class="code hl_function" href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">create_workspace&lt;Distance_&gt;</a>(block_sizes, options);</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(prebuilts, workspace, options);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>}</div>
 </div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Block_&gt;</div>
-<div class="foldopen" id="foldopen00257" data-start="{" data-end="};">
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html">  257</a></span><span class="keyword">class </span><a class="code hl_class" href="classmumosa_1_1BlockedIndicesFactory.html">BlockedIndicesFactory</a> {</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    Index_ my_num_cells;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <span class="keyword">const</span> Block_* my_block;</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    Block_ my_num_blocks = 0;</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    std::vector&lt;Index_&gt; my_block_sizes;</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    std::vector&lt;std::pair&lt;Index_, Index_&gt; &gt; my_contigs;</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    Index_ my_non_contig_total = 0;</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    std::vector&lt;Index_&gt; my_non_contig_offsets;</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Block_&gt;</div>
+<div class="foldopen" id="foldopen00261" data-start="{" data-end="};">
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html">  261</a></span><span class="keyword">class </span><a class="code hl_class" href="classmumosa_1_1BlockedIndicesFactory.html">BlockedIndicesFactory</a> {</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    Index_ my_num_cells;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keyword">const</span> Block_* my_block;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    Block_ my_num_blocks = 0;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    std::vector&lt;Index_&gt; my_block_sizes;</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00275" data-start="{" data-end="}">
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#a0443db4d10ca9b69e2f1999be3d9a743">  275</a></span>    <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a0443db4d10ca9b69e2f1999be3d9a743">BlockedIndicesFactory</a>(</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        <span class="keyword">const</span> Index_ num_cells,</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        <span class="keyword">const</span> Block_* block</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    ) :</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        my_num_cells(num_cells),</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        my_block(block)</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    {</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        <span class="keywordflow">if</span> (num_cells) {</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            my_num_blocks = sanisizer::sum&lt;Block_&gt;(1, *std::max_element(block, block + num_cells));</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        }</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        sanisizer::resize(my_block_sizes, my_num_blocks);</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="keyword">auto</span> block_non_contig = sanisizer::create&lt;std::vector&lt;char&gt; &gt;(my_num_blocks);</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        <span class="keyword">auto</span>&amp; block_ends = my_non_contig_offsets; <span class="comment">// repurposing the offset vector to store the end of each contiguous block.</span></div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        sanisizer::resize(block_ends, my_num_blocks);</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        <span class="keywordflow">for</span> (Index_ c = 0; c &lt; my_num_cells; ++c) {</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>            <span class="keyword">const</span> <span class="keyword">auto</span> curb = my_block[c];</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>            my_block_sizes[curb] += 1;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    std::vector&lt;std::pair&lt;Index_, Index_&gt; &gt; my_contigs;</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    Index_ my_non_contig_total = 0;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    std::vector&lt;Index_&gt; my_non_contig_offsets;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00279" data-start="{" data-end="}">
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#a0443db4d10ca9b69e2f1999be3d9a743">  279</a></span>    <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a0443db4d10ca9b69e2f1999be3d9a743">BlockedIndicesFactory</a>(</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        <span class="keyword">const</span> Index_ num_cells,</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        <span class="keyword">const</span> Block_* block</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    ) :</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        my_num_cells(num_cells),</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        my_block(block)</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    {</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <span class="keywordflow">if</span> (num_cells) {</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>            my_num_blocks = sanisizer::sum&lt;Block_&gt;(1, *std::max_element(block, block + num_cells));</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        }</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        sanisizer::resize(my_block_sizes, my_num_blocks);</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        <span class="keyword">auto</span> block_non_contig = sanisizer::create&lt;std::vector&lt;char&gt; &gt;(my_num_blocks);</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        <span class="keyword">auto</span>&amp; block_ends = my_non_contig_offsets; <span class="comment">// repurposing the offset vector to store the end of each contiguous block.</span></div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        sanisizer::resize(block_ends, my_num_blocks);</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>            <span class="keyword">auto</span>&amp; nc = block_non_contig[curb];</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            <span class="keywordflow">if</span> (!nc) {</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                <span class="keyword">auto</span>&amp; be = block_ends[curb];</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                <span class="keywordflow">if</span> (be == 0) {</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                    be = c + 1;</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (be == c) {</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                    ++be;</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                    nc = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                }</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>            }</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        }</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        sanisizer::resize(my_contigs, my_num_blocks);</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> </div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        <span class="keywordflow">for</span> (Block_ b = 0; b &lt; my_num_blocks; ++b) {</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>            <span class="keyword">const</span> <span class="keyword">auto</span> length = my_block_sizes[b];</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>            <span class="keywordflow">if</span> (block_non_contig[b]) {</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                my_non_contig_offsets[b] = my_non_contig_total; </div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                my_non_contig_total += length;</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (length) {</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                <span class="keyword">const</span> <span class="keyword">auto</span> start = block_ends[b] - length;</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                my_contigs[b] = std::make_pair(start, length);</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            }</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        }</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    }</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        <span class="keywordflow">for</span> (Index_ c = 0; c &lt; my_num_cells; ++c) {</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            <span class="keyword">const</span> <span class="keyword">auto</span> curb = my_block[c];</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>            my_block_sizes[curb] += 1;</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>            <span class="keyword">auto</span>&amp; nc = block_non_contig[curb];</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>            <span class="keywordflow">if</span> (!nc) {</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                <span class="keyword">auto</span>&amp; be = block_ends[curb];</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                <span class="keywordflow">if</span> (be == 0) {</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                    be = c + 1;</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (be == c) {</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                    ++be;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                    nc = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>                }</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>            }</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        }</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        sanisizer::resize(my_contigs, my_num_blocks);</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> </div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        <span class="keywordflow">for</span> (Block_ b = 0; b &lt; my_num_blocks; ++b) {</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>            <span class="keyword">const</span> <span class="keyword">auto</span> length = my_block_sizes[b];</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>            <span class="keywordflow">if</span> (block_non_contig[b]) {</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                my_non_contig_offsets[b] = my_non_contig_total; </div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                my_non_contig_total += length;</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (length) {</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>                <span class="keyword">const</span> <span class="keyword">auto</span> start = block_ends[b] - length;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                my_contigs[b] = std::make_pair(start, length);</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>            }</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        }</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    }</div>
 </div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span> </div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00327" data-start="{" data-end="}">
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66">  327</a></span>    <span class="keyword">const</span> std::vector&lt;Index_&gt;&amp; <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66">sizes</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        <span class="keywordflow">return</span> my_block_sizes;</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    }</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00331" data-start="{" data-end="}">
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66">  331</a></span>    <span class="keyword">const</span> std::vector&lt;Index_&gt;&amp; <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66">sizes</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        <span class="keywordflow">return</span> my_block_sizes;</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>    }</div>
 </div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_&gt;</div>
-<div class="foldopen" id="foldopen00336" data-start="{" data-end="};">
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">  336</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">Buffers</a> {</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        std::vector&lt;Index_&gt; tmp_offsets;</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>        std::vector&lt;Input_&gt; tmp_buffer;</div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    };</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_&gt;</div>
+<div class="foldopen" id="foldopen00340" data-start="{" data-end="};">
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno"><a class="line" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">  340</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">Buffers</a> {</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        std::vector&lt;Index_&gt; tmp_offsets;</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        std::vector&lt;Input_&gt; tmp_buffer;</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    };</div>
 </div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span> </div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_&gt;</div>
-<div class="foldopen" id="foldopen00351" data-start="{" data-end="}">
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970">  351</a></span>    <a class="code hl_struct" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">Buffers&lt;Input_&gt;</a> <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970">create_buffers</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>        <span class="keywordflow">return</span> <a class="code hl_struct" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">Buffers&lt;Input_&gt;</a>();</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>    }</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span> </div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_&gt;</div>
+<div class="foldopen" id="foldopen00355" data-start="{" data-end="}">
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970">  355</a></span>    <a class="code hl_struct" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">Buffers&lt;Input_&gt;</a> <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970">create_buffers</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        <span class="keywordflow">return</span> <a class="code hl_struct" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">Buffers&lt;Input_&gt;</a>();</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    }</div>
 </div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
-<div class="foldopen" id="foldopen00373" data-start="{" data-end="}">
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">  373</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">build</a>(</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        <span class="keyword">const</span> std::size_t num_dim,</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder,</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        std::vector&lt;std::shared_ptr&lt;<span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt;</a> &gt; &gt;&amp; output,</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        <a class="code hl_struct" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">Buffers&lt;Input_&gt;</a>&amp; work</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>    )<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        output.clear();</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        sanisizer::resize(output, my_num_blocks);</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span> </div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        <span class="keywordflow">for</span> (Block_ b = 0; b &lt; my_num_blocks; ++b) {</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; con = my_contigs[b];</div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>            <span class="keywordflow">if</span> (con.second) {</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>                <span class="keyword">const</span> <span class="keyword">auto</span> ptr = data + sanisizer::product_unsafe&lt;std::size_t&gt;(con.first, num_dim);</div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>                output[b] = builder.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90">build_shared</a>(<a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>(num_dim, con.second, ptr));</div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>            }</div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>        }</div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> </div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        <span class="keywordflow">if</span> (my_non_contig_total) {</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>            work.tmp_buffer.resize(sanisizer::product&lt;I&lt;<span class="keyword">decltype</span>(work.tmp_buffer.size())&gt; &gt;(my_non_contig_total, num_dim));</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>            work.tmp_offsets.clear();</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>            work.tmp_offsets.insert(work.tmp_offsets.end(), my_non_contig_offsets.begin(), my_non_contig_offsets.end());</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span> </div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>            Index_ c = 0;</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>            <span class="keywordflow">while</span> (c &lt; my_num_cells) {</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>                <span class="keyword">const</span> <span class="keyword">auto</span> curb = my_block[c];</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>                <span class="keyword">const</span> <span class="keyword">auto</span>&amp; con = my_contigs[curb];</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>                <span class="keywordflow">if</span> (con.second) {</div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>                    c += con.second; <span class="comment">// skip past the contiguous stretch of observations.</span></div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>                    <span class="keyword">auto</span>&amp; curoff = work.tmp_offsets[curb];</div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>                    std::copy_n(</div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>                        data + sanisizer::product_unsafe&lt;std::size_t&gt;(c, num_dim),</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>                        num_dim,</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>                        work.tmp_buffer.data() + sanisizer::product_unsafe&lt;std::size_t&gt;(curoff, num_dim)</div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>                    );</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>                    ++curoff;</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>                    ++c;</div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>                }</div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>            }</div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>            <span class="keywordflow">for</span> (Block_ b = 0; b &lt; my_num_blocks; ++b) {</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>                <span class="keywordflow">if</span> (my_contigs[b].second == 0) {</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> length = my_block_sizes[b];</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> ptr = work.tmp_buffer.data() + sanisizer::product_unsafe&lt;std::size_t&gt;(my_non_contig_offsets[b], num_dim);</div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>                    output[b] = builder.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90">build_shared</a>(<a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>(num_dim, length, ptr));</div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>                }</div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>            }</div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>        }</div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>    }</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span> </div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
+<div class="foldopen" id="foldopen00377" data-start="{" data-end="}">
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">  377</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">build</a>(</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        <span class="keyword">const</span> std::size_t num_dim,</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder,</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        std::vector&lt;std::shared_ptr&lt;<span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt;</a> &gt; &gt;&amp; output,</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        <a class="code hl_struct" href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">Buffers&lt;Input_&gt;</a>&amp; work</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>    )<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        output.clear();</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        sanisizer::resize(output, my_num_blocks);</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> </div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>        <span class="keywordflow">for</span> (Block_ b = 0; b &lt; my_num_blocks; ++b) {</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; con = my_contigs[b];</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>            <span class="keywordflow">if</span> (con.second) {</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>                <span class="keyword">const</span> <span class="keyword">auto</span> ptr = data + sanisizer::product_unsafe&lt;std::size_t&gt;(con.first, num_dim);</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>                output[b] = builder.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90">build_shared</a>(<a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>(num_dim, con.second, ptr));</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>            }</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>        }</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span> </div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        <span class="keywordflow">if</span> (my_non_contig_total) {</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>            work.tmp_buffer.resize(sanisizer::product&lt;I&lt;<span class="keyword">decltype</span>(work.tmp_buffer.size())&gt; &gt;(my_non_contig_total, num_dim));</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>            work.tmp_offsets.clear();</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>            work.tmp_offsets.insert(work.tmp_offsets.end(), my_non_contig_offsets.begin(), my_non_contig_offsets.end());</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>            Index_ c = 0;</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>            <span class="keywordflow">while</span> (c &lt; my_num_cells) {</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>                <span class="keyword">const</span> <span class="keyword">auto</span> curb = my_block[c];</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>                <span class="keyword">const</span> <span class="keyword">auto</span>&amp; con = my_contigs[curb];</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>                <span class="keywordflow">if</span> (con.second) {</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>                    c += con.second; <span class="comment">// skip past the contiguous stretch of observations.</span></div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>                    <span class="keyword">auto</span>&amp; curoff = work.tmp_offsets[curb];</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>                    std::copy_n(</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>                        data + sanisizer::product_unsafe&lt;std::size_t&gt;(c, num_dim),</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>                        num_dim,</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>                        work.tmp_buffer.data() + sanisizer::product_unsafe&lt;std::size_t&gt;(curoff, num_dim)</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>                    );</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>                    ++curoff;</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>                    ++c;</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>                }</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>            }</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span> </div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>            <span class="keywordflow">for</span> (Block_ b = 0; b &lt; my_num_blocks; ++b) {</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>                <span class="keywordflow">if</span> (my_contigs[b].second == 0) {</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> length = my_block_sizes[b];</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> ptr = work.tmp_buffer.data() + sanisizer::product_unsafe&lt;std::size_t&gt;(my_non_contig_offsets[b], num_dim);</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>                    output[b] = builder.<a class="code hl_functionRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90">build_shared</a>(<a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a>(num_dim, length, ptr));</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>                }</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>            }</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>        }</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>    }</div>
 </div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span> </div>
-<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
-<div class="foldopen" id="foldopen00442" data-start="{" data-end="}">
-<div class="line"><a id="l00442" name="l00442"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#ab7bfb8020b5379643ab1bd9b0fab806e">  442</a></span>    std::vector&lt;std::shared_ptr&lt;const knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt; &gt; &gt; <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#ab7bfb8020b5379643ab1bd9b0fab806e">build</a>(</div>
-<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>        <span class="keyword">const</span> std::size_t num_dim,</div>
-<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>        <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
-<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder</div>
-<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>    )<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>        std::vector&lt;std::shared_ptr&lt;const knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt; &gt; &gt; prebuilts;</div>
-<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>        <span class="keyword">auto</span> bufs = <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970">create_buffers&lt;Input_&gt;</a>();</div>
-<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>        <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">build</a>(num_dim, data, builder, prebuilts, bufs);</div>
-<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>        <span class="keywordflow">return</span> prebuilts;</div>
-<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>    }</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span> </div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
+<div class="foldopen" id="foldopen00446" data-start="{" data-end="}">
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno"><a class="line" href="classmumosa_1_1BlockedIndicesFactory.html#ab7bfb8020b5379643ab1bd9b0fab806e">  446</a></span>    std::vector&lt;std::shared_ptr&lt;const knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt; &gt; &gt; <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#ab7bfb8020b5379643ab1bd9b0fab806e">build</a>(</div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>        <span class="keyword">const</span> std::size_t num_dim,</div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>        <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>        <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder</div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>    )<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span>        std::vector&lt;std::shared_ptr&lt;const knncolle::Prebuilt&lt;Index_, Input_, Distance_&gt; &gt; &gt; prebuilts;</div>
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>        <span class="keyword">auto</span> bufs = <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970">create_buffers&lt;Input_&gt;</a>();</div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>        <a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">build</a>(num_dim, data, builder, prebuilts, bufs);</div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>        <span class="keywordflow">return</span> prebuilts;</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>    }</div>
 </div>
-<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>};</div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>};</div>
 </div>
-<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span> </div>
-<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Block_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
-<div class="foldopen" id="foldopen00479" data-start="{" data-end="}">
-<div class="line"><a id="l00479" name="l00479"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a8510a19aca6de4983bcfbef0b97cf940">  479</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(</div>
-<div class="line"><a id="l00480" name="l00480"></a><span class="lineno">  480</span>    <span class="keyword">const</span> std::size_t num_dim,</div>
-<div class="line"><a id="l00481" name="l00481"></a><span class="lineno">  481</span>    <span class="keyword">const</span> Index_ num_cells,</div>
-<div class="line"><a id="l00482" name="l00482"></a><span class="lineno">  482</span>    <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
-<div class="line"><a id="l00483" name="l00483"></a><span class="lineno">  483</span>    <span class="keyword">const</span> Block_* <span class="keyword">const</span> block,</div>
-<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>    <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder,</div>
-<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a>&amp; options</div>
-<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span>) {</div>
-<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>    <a class="code hl_class" href="classmumosa_1_1BlockedIndicesFactory.html">BlockedIndicesFactory&lt;Index_, Block_&gt;</a> blocked_factory(num_cells, block);</div>
-<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span>    <span class="keyword">const</span> <span class="keyword">auto</span> prebuilts = blocked_factory.<a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">build</a>(num_dim, data, builder);</div>
-<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>    <span class="keyword">auto</span> workspace = <a class="code hl_function" href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">create_workspace&lt;Distance_&gt;</a>(blocked_factory.<a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66">sizes</a>(), options);</div>
-<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(prebuilts, workspace, options);</div>
-<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>}</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span> </div>
+<div class="line"><a id="l00482" name="l00482"></a><span class="lineno">  482</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Index_, <span class="keyword">typename</span> Input_, <span class="keyword">typename</span> Block_, <span class="keyword">typename</span> Distance_, <span class="keyword">class</span> Matrix_ = knncolle::Matrix&lt;Index_, Input_&gt; &gt;</div>
+<div class="foldopen" id="foldopen00483" data-start="{" data-end="}">
+<div class="line"><a id="l00483" name="l00483"></a><span class="lineno"><a class="line" href="namespacemumosa.html#a8510a19aca6de4983bcfbef0b97cf940">  483</a></span>std::pair&lt;Distance_, Distance_&gt; <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(</div>
+<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>    <span class="keyword">const</span> std::size_t num_dim,</div>
+<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>    <span class="keyword">const</span> Index_ num_cells,</div>
+<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span>    <span class="keyword">const</span> Input_* <span class="keyword">const</span> data,</div>
+<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span>    <span class="keyword">const</span> Block_* <span class="keyword">const</span> block,</div>
+<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span>    <span class="keyword">const</span> <a class="code hl_classRef" href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder&lt;Index_, Input_, Distance_, Matrix_&gt;</a>&amp; builder,</div>
+<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>    <span class="keyword">const</span> <a class="code hl_struct" href="structmumosa_1_1BlockedOptions.html">BlockedOptions</a>&amp; options</div>
+<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>) {</div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>    <a class="code hl_class" href="classmumosa_1_1BlockedIndicesFactory.html">BlockedIndicesFactory&lt;Index_, Block_&gt;</a> blocked_factory(num_cells, block);</div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>    <span class="keyword">const</span> <span class="keyword">auto</span> prebuilts = blocked_factory.<a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">build</a>(num_dim, data, builder);</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>    <span class="keyword">auto</span> workspace = <a class="code hl_function" href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">create_workspace&lt;Distance_&gt;</a>(blocked_factory.<a class="code hl_function" href="classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66">sizes</a>(), options);</div>
+<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">compute_distance_blocked</a>(prebuilts, workspace, options);</div>
+<div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>}</div>
 </div>
-<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span> </div>
-<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>}</div>
+<div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span> </div>
+<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>}</div>
 </div>
-<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span> </div>
-<div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span> </div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassknncolle_1_1Builder_html"><div class="ttname"><a href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html">knncolle::Builder</a></div></div>
 <div class="ttc" id="aclassknncolle_1_1Builder_html_a9a7a0cb39688bedba6ab406e59da6c90"><div class="ttname"><a href="https://knncolle.github.io/knncolle/classknncolle_1_1Builder.html#a9a7a0cb39688bedba6ab406e59da6c90">knncolle::Builder::build_shared</a></div><div class="ttdeci">std::shared_ptr&lt; Prebuilt&lt; Index_, Data_, Distance_ &gt; &gt; build_shared(const Matrix_ &amp;data) const</div></div>
 <div class="ttc" id="aclassknncolle_1_1Prebuilt_html"><div class="ttname"><a href="https://knncolle.github.io/knncolle/classknncolle_1_1Prebuilt.html">knncolle::Prebuilt</a></div></div>
 <div class="ttc" id="aclassknncolle_1_1SimpleMatrix_html"><div class="ttname"><a href="https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html">knncolle::SimpleMatrix</a></div></div>
-<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html">mumosa::BlockedIndicesFactory</a></div><div class="ttdoc">Factory for creating nearest-neighbor search indices for each block.</div><div class="ttdef"><b>Definition</b> blocked.hpp:257</div></div>
-<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_a0443db4d10ca9b69e2f1999be3d9a743"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#a0443db4d10ca9b69e2f1999be3d9a743">mumosa::BlockedIndicesFactory::BlockedIndicesFactory</a></div><div class="ttdeci">BlockedIndicesFactory(const Index_ num_cells, const Block_ *block)</div><div class="ttdef"><b>Definition</b> blocked.hpp:275</div></div>
-<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_a14a3376745471edd1b72e6c508d56b49"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">mumosa::BlockedIndicesFactory::build</a></div><div class="ttdeci">void build(const std::size_t num_dim, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;output, Buffers&lt; Input_ &gt; &amp;work) const</div><div class="ttdef"><b>Definition</b> blocked.hpp:373</div></div>
-<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_a8825d775eb735f72c5c0be03ed860a66"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66">mumosa::BlockedIndicesFactory::sizes</a></div><div class="ttdeci">const std::vector&lt; Index_ &gt; &amp; sizes() const</div><div class="ttdef"><b>Definition</b> blocked.hpp:327</div></div>
-<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_a94a2caff1b1b77b7e6ca370cb1d57970"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970">mumosa::BlockedIndicesFactory::create_buffers</a></div><div class="ttdeci">Buffers&lt; Input_ &gt; create_buffers() const</div><div class="ttdef"><b>Definition</b> blocked.hpp:351</div></div>
-<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_ab7bfb8020b5379643ab1bd9b0fab806e"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#ab7bfb8020b5379643ab1bd9b0fab806e">mumosa::BlockedIndicesFactory::build</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; build(const std::size_t num_dim, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder) const</div><div class="ttdef"><b>Definition</b> blocked.hpp:442</div></div>
+<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html">mumosa::BlockedIndicesFactory</a></div><div class="ttdoc">Factory for creating nearest-neighbor search indices for each block.</div><div class="ttdef"><b>Definition</b> blocked.hpp:261</div></div>
+<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_a0443db4d10ca9b69e2f1999be3d9a743"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#a0443db4d10ca9b69e2f1999be3d9a743">mumosa::BlockedIndicesFactory::BlockedIndicesFactory</a></div><div class="ttdeci">BlockedIndicesFactory(const Index_ num_cells, const Block_ *block)</div><div class="ttdef"><b>Definition</b> blocked.hpp:279</div></div>
+<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_a14a3376745471edd1b72e6c508d56b49"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49">mumosa::BlockedIndicesFactory::build</a></div><div class="ttdeci">void build(const std::size_t num_dim, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;output, Buffers&lt; Input_ &gt; &amp;work) const</div><div class="ttdef"><b>Definition</b> blocked.hpp:377</div></div>
+<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_a8825d775eb735f72c5c0be03ed860a66"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66">mumosa::BlockedIndicesFactory::sizes</a></div><div class="ttdeci">const std::vector&lt; Index_ &gt; &amp; sizes() const</div><div class="ttdef"><b>Definition</b> blocked.hpp:331</div></div>
+<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_a94a2caff1b1b77b7e6ca370cb1d57970"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#a94a2caff1b1b77b7e6ca370cb1d57970">mumosa::BlockedIndicesFactory::create_buffers</a></div><div class="ttdeci">Buffers&lt; Input_ &gt; create_buffers() const</div><div class="ttdef"><b>Definition</b> blocked.hpp:355</div></div>
+<div class="ttc" id="aclassmumosa_1_1BlockedIndicesFactory_html_ab7bfb8020b5379643ab1bd9b0fab806e"><div class="ttname"><a href="classmumosa_1_1BlockedIndicesFactory.html#ab7bfb8020b5379643ab1bd9b0fab806e">mumosa::BlockedIndicesFactory::build</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; build(const std::size_t num_dim, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder) const</div><div class="ttdef"><b>Definition</b> blocked.hpp:446</div></div>
 <div class="ttc" id="aknncolle_8hpp_html"><div class="ttname"><a href="https://knncolle.github.io/knncolle/knncolle_8hpp.html">knncolle.hpp</a></div></div>
-<div class="ttc" id="anamespacemumosa_html"><div class="ttname"><a href="namespacemumosa.html">mumosa</a></div><div class="ttdoc">Scale multi-modal embeddings to adjust for differences in variance.</div><div class="ttdef"><b>Definition</b> blocked.hpp:20</div></div>
-<div class="ttc" id="anamespacemumosa_html_a865e2bcb5ff9ae07f7f4d9c762720f29"><div class="ttname"><a href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">mumosa::compute_distance_blocked</a></div><div class="ttdeci">std::pair&lt; Distance_, Distance_ &gt; compute_distance_blocked(const std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;prebuilts, BlockedWorkspace&lt; Distance_ &gt; &amp;workspace, const BlockedOptions &amp;options)</div><div class="ttdef"><b>Definition</b> blocked.hpp:139</div></div>
+<div class="ttc" id="anamespacemumosa_html"><div class="ttname"><a href="namespacemumosa.html">mumosa</a></div><div class="ttdoc">Scale multi-modal embeddings to adjust for differences in variance.</div><div class="ttdef"><b>Definition</b> blocked.hpp:21</div></div>
+<div class="ttc" id="anamespacemumosa_html_a865e2bcb5ff9ae07f7f4d9c762720f29"><div class="ttname"><a href="namespacemumosa.html#a865e2bcb5ff9ae07f7f4d9c762720f29">mumosa::compute_distance_blocked</a></div><div class="ttdeci">std::pair&lt; Distance_, Distance_ &gt; compute_distance_blocked(const std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;prebuilts, BlockedWorkspace&lt; Distance_ &gt; &amp;workspace, const BlockedOptions &amp;options)</div><div class="ttdef"><b>Definition</b> blocked.hpp:143</div></div>
 <div class="ttc" id="anamespacemumosa_html_ab9bb10478b865f21008d5b87e5d8cf4a"><div class="ttname"><a href="namespacemumosa.html#ab9bb10478b865f21008d5b87e5d8cf4a">mumosa::compute_distance</a></div><div class="ttdeci">std::pair&lt; Distance_, Distance_ &gt; compute_distance(const Index_ num_cells, Distance_ *const distances)</div><div class="ttdef"><b>Definition</b> simple.hpp:59</div></div>
-<div class="ttc" id="anamespacemumosa_html_abd487dda75494406f5e8b66e5d2d68f1"><div class="ttname"><a href="namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1">mumosa::build_blocked_indices</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; build_blocked_indices(const std::size_t num_dim, const std::vector&lt; Index_ &gt; block_sizes, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder)</div><div class="ttdef"><b>Definition</b> blocked.hpp:192</div></div>
-<div class="ttc" id="anamespacemumosa_html_ad4d80dfac74448a389f91f72f8a31548"><div class="ttname"><a href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">mumosa::create_workspace</a></div><div class="ttdeci">BlockedWorkspace&lt; Distance_ &gt; create_workspace(const std::vector&lt; Index_ &gt; &amp;block_sizes, const BlockedOptions &amp;options)</div><div class="ttdef"><b>Definition</b> blocked.hpp:82</div></div>
+<div class="ttc" id="anamespacemumosa_html_abd487dda75494406f5e8b66e5d2d68f1"><div class="ttname"><a href="namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1">mumosa::build_blocked_indices</a></div><div class="ttdeci">std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; build_blocked_indices(const std::size_t num_dim, const std::vector&lt; Index_ &gt; block_sizes, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder)</div><div class="ttdef"><b>Definition</b> blocked.hpp:196</div></div>
+<div class="ttc" id="anamespacemumosa_html_ad4d80dfac74448a389f91f72f8a31548"><div class="ttname"><a href="namespacemumosa.html#ad4d80dfac74448a389f91f72f8a31548">mumosa::create_workspace</a></div><div class="ttdeci">BlockedWorkspace&lt; Distance_ &gt; create_workspace(const std::vector&lt; Index_ &gt; &amp;block_sizes, const BlockedOptions &amp;options)</div><div class="ttdef"><b>Definition</b> blocked.hpp:83</div></div>
 <div class="ttc" id="anamespacescran__blocks_html_a2eb0ccb73289d97436afd94824ec0fae"><div class="ttname"><a href="https://libscran.github.io/scran_blocks/namespacescran__blocks.html#a2eb0ccb73289d97436afd94824ec0fae">scran_blocks::compute_weights</a></div><div class="ttdeci">void compute_weights(const std::size_t num_blocks, const Size_ *const sizes, const WeightPolicy policy, const VariableWeightParameters &amp;variable, Weight_ *const weights)</div></div>
 <div class="ttc" id="anamespacescran__blocks_html_ac2412948da94055ff438267ba089ba97"><div class="ttname"><a href="https://libscran.github.io/scran_blocks/namespacescran__blocks.html#ac2412948da94055ff438267ba089ba97">scran_blocks::WeightPolicy</a></div><div class="ttdeci">WeightPolicy</div></div>
 <div class="ttc" id="ascran__blocks_8hpp_html"><div class="ttname"><a href="https://libscran.github.io/scran_blocks/scran__blocks_8hpp.html">scran_blocks.hpp</a></div></div>
 <div class="ttc" id="asimple_8hpp_html"><div class="ttname"><a href="simple_8hpp.html">simple.hpp</a></div><div class="ttdoc">Compute distances to nearest neighbors.</div></div>
-<div class="ttc" id="astructmumosa_1_1BlockedIndicesFactory_1_1Buffers_html"><div class="ttname"><a href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">mumosa::BlockedIndicesFactory::Buffers</a></div><div class="ttdoc">Temporary buffers for build().</div><div class="ttdef"><b>Definition</b> blocked.hpp:336</div></div>
-<div class="ttc" id="astructmumosa_1_1BlockedOptions_html"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html">mumosa::BlockedOptions</a></div><div class="ttdoc">Options for compute_distance_blocked().</div><div class="ttdef"><b>Definition</b> blocked.hpp:25</div></div>
-<div class="ttc" id="astructmumosa_1_1BlockedOptions_html_a3da1b340177201902deb499edf632218"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html#a3da1b340177201902deb499edf632218">mumosa::BlockedOptions::variable_block_weight_parameters</a></div><div class="ttdeci">scran_blocks::VariableWeightParameters variable_block_weight_parameters</div><div class="ttdef"><b>Definition</b> blocked.hpp:42</div></div>
-<div class="ttc" id="astructmumosa_1_1BlockedOptions_html_aa39215f15f49244c734e5d6fdde99559"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559">mumosa::BlockedOptions::block_weight_policy</a></div><div class="ttdeci">scran_blocks::WeightPolicy block_weight_policy</div><div class="ttdef"><b>Definition</b> blocked.hpp:36</div></div>
-<div class="ttc" id="astructmumosa_1_1BlockedOptions_html_abf104360e28bdb625b49ab062d9066bc"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html#abf104360e28bdb625b49ab062d9066bc">mumosa::BlockedOptions::num_threads</a></div><div class="ttdeci">int num_threads</div><div class="ttdef"><b>Definition</b> blocked.hpp:48</div></div>
-<div class="ttc" id="astructmumosa_1_1BlockedOptions_html_af5844d64ee5524d9074f97a8d6cbc237"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html#af5844d64ee5524d9074f97a8d6cbc237">mumosa::BlockedOptions::num_neighbors</a></div><div class="ttdeci">int num_neighbors</div><div class="ttdef"><b>Definition</b> blocked.hpp:31</div></div>
-<div class="ttc" id="astructmumosa_1_1BlockedWorkspace_html"><div class="ttname"><a href="structmumosa_1_1BlockedWorkspace.html">mumosa::BlockedWorkspace</a></div><div class="ttdoc">Workspace for compute_distance_blocked().</div><div class="ttdef"><b>Definition</b> blocked.hpp:59</div></div>
+<div class="ttc" id="astructmumosa_1_1BlockedIndicesFactory_1_1Buffers_html"><div class="ttname"><a href="structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html">mumosa::BlockedIndicesFactory::Buffers</a></div><div class="ttdoc">Temporary buffers for build().</div><div class="ttdef"><b>Definition</b> blocked.hpp:340</div></div>
+<div class="ttc" id="astructmumosa_1_1BlockedOptions_html"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html">mumosa::BlockedOptions</a></div><div class="ttdoc">Options for compute_distance_blocked().</div><div class="ttdef"><b>Definition</b> blocked.hpp:26</div></div>
+<div class="ttc" id="astructmumosa_1_1BlockedOptions_html_a3da1b340177201902deb499edf632218"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html#a3da1b340177201902deb499edf632218">mumosa::BlockedOptions::variable_block_weight_parameters</a></div><div class="ttdeci">scran_blocks::VariableWeightParameters variable_block_weight_parameters</div><div class="ttdef"><b>Definition</b> blocked.hpp:43</div></div>
+<div class="ttc" id="astructmumosa_1_1BlockedOptions_html_aa39215f15f49244c734e5d6fdde99559"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559">mumosa::BlockedOptions::block_weight_policy</a></div><div class="ttdeci">scran_blocks::WeightPolicy block_weight_policy</div><div class="ttdef"><b>Definition</b> blocked.hpp:37</div></div>
+<div class="ttc" id="astructmumosa_1_1BlockedOptions_html_abf104360e28bdb625b49ab062d9066bc"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html#abf104360e28bdb625b49ab062d9066bc">mumosa::BlockedOptions::num_threads</a></div><div class="ttdeci">int num_threads</div><div class="ttdef"><b>Definition</b> blocked.hpp:49</div></div>
+<div class="ttc" id="astructmumosa_1_1BlockedOptions_html_af5844d64ee5524d9074f97a8d6cbc237"><div class="ttname"><a href="structmumosa_1_1BlockedOptions.html#af5844d64ee5524d9074f97a8d6cbc237">mumosa::BlockedOptions::num_neighbors</a></div><div class="ttdeci">int num_neighbors</div><div class="ttdef"><b>Definition</b> blocked.hpp:32</div></div>
+<div class="ttc" id="astructmumosa_1_1BlockedWorkspace_html"><div class="ttname"><a href="structmumosa_1_1BlockedWorkspace.html">mumosa::BlockedWorkspace</a></div><div class="ttdoc">Workspace for compute_distance_blocked().</div><div class="ttdef"><b>Definition</b> blocked.hpp:60</div></div>
 <div class="ttc" id="astructmumosa_1_1Options_html"><div class="ttname"><a href="structmumosa_1_1Options.html">mumosa::Options</a></div><div class="ttdoc">Options for compute_distance().</div><div class="ttdef"><b>Definition</b> simple.hpp:28</div></div>
 <div class="ttc" id="astructmumosa_1_1Options_html_a390a953ace5a6fa0a172efb8cb691929"><div class="ttname"><a href="structmumosa_1_1Options.html#a390a953ace5a6fa0a172efb8cb691929">mumosa::Options::num_threads</a></div><div class="ttdeci">int num_threads</div><div class="ttdef"><b>Definition</b> simple.hpp:40</div></div>
 <div class="ttc" id="astructmumosa_1_1Options_html_a76621d12b7ed8b1c072ccf3598761640"><div class="ttname"><a href="structmumosa_1_1Options.html#a76621d12b7ed8b1c072ccf3598761640">mumosa::Options::num_neighbors</a></div><div class="ttdeci">int num_neighbors</div><div class="ttdef"><b>Definition</b> simple.hpp:34</div></div>
