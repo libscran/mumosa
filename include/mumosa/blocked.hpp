@@ -97,13 +97,8 @@ BlockedWorkspace<Distance_> create_workspace(const std::vector<Index_>& block_si
     return output;
 }
 
-/**
- * NOTES:
- *
- * The local neighborhood variance can be considered as the variance within a particular region of the high-dimensional space.
- * The expectation of this variance should not be affected by the number of cells, but the distance to the neighbors will be affected if the density of cells changes.
- *
- * We do not apply block-specific scaling factors as we don't want to alter the relative values within the same modality.
+/*
+ * We don't apply block-specific scaling factors as we don't want to alter the relative values within the same modality.
  * We shouldn't have to do it in the first place - as it's the same modality! - but more importantly, we could introduce spurious differences between blocks.
  * In the simplest case, two blocks have the same subpopulation structure but the number of cells is different.
  * We would get different distances in each block due to density, causing us to scale each block differently.

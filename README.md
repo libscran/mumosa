@@ -90,11 +90,11 @@ Check out the [reference documentation](https://libscran.github.io/mumosa) for m
 
 ## Further comments
 
-The premise of the **mumosa** approach is that the distance to the $k$-nearest neighbor is a suitable measure of (uninteresting) variation.
+The premise of the **mumosa** approach is that the median distance to the $k$-nearest neighbor is a suitable measure of (uninteresting) variation within each modality.
 By quantifying the spread of cells in each local neighborhood, we capture the effects of dimensionality, scale, etc. without much contribution from biological variance. 
-Scaling by this distance removes differences in the magnitude of noise while preserving modality-specific biological signal in the concatenated matrix.
+Scaling each modality by its median distance removes differences in the magnitude of noise while preserving modality-specific biological signal in the concatenated matrix.
 In contrast, the total variance for each embedding includes the biological heterogeneity of interest.
-Scaling by the total variance would reduce the contribution of the most informative modalities, which is obviously not desirable.
+Scaling each modality by its total variance would reduce the contribution of the most informative modalities, which is obviously not desirable.
 
 Ideally, the median distance-to-neighbor would serve as a proxy for the average variance within subpopulations of at least $k + 1$ cells.
 This provides an intuitive rationale for scaling each modality to equalize the within-population variance.
@@ -111,7 +111,7 @@ However, this interpretation has several caveats:
   Nonetheless, **mumosa** can still be useful for downstream procedures that perform distance calculations between cells,
   as it ensures that each modality contributes equally to the distance between cells from the same subpopulation in the combined embedding.
 
-One appeal of **mumosa** is its simplicity relative to other approaches, e.g., multi-modal factor analyses, intersection of simplicial sets. 
+One appeal of **mumosa** is its simplicity relative to other approaches, e.g., multi-modal factor analyses, intersection of nearest-neighbor sets. 
 No further transformations beyond scaling are performed, ensuring that population structure within each modality is faithfully represented in the combined embedding.
 It is very easy to implement and the result is directly compatible with any downstream analysis step that can operate on an embedding matrix.
 In fact, we only care about the median distance so we could save even more time by only performing the neighbor search for a subset of cells.
