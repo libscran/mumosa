@@ -99,6 +99,7 @@ TEST_F(ComputeDistanceBlockedTest, Empty) {
 
 TEST_F(ComputeDistanceBlockedTest, Rearranged) {
     std::vector<int> sizes { 100, 200, 300, 400, nobs - 1000 };
+    const std::size_t num_blocks = sizes.size();
 
     std::vector<char> blocks;
     int counter = 0;
@@ -109,7 +110,7 @@ TEST_F(ComputeDistanceBlockedTest, Rearranged) {
     auto ref = mumosa::compute_distance_blocked(ndim, sizes, first.data(), *builder, mumosa::BlockedOptions());
 
     {
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), blocks.data(), *builder, mumosa::BlockedOptions());
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), blocks.data(), num_blocks, *builder, mumosa::BlockedOptions());
         EXPECT_EQ(ref, out);
     }
 
@@ -119,7 +120,7 @@ TEST_F(ComputeDistanceBlockedTest, Rearranged) {
         for (auto& b : blocks2) {
             b *= 2;
         }
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), blocks2.data(), *builder, mumosa::BlockedOptions());
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), blocks2.data(), num_blocks * 2, *builder, mumosa::BlockedOptions());
         EXPECT_EQ(ref, out);
     }
 
@@ -150,7 +151,7 @@ TEST_F(ComputeDistanceBlockedTest, Rearranged) {
             interspersed_blocks.begin() + 200 
         );
 
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, interspersed_first.data(), interspersed_blocks.data(), *builder, mumosa::BlockedOptions());
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, interspersed_first.data(), interspersed_blocks.data(), num_blocks, *builder, mumosa::BlockedOptions());
         EXPECT_EQ(ref, out); // equality assumes that the swap does not change the order of observations within each block.
     }
 
@@ -178,7 +179,7 @@ TEST_F(ComputeDistanceBlockedTest, Rearranged) {
     }
 
     {
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, shuffled_first.data(), shuffled_blocks.data(), *builder, mumosa::BlockedOptions());
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, shuffled_first.data(), shuffled_blocks.data(), num_blocks, *builder, mumosa::BlockedOptions());
         EXPECT_EQ(ref, out);
     }
 
@@ -188,7 +189,7 @@ TEST_F(ComputeDistanceBlockedTest, Rearranged) {
         for (auto& b : shuffled_blocks2) {
             b = b * 2 + 1;
         }
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, shuffled_first.data(), shuffled_blocks2.data(), *builder, mumosa::BlockedOptions());
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, shuffled_first.data(), shuffled_blocks2.data(), num_blocks * 2, *builder, mumosa::BlockedOptions());
         EXPECT_EQ(ref, out);
     }
 }

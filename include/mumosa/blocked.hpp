@@ -261,7 +261,7 @@ template<typename Index_, typename Block_>
 class BlockedIndicesFactory {
 private:
     Index_ my_num_cells;
-    const Block_* my_block;
+    const Block_* my_blocks;
     Block_ my_num_blocks = 0;
     std::vector<Index_> my_block_sizes;
 
@@ -272,28 +272,27 @@ private:
 public:
     /**
      * @param num_cells Number of cells.
-     * @param[in] block Pointer to an array of length equal to `num_cells`, containing the block assignment for each cell.
-     * Each value should be a non-negative integer in \f$[0, B)\f$ where \f$B\f$ is the number of blocks.
+     * @param[in] blocks Pointer to an array of length equal to `num_cells`, containing the block assignment for each column of `data`.
+     * Each value should be a non-negative integer in `[0, num_blocks)`.
      * The lifetime of the underlying array should be no less than the last call to `build()`.
+     * @param num_blocks Number of blocks.
      */
     BlockedIndicesFactory(
         const Index_ num_cells,
-        const Block_* block
+        const Block_* blocks,
+        const std::size_t num_blocks
     ) :
         my_num_cells(num_cells),
-        my_block(block)
+        my_blocks(blocks),
+        my_num_blocks(num_blocks)
     {
-        if (num_cells) {
-            my_num_blocks = sanisizer::sum<Block_>(1, *std::max_element(block, block + num_cells));
-        }
-
         sanisizer::resize(my_block_sizes, my_num_blocks);
         auto block_non_contig = sanisizer::create<std::vector<char> >(my_num_blocks);
         auto& block_ends = my_non_contig_offsets; // repurposing the offset vector to store the end of each contiguous block.
         sanisizer::resize(block_ends, my_num_blocks);
 
         for (Index_ c = 0; c < my_num_cells; ++c) {
-            const auto curb = my_block[c];
+            const auto curb = my_blocks[c];
             my_block_sizes[curb] += 1;
 
             auto& nc = block_non_contig[curb];
@@ -366,7 +365,7 @@ public:
      * @param num_dim Number of dimensions.
      * @param[in] data Pointer to an array of length equal to the product of `num_dim` and `num_obs`.
      * This contains the embedding matrix for a modality, stored in column-major layout where each row is a dimension and each column is a cell.
-     * The block assignment for each cell should be the same as that in `block`. 
+     * The block assignment for each cell should be the same as that in `blocks`. 
      * @param builder Algorithm to use for the neighbor search.
      * @param[out] output Vector in which to store the nearest-neighbor search indices constructed by `builder`.
      * On output, this will have length equal to the number of blocks, where a new search index is constructed for each non-empty block.
@@ -399,7 +398,7 @@ public:
 
             Index_ c = 0;
             while (c < my_num_cells) {
-                const auto curb = my_block[c];
+                const auto curb = my_blocks[c];
                 const auto& con = my_contigs[curb];
                 if (con.second) {
                     c += con.second; // skip past the contiguous stretch of observations.
@@ -469,9 +468,9 @@ public:
  * @param[in] data Pointer to an array containing the embedding matrix for a modality.
  * This should be stored in column-major layout where each row is a dimension and each column is a cell.
  * The number of rows and columns should be equal to `num_dim` and `num_cells`, respectively.
- * @param block Pointer to an array of length equal to `num_cells`,
- * containing the block assignment for each column of `data`.
- * Each value should be a non-negative integer in \f$[0, B)\f$ where \f$B\f$ is the number of blocks.
+ * @param[in] blocks Pointer to an array of length equal to `num_cells`, containing the block assignment for each column of `data`.
+ * Each value should be a non-negative integer in `[0, num_blocks)`.
+ * @param num_blocks Number of blocks.
  * @param builder Algorithm to use for the neighbor search.
  * @param options Further options.
  * 
@@ -484,11 +483,12 @@ std::pair<Distance_, Distance_> compute_distance_blocked(
     const std::size_t num_dim,
     const Index_ num_cells,
     const Input_* const data,
-    const Block_* const block,
+    const Block_* const blocks,
+    const std::size_t num_blocks,
     const knncolle::Builder<Index_, Input_, Distance_, Matrix_>& builder,
     const BlockedOptions& options
 ) {
-    BlockedIndicesFactory<Index_, Block_> blocked_factory(num_cells, block);
+    BlockedIndicesFactory<Index_, Block_> blocked_factory(num_cells, blocks, num_blocks);
     const auto prebuilts = blocked_factory.build(num_dim, data, builder);
     auto workspace = create_workspace<Distance_>(blocked_factory.sizes(), options);
     return compute_distance_blocked(prebuilts, workspace, options);
