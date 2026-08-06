@@ -8,6 +8,7 @@
 #include "knncolle/knncolle.hpp"
 #include "sanisizer/sanisizer.hpp"
 #include "scran_blocks/scran_blocks.hpp"
+#include "quickstats/quickstats.hpp"
 
 #include "simple.hpp"
 #include "utils.hpp"
@@ -82,7 +83,10 @@ template<typename Distance_, typename Index_>
 BlockedWorkspace<Distance_> create_workspace(const std::vector<Index_>& block_sizes, const BlockedOptions& options) {
     BlockedWorkspace<Distance_> output;
     output.weights = scran_blocks::compute_weights<Distance_>(block_sizes, options.block_weight_policy, options.variable_block_weight_parameters);
-    output.total_weight = std::accumulate(output.weights.begin(), output.weights.end(), static_cast<Distance_>(0));
+
+    quickstats::PairwiseSumWorkspace<Distance_> pswrk;
+    quickstats::PairwiseSumOptions psopt;
+    output.total_weight = quickstats::pairwise_sum(output.weights.size(), output.weights.data(), pswrk, psopt);
 
     Index_ max_size = 0;
     if (block_sizes.size()) {

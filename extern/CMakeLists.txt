@@ -7,8 +7,8 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-  tatami_stats
-  GIT_REPOSITORY https://github.com/tatami-inc/tatami_stats
+  quickstats
+  GIT_REPOSITORY https://github.com/LTLA/quickstats
   GIT_TAG master # ^2.0.0
 )
 
@@ -25,6 +25,6 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(knncolle)
-FetchContent_MakeAvailable(tatami_stats)
+FetchContent_MakeAvailable(quickstats)
 FetchContent_MakeAvailable(sanisizer)
 FetchContent_MakeAvailable(scran_blocks)

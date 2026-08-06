@@ -22,13 +22,13 @@ option(MUMOSA_FETCH_EXTERN "Automatically fetch mumosa's external dependencies."
 if(MUMOSA_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
-    find_package(tatami_tatami_stats 2.0.0 CONFIG REQUIRED)
+    find_package(ltla_quickstats 0.1.0 CONFIG REQUIRED)
     find_package(knncolle_knncolle 3.0.0 CONFIG REQUIRED)
     find_package(ltla_sanisizer 0.1.0 CONFIG REQUIRED)
     find_package(libscran_scran_blocks 0.1.0 CONFIG REQUIRED)
 endif()
 
-target_link_libraries(mumosa INTERFACE knncolle::knncolle tatami::tatami_stats ltla::sanisizer libscran::scran_blocks)
+target_link_libraries(mumosa INTERFACE knncolle::knncolle ltla::quickstats ltla::sanisizer libscran::scran_blocks)
 
 # Tests
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
