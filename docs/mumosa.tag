@@ -50,8 +50,8 @@
       <type></type>
       <name>BlockedIndicesFactory</name>
       <anchorfile>classmumosa_1_1BlockedIndicesFactory.html</anchorfile>
-      <anchor>a0443db4d10ca9b69e2f1999be3d9a743</anchor>
-      <arglist>(const Index_ num_cells, const Block_ *block)</arglist>
+      <anchor>a32db48306bb08b72034334db5f38cd42</anchor>
+      <arglist>(const Index_ num_cells, const Block_ *blocks, const std::size_t num_blocks)</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; Index_ &gt; &amp;</type>
@@ -181,8 +181,8 @@
       <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance_blocked</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a8510a19aca6de4983bcfbef0b97cf940</anchor>
-      <arglist>(const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const Block_ *const block, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const BlockedOptions &amp;options)</arglist>
+      <anchor>a60fd1df19e13a7adedf0cadcd9f8d05f</anchor>
+      <arglist>(const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const Block_ *const blocks, const std::size_t num_blocks, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const BlockedOptions &amp;options)</arglist>
     </member>
     <member kind="function">
       <type>void</type>

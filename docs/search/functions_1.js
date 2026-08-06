@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['blockedindicesfactory_0',['BlockedIndicesFactory',['../classmumosa_1_1BlockedIndicesFactory.html#a0443db4d10ca9b69e2f1999be3d9a743',1,'mumosa::BlockedIndicesFactory']]],
+  ['blockedindicesfactory_0',['BlockedIndicesFactory',['../classmumosa_1_1BlockedIndicesFactory.html#a32db48306bb08b72034334db5f38cd42',1,'mumosa::BlockedIndicesFactory']]],
   ['bruteforcebuilder_1',['BruteforceBuilder',['https://knncolle.github.io/knncolle/classknncolle_1_1BruteforceBuilder.html#a4a7b4fa0a5301677f340b64875969929',1,'knncolle::BruteforceBuilder']]],
   ['build_2',['build',['../classmumosa_1_1BlockedIndicesFactory.html#a14a3376745471edd1b72e6c508d56b49',1,'mumosa::BlockedIndicesFactory::build(const std::size_t num_dim, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;output, Buffers&lt; Input_ &gt; &amp;work) const'],['../classmumosa_1_1BlockedIndicesFactory.html#ab7bfb8020b5379643ab1bd9b0fab806e',1,'mumosa::BlockedIndicesFactory::build(const std::size_t num_dim, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder) const']]],
   ['build_5fblocked_5findices_3',['build_blocked_indices',['../namespacemumosa.html#abd487dda75494406f5e8b66e5d2d68f1',1,'mumosa']]],

@@ -3,7 +3,7 @@ var searchData=
   ['block_5fweight_5fpolicy_0',['block_weight_policy',['../structmumosa_1_1BlockedOptions.html#aa39215f15f49244c734e5d6fdde99559',1,'mumosa::BlockedOptions']]],
   ['block_5fweights_2ehpp_1',['block_weights.hpp',['https://libscran.github.io/scran_blocks/block__weights_8hpp.html',1,'']]],
   ['blocked_2ehpp_2',['blocked.hpp',['../blocked_8hpp.html',1,'']]],
-  ['blockedindicesfactory_3',['BlockedIndicesFactory',['../classmumosa_1_1BlockedIndicesFactory.html',1,'mumosa::BlockedIndicesFactory&lt; Index_, Block_ &gt;'],['../classmumosa_1_1BlockedIndicesFactory.html#a0443db4d10ca9b69e2f1999be3d9a743',1,'mumosa::BlockedIndicesFactory::BlockedIndicesFactory()']]],
+  ['blockedindicesfactory_3',['BlockedIndicesFactory',['../classmumosa_1_1BlockedIndicesFactory.html',1,'mumosa::BlockedIndicesFactory&lt; Index_, Block_ &gt;'],['../classmumosa_1_1BlockedIndicesFactory.html#a32db48306bb08b72034334db5f38cd42',1,'mumosa::BlockedIndicesFactory::BlockedIndicesFactory()']]],
   ['blockedoptions_4',['BlockedOptions',['../structmumosa_1_1BlockedOptions.html',1,'mumosa']]],
   ['blockedworkspace_5',['BlockedWorkspace',['../structmumosa_1_1BlockedWorkspace.html',1,'mumosa']]],
   ['bruteforce_2ehpp_6',['Bruteforce.hpp',['https://knncolle.github.io/knncolle/Bruteforce_8hpp.html',1,'']]],
