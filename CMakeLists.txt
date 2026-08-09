@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(mumosa
-    VERSION 0.2.1
+project(
+    mumosa
+    VERSION 0.3.0
     DESCRIPTION "Multi-modal analyses of single-cell data"
-    LANGUAGES CXX)
+    LANGUAGES CXX
+)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -22,9 +24,9 @@ option(MUMOSA_FETCH_EXTERN "Automatically fetch mumosa's external dependencies."
 if(MUMOSA_FETCH_EXTERN)
     add_subdirectory(extern)
 else()
-    find_package(ltla_quickstats 0.1.0 CONFIG REQUIRED)
-    find_package(knncolle_knncolle 3.0.0 CONFIG REQUIRED)
-    find_package(ltla_sanisizer 0.1.0 CONFIG REQUIRED)
+    find_package(ltla_quickstats 0.2.0 CONFIG REQUIRED)
+    find_package(knncolle_knncolle 3.1.0 CONFIG REQUIRED)
+    find_package(ltla_sanisizer 0.2.0 CONFIG REQUIRED)
     find_package(libscran_scran_blocks 0.1.0 CONFIG REQUIRED)
 endif()
 
