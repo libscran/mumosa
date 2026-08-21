@@ -257,7 +257,7 @@ class BlockedIndicesFactory {
 private:
     Index_ my_num_cells;
     const Block_* my_blocks;
-    Block_ my_num_blocks = 0;
+    std::size_t my_num_blocks = 0;
     std::vector<Index_> my_block_sizes;
 
     std::vector<std::pair<Index_, Index_> > my_contigs;
