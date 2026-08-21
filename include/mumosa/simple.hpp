@@ -75,10 +75,10 @@ std::pair<Distance_, Distance_> compute_distance(const Index_ num_cells, Distanc
  * This is only required to define the `knncolle::Prebuilt` class and is otherwise ignored.
  * @tparam Distance_ Floating-point type of the distances.
  *
- * @param prebuilt A prebuilt neighbor search index for a modality-specifi embedding.
- * @param[out] distances Pointer to an array of length `prebuilt.num_observations()`,
- * containing the distances from each cell to its \f$k\f$-nearest neighbor.
- * This may not be ordered on output.
+ * @param prebuilt A prebuilt neighbor search index for a modality-specific embedding.
+ * @param buffer Pointer to an array of length `prebuilt.num_observations()`.
+ * This is used as a buffer to store distances before calling the first `compute_distance()` overload.
+ * Input values are ignored, and no guarantee is provided for the output values.
  * @param options Further options.
  *
  * @return Pair containing the median distance to the `Options::num_neighbors`-th nearest neighbor (first)
@@ -88,7 +88,7 @@ std::pair<Distance_, Distance_> compute_distance(const Index_ num_cells, Distanc
 template<typename Index_, typename Input_, typename Distance_>
 std::pair<Distance_, Distance_> compute_distance(
     const knncolle::Prebuilt<Index_, Input_, Distance_>& prebuilt,
-    Distance_* const distances,
+    Distance_* const buffer,
     const Options& options
 ) {
     const Index_ nobs = prebuilt.num_observations();
@@ -122,6 +122,9 @@ std::pair<Distance_, Distance_> compute_distance(
  * @param[in] data Pointer to an array containing the embedding matrix for a modality.
  * This should be stored in column-major layout where each row is a dimension and each column is a cell.
  * @param builder Algorithm to use for the neighbor search.
+ * @param buffer Pointer to an array of length `prebuilt.num_observations()`.
+ * This is used as a buffer to store distances before calling the first `compute_distance()` overload.
+ * Input values are ignored, and no guarantee is provided for the output values.
  * @param options Further options.
  *
  * @return Pair containing the median distance to the `Options::num_neighbors`-th nearest neighbor (first)
@@ -134,11 +137,11 @@ std::pair<Distance_, Distance_> compute_distance(
     const Index_ num_cells,
     const Input_* const data,
     const knncolle::Builder<Index_, Input_, Distance_, Matrix_>& builder,
+    Distance_* const buffer,
     const Options& options
 ) {
-    auto dist = sanisizer::create<std::vector<Distance_> >(num_cells);
     const auto prebuilt = builder.build_unique(knncolle::SimpleMatrix(num_dim, num_cells, data));
-    return compute_distance(*prebuilt, dist.data(), options);
+    return compute_distance(*prebuilt, buffer, options);
 }
 
 }
