@@ -74,7 +74,7 @@ struct BlockedOptions {
  * @tparam Index_ Integer type of the number of cells.
  * @tparam Distance_ Floating-point type of the distances.
  *
- * @param prebuilts Vector of length equal to the number of blocks.
+ * @param blocks Vector of length equal to the number of blocks.
  * Each entry contains (1) the number of cells in the block and (2) a pointer to an array of length equal to the number of cells in this block.
  * The latter contains the distance of each cell to its \f$k\f$-nearest neighbor within that block.
  * @param options Further options.
@@ -137,8 +137,9 @@ std::pair<Distance_, Distance_> compute_distance_blocked(const std::vector<std::
  * @param prebuilts Vector of length equal to the number of blocks.
  * Each entry contains a prebuilt neighbor search index for a single block.
  * A block with no observations may be represented by a null pointer.
- * @param workspace Workspace object, constructed with block sizes that match the number of observations in each entry of `prebuilts`.
- * This can be re-used across multiple `compute_distance_blocked()` calls with the same block sizes.
+ * @param buffer Pointer to an array of length `prebuilt.num_observations()`.
+ * This is used as a buffer to store distances before calling the other `compute_distance_blocked()` overload.
+ * Input values are ignored, and no guarantee is provided for the output values.
  * @param options Further options.
  * 
  * @return Pair containing the weighted average of the median distance to the nearest neighbor (first)
@@ -198,6 +199,9 @@ std::pair<Distance_, Distance_> compute_distance_blocked(
  * Each value should be a non-negative integer in `[0, num_blocks)`.
  * @param num_blocks Number of blocks.
  * @param builder Algorithm to use for the neighbor search.
+ * @param buffer Pointer to an array of length `prebuilt.num_observations()`.
+ * This is used as a buffer to store distances before calling the other `compute_distance_blocked()` overload.
+ * Input values are ignored, and no guarantee is provided for the output values.
  * @param options Further options.
  * 
  * @return Pair containing the weighted average of the median distance to the nearest neighbor (first)

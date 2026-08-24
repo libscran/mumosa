@@ -49,12 +49,14 @@ opt.num_neighbors = 20;
 opt.num_threads = 3;
 
 std::vector<std::pair<double, double> > distances;
+std::vector<double> distbuffer(nobs);
 for (int m = 0; m < 3; ++m) {
     distances[m] = mumosa::compute_distance(
         dimensions[m],
         nobs,
         embeddings[m].data(),
         vp_builder,
+        distbuffer.data(),
         opt
     );
 }
