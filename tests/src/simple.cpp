@@ -29,6 +29,9 @@ TEST_F(ComputeDistanceTest, Basic) {
     auto dbuffer = sanisizer::create<std::vector<double> >(nobs);
     auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), *builder, dbuffer.data(), mumosa::Options());
     auto out2 = mumosa::compute_distance(ndim, nobs, second.data(), *builder, dbuffer.data(), mumosa::Options());
+
+    EXPECT_FLOAT_EQ(out1.first / out2.first, 0.5);
+    EXPECT_FLOAT_EQ(out1.second / out2.second , 0.5);
     EXPECT_FLOAT_EQ(mumosa::compute_scale(out1, out2), 0.5);
 
     // Works in parallel.
@@ -66,7 +69,11 @@ TEST_F(ComputeDistanceTest, DifferentlyDimensioned) {
     auto dbuffer = sanisizer::create<std::vector<double> >(nobs);
     auto out1 = mumosa::compute_distance(ndim, nobs, first.data(), *builder, dbuffer.data(), mumosa::Options());
     auto out2 = mumosa::compute_distance(ndim * 2, nobs, second.data(), *builder, dbuffer.data(), mumosa::Options());
-    EXPECT_FLOAT_EQ(mumosa::compute_scale(out1, out2), 1.0 / std::sqrt(2));
+
+    const double expected_ratio = 1.0 / std::sqrt(2);
+    EXPECT_FLOAT_EQ(out1.first / out2.first, expected_ratio);
+    EXPECT_FLOAT_EQ(out1.second / out2.second , expected_ratio);
+    EXPECT_FLOAT_EQ(mumosa::compute_scale(out1, out2), expected_ratio);
 }
 
 TEST_F(ComputeDistanceTest, Zeros) {
@@ -97,6 +104,34 @@ TEST_F(ComputeDistanceTest, Zeros) {
 
         scale = mumosa::compute_scale(out2, out1);
         EXPECT_EQ(scale, 0);
+    }
+}
+
+TEST_F(ComputeDistanceTest, FewPoints) {
+    // No points.
+    // Check that we avoid returning NaNs.
+    {
+        auto alt = mumosa::compute_distance(ndim, 0, static_cast<double*>(NULL), *builder, static_cast<double*>(NULL), mumosa::Options());
+        EXPECT_EQ(alt.first, 0);
+        EXPECT_EQ(alt.second, 0);
+    }
+
+    // One point.
+    // Check that we avoid indexing the end of an empty distance vector.
+    {
+        std::vector<double> buffer(1);
+        auto alt = mumosa::compute_distance(ndim, 1, first.data(), *builder, buffer.data(), mumosa::Options());
+        EXPECT_EQ(alt.first, 0);
+        EXPECT_EQ(alt.second, 0);
+    }
+
+    // Two points.
+    // Check that 'k' is properly capped.
+    {
+        std::vector<double> buffer(2);
+        auto alt = mumosa::compute_distance(ndim, 2, first.data(), *builder, buffer.data(), mumosa::Options());
+        EXPECT_GT(alt.first, 0);
+        EXPECT_GT(alt.second, 0);
     }
 }
 

@@ -52,18 +52,23 @@ struct Options {
  * if this is undesirable, users should pass in a copy of the array.
  *
  * @return Pair containing the median distance to the nearest neighbor (first)
- * and the root-mean-squared distance across all cells (second).
- * These values can be used in `compute_scale()`.
+ * and the root-mean-squared distance across all cells (second),
+ * to be used in `compute_scale()`.
+ * If `num_cells == 0`, both the median and RMSD are set to zero.
  */
 template<typename Index_, typename Distance_>
 std::pair<Distance_, Distance_> compute_distance(const Index_ num_cells, Distance_* const distances) {
+    if (num_cells == 0) {
+        return std::pair<Distance_, Distance_>(0, 0);
+    }
+
     const Distance_ med = quickstats::median(num_cells, distances);
     Distance_ rmsd = 0;
     for (Index_ i = 0; i < num_cells; ++i) {
         const auto d = distances[i];
         rmsd += d * d;
     }
-    rmsd = std::sqrt(rmsd);
+    rmsd = std::sqrt(rmsd / num_cells);
     return std::make_pair(med, rmsd);
 }
 
@@ -100,12 +105,14 @@ std::pair<Distance_, Distance_> compute_distance(
         for (Index_ i = start, end = start + length; i < end; ++i) {
             searcher->search(i, capped_k, NULL, &cur_distances);
             if (cur_distances.size()) {
-                distances[i] = cur_distances.back();
+                buffer[i] = cur_distances.back();
+            } else {
+                buffer[i] = 0; // i.e., only distance is that to itself.
             }
         }
     });
 
-    return compute_distance(nobs, distances);
+    return compute_distance(nobs, buffer);
 }
 
 /**
