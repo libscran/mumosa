@@ -21,6 +21,16 @@ protected:
     inline static std::unique_ptr<knncolle::Builder<int, double, double> > builder;
 };
 
+template<typename Block_ = int>
+std::vector<Block_> sizes_to_block(const std::vector<int>& sizes) {
+    std::vector<Block_> output;
+    const std::size_t nblocks = sizes.size();
+    for (std::size_t b = 0; b < nblocks; ++b) {
+        output.insert(output.end(), sizes[b], b);
+    }
+    return output;
+}
+
 TEST_F(ComputeDistanceBlockedTest, Basic) {
     auto combined = first;
     combined.reserve(first.size() * 2);
@@ -29,8 +39,12 @@ TEST_F(ComputeDistanceBlockedTest, Basic) {
     }
 
     {
-        auto ref = mumosa::compute_distance(ndim, nobs, first.data(), *builder, mumosa::Options());
-        auto out = mumosa::compute_distance_blocked(ndim, { nobs, nobs }, combined.data(), *builder, mumosa::BlockedOptions());
+        std::vector<double> buffer(nobs);
+        auto ref = mumosa::compute_distance(ndim, nobs, first.data(), *builder, buffer.data(), mumosa::Options());
+
+        auto block = sizes_to_block({ nobs, nobs });
+        buffer.resize(nobs * 2);
+        auto out = mumosa::compute_distance_blocked(ndim, nobs * 2, combined.data(), block.data(), 2, *builder, buffer.data(), mumosa::BlockedOptions());
         EXPECT_FLOAT_EQ(mumosa::compute_scale(ref, out), 2.0/3);
     }
 
@@ -38,11 +52,14 @@ TEST_F(ComputeDistanceBlockedTest, Basic) {
     {
         mumosa::Options opt;
         opt.num_neighbors = 10;
-        auto ref = mumosa::compute_distance(ndim, nobs, first.data(), *builder, opt);
+        std::vector<double> buffer(nobs);
+        auto ref = mumosa::compute_distance(ndim, nobs, first.data(), *builder, buffer.data(), opt);
 
         mumosa::BlockedOptions bopt;
         bopt.num_neighbors = 10;
-        auto out = mumosa::compute_distance_blocked(ndim, { nobs, nobs }, combined.data(), *builder, bopt);
+        auto block = sizes_to_block({ nobs, nobs });
+        buffer.resize(nobs * 2);
+        auto out = mumosa::compute_distance_blocked(ndim, nobs * 2, combined.data(), block.data(), 2, *builder, buffer.data(), bopt);
 
         EXPECT_FLOAT_EQ(mumosa::compute_scale(ref, out), 2.0/3);
     }
@@ -50,14 +67,17 @@ TEST_F(ComputeDistanceBlockedTest, Basic) {
 
 TEST_F(ComputeDistanceBlockedTest, BlockWeights) {
     std::vector<int> sizes { 100, 700, nobs - 800 };
+    std::vector<double> buffer(nobs);
 
-    auto ref1 = mumosa::compute_distance(ndim, sizes[0], first.data(), *builder, mumosa::Options());
-    auto ref2 = mumosa::compute_distance(ndim, sizes[1], first.data() + sanisizer::product_unsafe<std::size_t>(sizes[0], ndim), *builder, mumosa::Options());
-    auto ref3 = mumosa::compute_distance(ndim, sizes[2], first.data() + sanisizer::product_unsafe<std::size_t>(sizes[0] + sizes[1], ndim), *builder, mumosa::Options());
+    auto ref1 = mumosa::compute_distance(ndim, sizes[0], first.data(), *builder, buffer.data(), mumosa::Options());
+    auto ref2 = mumosa::compute_distance(ndim, sizes[1], first.data() + sanisizer::product_unsafe<std::size_t>(sizes[0], ndim), *builder, buffer.data(), mumosa::Options());
+    auto ref3 = mumosa::compute_distance(ndim, sizes[2], first.data() + sanisizer::product_unsafe<std::size_t>(sizes[0] + sizes[1], ndim), *builder, buffer.data(), mumosa::Options());
 
     // By default, weighted by the number of observations if we don't hit 1000.
+    const std::size_t num_blocks = sizes.size();
+    auto block = sizes_to_block(sizes);
     {
-        auto out = mumosa::compute_distance_blocked(ndim, sizes, first.data(), *builder, mumosa::BlockedOptions());
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), block.data(), num_blocks, *builder, buffer.data(), mumosa::BlockedOptions());
         EXPECT_FLOAT_EQ(out.first, (ref1.first * sizes[0] + ref2.first * sizes[1] + ref3.first * sizes[2]) / nobs); 
         EXPECT_FLOAT_EQ(out.second, (ref1.second * sizes[0] + ref2.second * sizes[1] + ref3.second * sizes[2]) / nobs); 
     }
@@ -66,7 +86,7 @@ TEST_F(ComputeDistanceBlockedTest, BlockWeights) {
     {
         mumosa::BlockedOptions bopt;
         bopt.variable_block_weight_parameters.upper_bound = 200;
-        auto out = mumosa::compute_distance_blocked(ndim, sizes, first.data(), *builder, bopt);
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), block.data(), num_blocks, *builder, buffer.data(), bopt);
         EXPECT_FLOAT_EQ(out.first, (ref1.first * 0.5 + ref2.first + ref3.first) / 2.5); 
         EXPECT_FLOAT_EQ(out.second, (ref1.second * 0.5 + ref2.second + ref3.second) / 2.5); 
     }
@@ -75,25 +95,65 @@ TEST_F(ComputeDistanceBlockedTest, BlockWeights) {
     {
         mumosa::BlockedOptions bopt;
         bopt.block_weight_policy = scran_blocks::WeightPolicy::EQUAL;
-        auto out = mumosa::compute_distance_blocked(ndim, sizes, first.data(), *builder, bopt);
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), block.data(), num_blocks, *builder, buffer.data(), bopt);
         EXPECT_FLOAT_EQ(out.first, (ref1.first + ref2.first + ref3.first) / 3); 
         EXPECT_FLOAT_EQ(out.second, (ref1.second + ref2.second + ref3.second) / 3); 
     }
 }
 
-TEST_F(ComputeDistanceBlockedTest, Empty) {
-    // Partially empty.
+TEST_F(ComputeDistanceBlockedTest, EmptyBlocks) {
+    std::vector<double> buffer(nobs);
+
+    // Partially empty; we consider three blocks, but all cells are in the second block.
     {
-        auto out = mumosa::compute_distance_blocked(ndim, { 0, nobs, 0 }, first.data(), *builder, mumosa::BlockedOptions());
-        auto ref = mumosa::compute_distance(ndim, nobs, first.data(), *builder, mumosa::Options());
+        std::vector<int> block(nobs, 1);
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), block.data(), 3, *builder, buffer.data(), mumosa::BlockedOptions());
+        auto ref = mumosa::compute_distance(ndim, nobs, first.data(), *builder, buffer.data(), mumosa::Options());
+        EXPECT_EQ(ref, out);
+    }
+
+    // Multiplying block assignments to force the existence of empty (even-numbered) clusters. 
+    {
+        std::vector<int> sizes { 500, 100, nobs - 600 };
+        const std::size_t num_blocks = sizes.size();
+
+        auto block = sizes_to_block<char>(sizes);
+        auto ref = mumosa::compute_distance_blocked(ndim, nobs, first.data(), block.data(), num_blocks, *builder, buffer.data(), mumosa::BlockedOptions());
+
+        for (auto& b : block) {
+            b = b * 2 + 1;
+        }
+        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), block.data(), num_blocks * 2 + 1, *builder, buffer.data(), mumosa::BlockedOptions());
         EXPECT_EQ(ref, out);
     }
 
     // Fully empty.
     {
-        auto out = mumosa::compute_distance_blocked(ndim, { 0, 0, 0 }, first.data(), *builder, mumosa::BlockedOptions());
+        auto out = mumosa::compute_distance_blocked(ndim, 0, first.data(), static_cast<int*>(NULL), 0, *builder, buffer.data(), mumosa::BlockedOptions());
         EXPECT_EQ(out.first, 0);
         EXPECT_EQ(out.second, 0);
+    }
+}
+
+TEST_F(ComputeDistanceBlockedTest, FewPoints) {
+    // One point.
+    // Check that we avoid indexing the end of an empty distance vector.
+    {
+        std::vector<int> blocks { 1, 2, 0 };
+        std::vector<double> buffer(blocks.size());
+        auto alt = mumosa::compute_distance_blocked(ndim, static_cast<int>(blocks.size()), first.data(), blocks.data(), 3, *builder, buffer.data(), {});
+        EXPECT_EQ(alt.first, 0);
+        EXPECT_EQ(alt.second, 0);
+    }
+
+    // Two points.
+    // Check that 'k' is properly capped.
+    {
+        std::vector<int> blocks { 1, 0, 2, 1, 2, 0 };
+        std::vector<double> buffer(blocks.size());
+        auto alt = mumosa::compute_distance_blocked(ndim, static_cast<int>(blocks.size()), first.data(), blocks.data(), 3, *builder, buffer.data(), {});
+        EXPECT_GT(alt.first, 0);
+        EXPECT_GT(alt.second, 0);
     }
 }
 
@@ -101,33 +161,14 @@ TEST_F(ComputeDistanceBlockedTest, Rearranged) {
     std::vector<int> sizes { 100, 200, 300, 400, nobs - 1000 };
     const std::size_t num_blocks = sizes.size();
 
-    std::vector<char> blocks;
-    int counter = 0;
-    for (auto s : sizes) {
-        blocks.insert(blocks.end(), s, counter);
-        ++counter;
-    }
-    auto ref = mumosa::compute_distance_blocked(ndim, sizes, first.data(), *builder, mumosa::BlockedOptions());
-
-    {
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), blocks.data(), num_blocks, *builder, mumosa::BlockedOptions());
-        EXPECT_EQ(ref, out);
-    }
-
-    // Multiplying block assignments by 2 to force the existence of empty (odd-numbered) clusters. 
-    {
-        auto blocks2 = blocks;
-        for (auto& b : blocks2) {
-            b *= 2;
-        }
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, first.data(), blocks2.data(), num_blocks * 2, *builder, mumosa::BlockedOptions());
-        EXPECT_EQ(ref, out);
-    }
+    auto block = sizes_to_block<char>(sizes);
+    std::vector<double> buffer(nobs);
+    auto ref = mumosa::compute_distance_blocked(ndim, nobs, first.data(), block.data(), num_blocks, *builder, buffer.data(), mumosa::BlockedOptions());
 
     // Swapping a stretch of observations so that the second and fourth blocks are not contiguous.
     {
         auto interspersed_first = first;
-        auto interspersed_blocks = blocks;
+        auto interspersed_block = block;
 
         std::copy_n(
             first.begin() + sanisizer::product_unsafe<std::size_t>(200, ndim),
@@ -135,9 +176,9 @@ TEST_F(ComputeDistanceBlockedTest, Rearranged) {
             interspersed_first.begin() + sanisizer::product_unsafe<std::size_t>(600, ndim)
         );
         std::copy_n(
-            blocks.begin() + 200,
+            block.begin() + 200,
             100,
-            interspersed_blocks.begin() + 600
+            interspersed_block.begin() + 600
         );
 
         std::copy_n(
@@ -146,50 +187,58 @@ TEST_F(ComputeDistanceBlockedTest, Rearranged) {
             interspersed_first.begin() + sanisizer::product_unsafe<std::size_t>(200, ndim)
         );
         std::copy_n(
-            blocks.begin() + 600,
+            block.begin() + 600,
             100,
-            interspersed_blocks.begin() + 200 
+            interspersed_block.begin() + 200 
         );
 
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, interspersed_first.data(), interspersed_blocks.data(), num_blocks, *builder, mumosa::BlockedOptions());
+        auto out = mumosa::compute_distance_blocked(
+            ndim,
+            nobs,
+            interspersed_first.data(),
+            interspersed_block.data(),
+            num_blocks,
+            *builder,
+            buffer.data(),
+            mumosa::BlockedOptions()
+        );
         EXPECT_EQ(ref, out); // equality assumes that the swap does not change the order of observations within each block.
     }
 
     // Randomizing all of the observations.
-    auto shuffled_blocks = blocks;
-
-    std::mt19937_64 rng(23423);
-    std::shuffle(shuffled_blocks.begin(), shuffled_blocks.end(), rng);
-
-    auto offsets = sizes;
-    int cumulative = 0;
-    for (auto& o : offsets) {
-        auto previous = cumulative;
-        cumulative += o;
-        o = previous;
-    }
-
-    std::vector<double> shuffled_first;
-    shuffled_first.reserve(first.size());
-    for (auto b : shuffled_blocks) {
-        auto& off = offsets[b];
-        auto start = first.begin() + sanisizer::product_unsafe<std::size_t>(off, ndim);
-        shuffled_first.insert(shuffled_first.end(), start, start + ndim);
-        ++off;
-    }
-
     {
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, shuffled_first.data(), shuffled_blocks.data(), num_blocks, *builder, mumosa::BlockedOptions());
-        EXPECT_EQ(ref, out);
-    }
+        auto shuffled_block = block;
 
-    // Multiplying block assignments to force the existence of empty (even-numbered) clusters. 
-    {
-        auto shuffled_blocks2 = shuffled_blocks;
-        for (auto& b : shuffled_blocks2) {
-            b = b * 2 + 1;
+        std::mt19937_64 rng(23423);
+        std::shuffle(shuffled_block.begin(), shuffled_block.end(), rng);
+
+        auto offsets = sizes;
+        int cumulative = 0;
+        for (auto& o : offsets) {
+            auto previous = cumulative;
+            cumulative += o;
+            o = previous;
         }
-        auto out = mumosa::compute_distance_blocked(ndim, nobs, shuffled_first.data(), shuffled_blocks2.data(), num_blocks * 2, *builder, mumosa::BlockedOptions());
+
+        std::vector<double> shuffled_first;
+        shuffled_first.reserve(first.size());
+        for (auto b : shuffled_block) {
+            auto& off = offsets[b];
+            auto start = first.begin() + sanisizer::product_unsafe<std::size_t>(off, ndim);
+            shuffled_first.insert(shuffled_first.end(), start, start + ndim);
+            ++off;
+        }
+
+        auto out = mumosa::compute_distance_blocked(
+            ndim,
+            nobs,
+            shuffled_first.data(),
+            shuffled_block.data(),
+            num_blocks,
+            *builder, 
+            buffer.data(),
+            mumosa::BlockedOptions()
+        );
         EXPECT_EQ(ref, out);
     }
 }

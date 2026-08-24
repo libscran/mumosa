@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstddef>
+#include <optional>
 
 #include "knncolle/knncolle.hpp"
 #include "sanisizer/sanisizer.hpp"
@@ -49,54 +50,6 @@ struct BlockedOptions {
     int num_threads = 1;
 };
 
-/**
- * @brief Workspace for `compute_distance_blocked()`.
- *
- * @tparam Distance_ Floating-point type of the distances.
- *
- * Instances of this class should typically be created by `prepare_workspace()`.
- */
-template<typename Distance_>
-struct BlockedWorkspace {
-    /**
-     * @cond
-     */
-    std::vector<Distance_> weights;
-    Distance_ total_weight;
-
-    std::vector<Distance_> distance_buffer;
-    /**
-     * @endcond
-     */
-};
-
-/**
- * @tparam Index_ Integer type of the number of cells.
- * @tparam Distance_ Floating-point type of the distances.
- *
- * @param block_sizes Vector of length equal to the number of blocks, containing the number of observations in each block.
- * @param options Further options.
- * 
- * @return A workspace that can be re-used across multiple `compute_distance_blocked()` calls with the same `block_sizes`.
- */
-template<typename Distance_, typename Index_>
-BlockedWorkspace<Distance_> create_workspace(const std::vector<Index_>& block_sizes, const BlockedOptions& options) {
-    BlockedWorkspace<Distance_> output;
-    output.weights = scran_blocks::compute_weights<Distance_>(block_sizes, options.block_weight_policy, options.variable_block_weight_parameters);
-
-    quickstats::PairwiseSumWorkspace<Distance_> pswrk;
-    quickstats::PairwiseSumOptions psopt;
-    output.total_weight = quickstats::pairwise_sum(output.weights.size(), output.weights.data(), pswrk, psopt);
-
-    Index_ max_size = 0;
-    if (block_sizes.size()) {
-        max_size = *std::max_element(block_sizes.begin(), block_sizes.end());
-    }
-    sanisizer::resize(output.distance_buffer, max_size);
-
-    return output;
-}
-
 /*
  * We don't apply block-specific scaling factors as we don't want to alter the relative values within the same modality.
  * We shouldn't have to do it in the first place - as it's the same modality! - but more importantly, we could introduce spurious differences between blocks.
@@ -119,6 +72,64 @@ BlockedWorkspace<Distance_> create_workspace(const std::vector<Index_>& block_si
  * This ensures that arbitrary shifts in location between blocks have no effect on the distances to the nearest neighbors for each modality.
  *
  * @tparam Index_ Integer type of the number of cells.
+ * @tparam Distance_ Floating-point type of the distances.
+ *
+ * @param prebuilts Vector of length equal to the number of blocks.
+ * Each entry contains (1) the number of cells in the block and (2) a pointer to an array of length equal to the number of cells in this block.
+ * The latter contains the distance of each cell to its \f$k\f$-nearest neighbor within that block.
+ * @param options Further options.
+ * 
+ * @return Pair containing the weighted average of the median distance to the nearest neighbor (first)
+ * and the root-mean-squared distance (second) across blocks.
+ * These values can be used in `compute_scale()`.
+ * If there are no non-empty blocks, both the median and RMSD are set to zero.
+ */
+template<typename Index_, typename Distance_>
+std::pair<Distance_, Distance_> compute_distance_blocked(const std::vector<std::pair<Index_, Distance_*> >& blocks, const BlockedOptions& options) {
+    const auto nblocks = blocks.size();
+    auto block_weights = sanisizer::create<std::vector<Distance_> >(nblocks);
+    scran_blocks::compute_weights(
+        sanisizer::cast<std::size_t>(nblocks),
+        [&](std::size_t b) -> Index_ { return blocks[b].first; },
+        options.block_weight_policy,
+        options.variable_block_weight_parameters,
+        [&](std::size_t b, Distance_ w) -> void { block_weights[b] = w; }
+    );
+
+    const auto total_weight = [&]{
+        quickstats::PairwiseSumWorkspace<Distance_> pswrk;
+        quickstats::PairwiseSumOptions psopt;
+        return quickstats::pairwise_sum(block_weights.size(), block_weights.data(), pswrk, psopt);
+    }();
+
+    auto outputs = sanisizer::create<std::vector<std::pair<Distance_, Distance_> > >(nblocks);
+    knncolle::parallelize(options.num_threads, nblocks, [&](const int, I<decltype(nblocks)> start, I<decltype(nblocks)> length) -> void {
+        for (I<decltype(nblocks)> b = start, bend = start + length; b < bend; ++b) {
+            const auto curweight = block_weights[b];
+            const auto curdist = compute_distance(blocks[b].first, blocks[b].second);
+            outputs[b].first = curdist.first * curweight;
+            outputs[b].second = curdist.second * curweight;
+        }
+    });
+
+    std::pair<Distance_, Distance_> output{};
+    for (I<decltype(nblocks)> b = 0; b < nblocks; ++b) {
+        output.first += outputs[b].first;
+        output.second += outputs[b].second;
+    }
+
+    if (total_weight) {
+        output.first /= total_weight;
+        output.second /= total_weight;
+    }
+
+    return output;
+}
+
+/**
+ * Overload of `compute_distance_blocked()` that accepts a set of prebuilt neighbor search indices.
+ *
+ * @tparam Index_ Integer type of the number of cells.
  * @tparam Input_ Numeric type of the input data used to build the search index.
  * This is only required to define the `knncolle::Prebuilt` class and is otherwise ignored.
  * @tparam Distance_ Floating-point type of the distances.
@@ -137,320 +148,40 @@ BlockedWorkspace<Distance_> create_workspace(const std::vector<Index_>& block_si
 template<typename Index_, typename Input_, typename Distance_>
 std::pair<Distance_, Distance_> compute_distance_blocked(
     const std::vector<std::shared_ptr<const knncolle::Prebuilt<Index_, Input_, Distance_> > >& prebuilts,
-    BlockedWorkspace<Distance_>& workspace,
+    Distance_* const buffer,
     const BlockedOptions& options
 ) {
-    Options simple_opt;
-    simple_opt.num_neighbors = options.num_neighbors;
-    simple_opt.num_threads = options.num_threads;
-
-    std::pair<Distance_, Distance_> output(0, 0);
-
     const auto nblocks = prebuilts.size();
+    std::size_t accumulated = 0;
+    std::vector<std::pair<Index_, Distance_*> > blocks;
+    blocks.reserve(nblocks);
+
     for (I<decltype(nblocks)> b = 0; b < nblocks; ++b) {
-        const auto curweight = workspace.weights[b];
-        const auto& pbptr = prebuilts[b];
-        if (curweight && pbptr && pbptr->num_observations()) {
-            const auto curdist = compute_distance(*pbptr, workspace.distance_buffer.data(), simple_opt);
-            output.first += curdist.first * curweight;
-            output.second += curdist.second * curweight;
-        }
-    }
+        const auto nobs = prebuilts[b]->num_observations();
+        const auto capped_k = knncolle::cap_k(options.num_neighbors, nobs);
 
-    if (workspace.total_weight) {
-        output.first /= workspace.total_weight;
-        output.second /= workspace.total_weight;
-    }
-
-    return output;
-}
-
-/**
- * Build nearest-neighbor search indices from an embedding where cells from the same block occupy contiguous columns. 
- *
- * @tparam Index_ Integer type of the number of cells.
- * @tparam Input_ Numeric type of the input data. 
- * @tparam Distance_ Floating-point type of the distances.
- * @tparam Matrix_ Class of the input data matrix for the neighbor search.
- * This should satisfy the `knncolle::Matrix` interface.
- *
- * @param num_dim Number of dimensions in the embedding.
- * @param block_sizes Number of cells in each block.
- * @param[in] data Pointer to an array containing the embedding matrix for a modality.
- * This should be stored in column-major layout where each row is a dimension and each column is a cell.
- * The number of rows should be equal to `num_dim` and the number of columns should be equal to the sum of `block_sizes`.
- * Cells from the first block should be stored in the first `block_sizes[0]` columns,
- * cells from the second block should be stored in the next `block_sizes[1]` columns,
- * and so on.
- * @param builder Algorithm to use for the neighbor search.
- * 
- * @return Vector of prebuilt nearest-neighbor search indices to be used in `compute_distance_blocked()`.
- * Empty blocks will be represented by null pointers. 
- */
-template<typename Index_, typename Input_, typename Distance_, class Matrix_ = knncolle::Matrix<Index_, Input_> >
-std::vector<std::shared_ptr<const knncolle::Prebuilt<Index_, Input_, Distance_> > > build_blocked_indices(
-    const std::size_t num_dim,
-    const std::vector<Index_> block_sizes,
-    const Input_* const data,
-    const knncolle::Builder<Index_, Input_, Distance_, Matrix_>& builder
-) {
-    const auto num_blocks = block_sizes.size();
-    auto prebuilts = sanisizer::create<std::vector<std::shared_ptr<const knncolle::Prebuilt<Index_, Input_, Distance_> > > >(num_blocks);
-
-    Index_ sofar = 0;
-    for (I<decltype(num_blocks)> b = 0; b < num_blocks; ++b) {
-        const auto cursize = block_sizes[b];
-        if (cursize) {
-            prebuilts[b] = builder.build_shared(knncolle::SimpleMatrix(num_dim, cursize, data + sanisizer::product_unsafe<std::size_t>(sofar, num_dim)));
-        }
-        sofar += cursize;
-    }
-
-    return prebuilts;
-}
-
-/**
- * Overload of `compute_distance()` that accepts an embedding matrix with contiguous blocks.
- *
- * @tparam Index_ Integer type of the number of cells.
- * @tparam Input_ Numeric type of the input data. 
- * @tparam Distance_ Floating-point type of the distances.
- * @tparam Matrix_ Class of the input data matrix for the neighbor search.
- * This should satisfy the `knncolle::Matrix` interface.
- *
- * @param num_dim Number of dimensions in the embedding.
- * @param block_sizes Number of cells in each block.
- * @param[in] data Pointer to an array containing the embedding matrix for a modality.
- * This should be stored in column-major layout where each row is a dimension and each column is a cell,
- * see `build_blocked_indices()` for details.
- * @param builder Algorithm to use for the neighbor search.
- * @param options Further options.
- * 
- * @return Pair containing the weighted average of the median distance to the nearest neighbor (first)
- * and the root-mean-squared distance (second) across blocks.
- * These values can be used in `compute_scale()`.
- */
-template<typename Index_, typename Input_, typename Distance_, class Matrix_ = knncolle::Matrix<Index_, Input_> >
-std::pair<Distance_, Distance_> compute_distance_blocked(
-    const std::size_t num_dim,
-    const std::vector<Index_>& block_sizes,
-    const Input_* const data,
-    const knncolle::Builder<Index_, Input_, Distance_, Matrix_>& builder,
-    const BlockedOptions& options
-) {
-    const auto prebuilts = build_blocked_indices(num_dim, block_sizes, data, builder);
-    auto workspace = create_workspace<Distance_>(block_sizes, options);
-    return compute_distance_blocked(prebuilts, workspace, options);
-}
-
-/**
- * @brief Factory for creating nearest-neighbor search indices for each block.
- *
- * Unlike `build_blocked_indices()`, this class handles the scenario where cells from the same block do not occupy contiguous columns,
- * i.e., cells from different blocks are intermingled.
- *
- * @tparam Index_ Integer type of the number of cells.
- * @tparam Block_ Integer type of the block assignments.
- */
-template<typename Index_, typename Block_>
-class BlockedIndicesFactory {
-private:
-    Index_ my_num_cells;
-    const Block_* my_blocks;
-    std::size_t my_num_blocks = 0;
-    std::vector<Index_> my_block_sizes;
-
-    std::vector<std::pair<Index_, Index_> > my_contigs;
-    Index_ my_non_contig_total = 0;
-    std::vector<Index_> my_non_contig_offsets;
-
-public:
-    /**
-     * @param num_cells Number of cells.
-     * @param[in] blocks Pointer to an array of length equal to `num_cells`, containing the block assignment for each column of `data`.
-     * Each value should be a non-negative integer in `[0, num_blocks)`.
-     * The lifetime of the underlying array should be no less than the last call to `build()`.
-     * @param num_blocks Number of blocks.
-     */
-    BlockedIndicesFactory(
-        const Index_ num_cells,
-        const Block_* blocks,
-        const std::size_t num_blocks
-    ) :
-        my_num_cells(num_cells),
-        my_blocks(blocks),
-        my_num_blocks(num_blocks)
-    {
-        sanisizer::resize(my_block_sizes, my_num_blocks);
-        auto block_non_contig = sanisizer::create<std::vector<char> >(my_num_blocks);
-        auto& block_ends = my_non_contig_offsets; // repurposing the offset vector to store the end of each contiguous block.
-        sanisizer::resize(block_ends, my_num_blocks);
-
-        for (Index_ c = 0; c < my_num_cells; ++c) {
-            const auto curb = my_blocks[c];
-            my_block_sizes[curb] += 1;
-
-            auto& nc = block_non_contig[curb];
-            if (!nc) {
-                auto& be = block_ends[curb];
-                if (be == 0) {
-                    be = c + 1;
-                } else if (be == c) {
-                    ++be;
+        knncolle::parallelize(options.num_threads, nobs, [&](const int, const Index_ start, const Index_ length) -> void {
+            const auto searcher = prebuilts[b]->initialize();
+            std::vector<Distance_> cur_distances;
+            for (Index_ i = start, end = start + length; i < end; ++i) {
+                searcher->search(i, capped_k, NULL, &cur_distances);
+                if (cur_distances.size()) {
+                    buffer[accumulated + i] = cur_distances.back();
                 } else {
-                    nc = true;
+                    buffer[accumulated + i] = 0; // i.e., only distance is that to itself.
                 }
             }
-        }
+        });
 
-        sanisizer::resize(my_contigs, my_num_blocks);
-
-        for (Block_ b = 0; b < my_num_blocks; ++b) {
-            const auto length = my_block_sizes[b];
-            if (block_non_contig[b]) {
-                my_non_contig_offsets[b] = my_non_contig_total; 
-                my_non_contig_total += length;
-            } else if (length) {
-                const auto start = block_ends[b] - length;
-                my_contigs[b] = std::make_pair(start, length);
-            }
-        }
+        blocks.emplace_back(nobs, buffer + accumulated);
+        accumulated += nobs;
     }
 
-public:
-    /**
-     * @return Vector of length equal to the number of blocks, containing the number of cells in each block.
-     * This can be used in `create_workspace()`.
-     */
-    const std::vector<Index_>& sizes() const {
-        return my_block_sizes;
-    }
-
-    /**
-     * @brief Temporary buffers for `build()`.
-     * @tparam Input_ Numeric type of the input data. 
-     */
-    template<typename Input_>
-    struct Buffers {
-        /**
-         * @cond
-         */
-        std::vector<Index_> tmp_offsets;
-        std::vector<Input_> tmp_buffer;
-        /**
-         * @endcond
-         */
-    };
-
-    /**
-     * @return A collection of buffers that can be re-used for multiple calls to `build()`.
-     */
-    template<typename Input_>
-    Buffers<Input_> create_buffers() const {
-        return Buffers<Input_>();
-    }
-
-public:
-    /**
-     * @tparam Input_ Numeric type of the input data. 
-     * @tparam Distance_ Floating-point type of the distances.
-     * @tparam Matrix_ Class of the input data matrix for the neighbor search.
-     * This should satisfy the `knncolle::Matrix` interface.
-     *
-     * @param num_dim Number of dimensions.
-     * @param[in] data Pointer to an array of length equal to the product of `num_dim` and `num_obs`.
-     * This contains the embedding matrix for a modality, stored in column-major layout where each row is a dimension and each column is a cell.
-     * The block assignment for each cell should be the same as that in `blocks`. 
-     * @param builder Algorithm to use for the neighbor search.
-     * @param[out] output Vector in which to store the nearest-neighbor search indices constructed by `builder`.
-     * On output, this will have length equal to the number of blocks, where a new search index is constructed for each non-empty block.
-     * An empty block will be represented by a null pointer.
-     * @param work Temporary buffers, typically created with `create_buffers()`.
-     */
-    template<typename Input_, typename Distance_, class Matrix_ = knncolle::Matrix<Index_, Input_> >
-    void build(
-        const std::size_t num_dim,
-        const Input_* const data,
-        const knncolle::Builder<Index_, Input_, Distance_, Matrix_>& builder,
-        std::vector<std::shared_ptr<const knncolle::Prebuilt<Index_, Input_, Distance_> > >& output,
-        Buffers<Input_>& work
-    ) const {
-        output.clear();
-        sanisizer::resize(output, my_num_blocks);
-
-        for (Block_ b = 0; b < my_num_blocks; ++b) {
-            const auto& con = my_contigs[b];
-            if (con.second) {
-                const auto ptr = data + sanisizer::product_unsafe<std::size_t>(con.first, num_dim);
-                output[b] = builder.build_shared(knncolle::SimpleMatrix(num_dim, con.second, ptr));
-            }
-        }
-
-        if (my_non_contig_total) {
-            work.tmp_buffer.resize(sanisizer::product<I<decltype(work.tmp_buffer.size())> >(my_non_contig_total, num_dim));
-            work.tmp_offsets.clear();
-            work.tmp_offsets.insert(work.tmp_offsets.end(), my_non_contig_offsets.begin(), my_non_contig_offsets.end());
-
-            Index_ c = 0;
-            while (c < my_num_cells) {
-                const auto curb = my_blocks[c];
-                const auto& con = my_contigs[curb];
-                if (con.second) {
-                    c += con.second; // skip past the contiguous stretch of observations.
-                } else {
-                    auto& curoff = work.tmp_offsets[curb];
-                    std::copy_n(
-                        data + sanisizer::product_unsafe<std::size_t>(c, num_dim),
-                        num_dim,
-                        work.tmp_buffer.data() + sanisizer::product_unsafe<std::size_t>(curoff, num_dim)
-                    );
-                    ++curoff;
-                    ++c;
-                }
-            }
-
-            for (Block_ b = 0; b < my_num_blocks; ++b) {
-                if (my_contigs[b].second == 0) {
-                    const auto length = my_block_sizes[b];
-                    const auto ptr = work.tmp_buffer.data() + sanisizer::product_unsafe<std::size_t>(my_non_contig_offsets[b], num_dim);
-                    output[b] = builder.build_shared(knncolle::SimpleMatrix(num_dim, length, ptr));
-                }
-            }
-        }
-    }
-
-    /**
-     * Overload of `build()` that handles some of the memory allocation.
-     *
-     * @tparam Input_ Numeric type of the input data. 
-     * @tparam Distance_ Floating-point type of the distances.
-     * @tparam Matrix_ Class of the input data matrix for the neighbor search.
-     * This should satisfy the `knncolle::Matrix` interface.
-     *
-     * @param num_dim Number of dimensions.
-     * @param[in] data Pointer to an array of length equal to the product of `num_dim` and `num_obs`.
-     * This contains the embedding matrix for a modality, stored in column-major layout where each row is a dimension and each column is a cell.
-     * @param builder Algorithm to use for the neighbor search.
-     *
-     * @return Vector in which to store the nearest-neighbor search indices constructed by `builder`.
-     * This has length equal to the number of blocks, where a new search index is constructed for each non-empty block.
-     * Empty blocks are represented by null pointers.
-     */
-    template<typename Input_, typename Distance_, class Matrix_ = knncolle::Matrix<Index_, Input_> >
-    std::vector<std::shared_ptr<const knncolle::Prebuilt<Index_, Input_, Distance_> > > build(
-        const std::size_t num_dim,
-        const Input_* const data,
-        const knncolle::Builder<Index_, Input_, Distance_, Matrix_>& builder
-    ) const {
-        std::vector<std::shared_ptr<const knncolle::Prebuilt<Index_, Input_, Distance_> > > prebuilts;
-        auto bufs = create_buffers<Input_>();
-        build(num_dim, data, builder, prebuilts, bufs);
-        return prebuilts;
-    }
-};
+    return compute_distance_blocked(blocks, options);
+}
 
 /**
- * Overload of `compute_distance()` that accepts an embedding matrix with non-contiguous block assignments.
+ * Overload of `compute_distance_blocked()` that accepts an embedding matrix with a block factor.
  *
  * @tparam Index_ Integer type of the number of cells.
  * @tparam Input_ Numeric type of the input data. 
@@ -481,12 +212,59 @@ std::pair<Distance_, Distance_> compute_distance_blocked(
     const Block_* const blocks,
     const std::size_t num_blocks,
     const knncolle::Builder<Index_, Input_, Distance_, Matrix_>& builder,
+    Distance_* const buffer,
     const BlockedOptions& options
 ) {
-    BlockedIndicesFactory<Index_, Block_> blocked_factory(num_cells, blocks, num_blocks);
-    const auto prebuilts = blocked_factory.build(num_dim, data, builder);
-    auto workspace = create_workspace<Distance_>(blocked_factory.sizes(), options);
-    return compute_distance_blocked(prebuilts, workspace, options);
+    // Avoiding allocation of a temporary buffer if we're already dealing with contiguous blocks.
+    auto block_details = sanisizer::create<std::vector<std::pair<Index_, Index_> > >(num_blocks);
+    Index_ non_contiguous = 0;
+    for (Index_ c = 0; c < num_cells; ++c) {
+        auto& curblock = block_details[blocks[c]];
+        if (curblock.second == 0) {
+            curblock.first = c;
+            curblock.second = 1;
+        } else {
+            non_contiguous += (c != curblock.first + curblock.second);
+            ++curblock.second;
+        }
+    }
+
+    const Input_* dataptr = data;
+    std::optional<std::vector<Input_> > tmp_data;
+    if (non_contiguous) {
+        // Otherwise, we reorganize the data so that observations from the same batch are in a single block.
+        Index_ accumulated = 0;
+        auto offsets = sanisizer::create<std::vector<Index_> >(num_blocks);
+        for (std::size_t b = 0; b < num_blocks; ++b) {
+            offsets[b] = accumulated;
+            block_details[b].first = accumulated;
+            accumulated += block_details[b].second; // this won't overflow as we already know that num_cells fits in an Index_.
+        }
+
+        tmp_data.emplace(sanisizer::product<typename std::vector<Input_>::size_type>(num_dim, num_cells));
+        for (Index_ c = 0; c < num_cells; ++c) {
+            auto& off = offsets[blocks[c]];
+            std::copy_n(
+                data + sanisizer::product_unsafe<std::size_t>(c, num_dim),
+                num_dim,
+                tmp_data->data() + sanisizer::product_unsafe<std::size_t>(off, num_dim)
+            );
+            ++off;
+        }
+
+        dataptr = tmp_data->data();
+    }
+
+    auto prebuilts = sanisizer::create<std::vector<std::shared_ptr<const knncolle::Prebuilt<Index_, Input_, Distance_> > > >(num_blocks);
+    knncolle::parallelize(options.num_threads, num_blocks, [&](const int, const std::size_t start, const std::size_t length) -> void {
+        for (std::size_t b = start, end = start + length; b < end; ++b) {
+            const auto sofar = block_details[b].first;
+            const auto cursize = block_details[b].second;
+            prebuilts[b] = builder.build_shared(knncolle::SimpleMatrix(num_dim, cursize, dataptr + sanisizer::product_unsafe<std::size_t>(sofar, num_dim)));
+        }
+    });
+
+    return compute_distance_blocked(prebuilts, buffer, options);
 }
 
 }
