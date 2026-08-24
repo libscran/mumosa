@@ -11,6 +11,5 @@ var searchData=
   ['simple_2ehpp_8',['simple.hpp',['../simple_8hpp.html',1,'']]],
   ['simplematrix_9',['SimpleMatrix',['https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html',1,'knncolle::SimpleMatrix&lt; typename Index_, typename Data_ &gt;'],['https://knncolle.github.io/knncolle/classknncolle_1_1SimpleMatrix.html#afe415d2e6adc07aecffab4e8b75ca9e5',1,'knncolle::SimpleMatrix::SimpleMatrix()']]],
   ['single_20cell_20analyses_10',['Multi-modal single-cell analyses',['../index.html',1,'']]],
-  ['size_11',['size',['https://knncolle.github.io/knncolle/classknncolle_1_1NeighborQueue.html#a08ecb8b2fb208fba3213150b9a14f535',1,'knncolle::NeighborQueue']]],
-  ['sizes_12',['sizes',['../classmumosa_1_1BlockedIndicesFactory.html#a8825d775eb735f72c5c0be03ed860a66',1,'mumosa::BlockedIndicesFactory']]]
+  ['size_11',['size',['https://knncolle.github.io/knncolle/classknncolle_1_1NeighborQueue.html#a08ecb8b2fb208fba3213150b9a14f535',1,'knncolle::NeighborQueue']]]
 ];

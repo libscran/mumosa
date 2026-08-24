@@ -6,9 +6,6 @@
     <filename>blocked_8hpp.html</filename>
     <includes id="simple_8hpp" name="simple.hpp" local="yes" import="no" module="no" objc="no">simple.hpp</includes>
     <class kind="struct">mumosa::BlockedOptions</class>
-    <class kind="struct">mumosa::BlockedWorkspace</class>
-    <class kind="class">mumosa::BlockedIndicesFactory</class>
-    <class kind="struct">mumosa::BlockedIndicesFactory::Buffers</class>
     <namespace>mumosa</namespace>
   </compound>
   <compound kind="file">
@@ -39,48 +36,6 @@
     <filename>simple_8hpp.html</filename>
     <class kind="struct">mumosa::Options</class>
     <namespace>mumosa</namespace>
-  </compound>
-  <compound kind="class">
-    <name>mumosa::BlockedIndicesFactory</name>
-    <filename>classmumosa_1_1BlockedIndicesFactory.html</filename>
-    <templarg>typename Index_</templarg>
-    <templarg>typename Block_</templarg>
-    <class kind="struct">mumosa::BlockedIndicesFactory::Buffers</class>
-    <member kind="function">
-      <type></type>
-      <name>BlockedIndicesFactory</name>
-      <anchorfile>classmumosa_1_1BlockedIndicesFactory.html</anchorfile>
-      <anchor>a32db48306bb08b72034334db5f38cd42</anchor>
-      <arglist>(const Index_ num_cells, const Block_ *blocks, const std::size_t num_blocks)</arglist>
-    </member>
-    <member kind="function">
-      <type>const std::vector&lt; Index_ &gt; &amp;</type>
-      <name>sizes</name>
-      <anchorfile>classmumosa_1_1BlockedIndicesFactory.html</anchorfile>
-      <anchor>a8825d775eb735f72c5c0be03ed860a66</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Buffers&lt; Input_ &gt;</type>
-      <name>create_buffers</name>
-      <anchorfile>classmumosa_1_1BlockedIndicesFactory.html</anchorfile>
-      <anchor>a94a2caff1b1b77b7e6ca370cb1d57970</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>build</name>
-      <anchorfile>classmumosa_1_1BlockedIndicesFactory.html</anchorfile>
-      <anchor>a14a3376745471edd1b72e6c508d56b49</anchor>
-      <arglist>(const std::size_t num_dim, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;output, Buffers&lt; Input_ &gt; &amp;work) const</arglist>
-    </member>
-    <member kind="function">
-      <type>std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt;</type>
-      <name>build</name>
-      <anchorfile>classmumosa_1_1BlockedIndicesFactory.html</anchorfile>
-      <anchor>ab7bfb8020b5379643ab1bd9b0fab806e</anchor>
-      <arglist>(const std::size_t num_dim, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder) const</arglist>
-    </member>
   </compound>
   <compound kind="struct">
     <name>mumosa::BlockedOptions</name>
@@ -115,16 +70,6 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mumosa::BlockedWorkspace</name>
-    <filename>structmumosa_1_1BlockedWorkspace.html</filename>
-    <templarg>typename Distance_</templarg>
-  </compound>
-  <compound kind="struct">
-    <name>mumosa::BlockedIndicesFactory::Buffers</name>
-    <filename>structmumosa_1_1BlockedIndicesFactory_1_1Buffers.html</filename>
-    <templarg>typename Input_</templarg>
-  </compound>
-  <compound kind="struct">
     <name>mumosa::Options</name>
     <filename>structmumosa_1_1Options.html</filename>
     <member kind="variable">
@@ -145,44 +90,28 @@
   <compound kind="namespace">
     <name>mumosa</name>
     <filename>namespacemumosa.html</filename>
-    <class kind="class">mumosa::BlockedIndicesFactory</class>
     <class kind="struct">mumosa::BlockedOptions</class>
-    <class kind="struct">mumosa::BlockedWorkspace</class>
     <class kind="struct">mumosa::Options</class>
     <member kind="function">
-      <type>BlockedWorkspace&lt; Distance_ &gt;</type>
-      <name>create_workspace</name>
+      <type>std::pair&lt; Distance_, Distance_ &gt;</type>
+      <name>compute_distance_blocked</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>ad4d80dfac74448a389f91f72f8a31548</anchor>
-      <arglist>(const std::vector&lt; Index_ &gt; &amp;block_sizes, const BlockedOptions &amp;options)</arglist>
+      <anchor>a7195df319d74eeeb8bb4361da100d567</anchor>
+      <arglist>(const std::vector&lt; std::pair&lt; Index_, Distance_ * &gt; &gt; &amp;blocks, const BlockedOptions &amp;options)</arglist>
     </member>
     <member kind="function">
       <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance_blocked</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a865e2bcb5ff9ae07f7f4d9c762720f29</anchor>
-      <arglist>(const std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;prebuilts, BlockedWorkspace&lt; Distance_ &gt; &amp;workspace, const BlockedOptions &amp;options)</arglist>
-    </member>
-    <member kind="function">
-      <type>std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt;</type>
-      <name>build_blocked_indices</name>
-      <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>abd487dda75494406f5e8b66e5d2d68f1</anchor>
-      <arglist>(const std::size_t num_dim, const std::vector&lt; Index_ &gt; block_sizes, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder)</arglist>
+      <anchor>a4ad9074bd5493713b84f09217f42d6c0</anchor>
+      <arglist>(const std::vector&lt; std::shared_ptr&lt; const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &gt; &gt; &amp;prebuilts, Distance_ *const buffer, const BlockedOptions &amp;options)</arglist>
     </member>
     <member kind="function">
       <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance_blocked</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a91388ad0732cac79997e01d9b9875372</anchor>
-      <arglist>(const std::size_t num_dim, const std::vector&lt; Index_ &gt; &amp;block_sizes, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const BlockedOptions &amp;options)</arglist>
-    </member>
-    <member kind="function">
-      <type>std::pair&lt; Distance_, Distance_ &gt;</type>
-      <name>compute_distance_blocked</name>
-      <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>a60fd1df19e13a7adedf0cadcd9f8d05f</anchor>
-      <arglist>(const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const Block_ *const blocks, const std::size_t num_blocks, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const BlockedOptions &amp;options)</arglist>
+      <anchor>ac039227453b7ff8df7eb5d62592b2477</anchor>
+      <arglist>(const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const Block_ *const blocks, const std::size_t num_blocks, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, Distance_ *const buffer, const BlockedOptions &amp;options)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -216,15 +145,15 @@
       <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>aae9909a1adc9470d2689046b7dab20df</anchor>
-      <arglist>(const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &amp;prebuilt, Distance_ *const distances, const Options &amp;options)</arglist>
+      <anchor>a592feb0ca8788ccb9dca65f04408d975</anchor>
+      <arglist>(const knncolle::Prebuilt&lt; Index_, Input_, Distance_ &gt; &amp;prebuilt, Distance_ *const buffer, const Options &amp;options)</arglist>
     </member>
     <member kind="function">
       <type>std::pair&lt; Distance_, Distance_ &gt;</type>
       <name>compute_distance</name>
       <anchorfile>namespacemumosa.html</anchorfile>
-      <anchor>ad5544f59301aea3947788e64190009d1</anchor>
-      <arglist>(const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, const Options &amp;options)</arglist>
+      <anchor>a97619a70487aa9f8d1803e6d4aa1520b</anchor>
+      <arglist>(const std::size_t num_dim, const Index_ num_cells, const Input_ *const data, const knncolle::Builder&lt; Index_, Input_, Distance_, Matrix_ &gt; &amp;builder, Distance_ *const buffer, const Options &amp;options)</arglist>
     </member>
   </compound>
   <compound kind="page">
