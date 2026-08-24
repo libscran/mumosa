@@ -126,12 +126,14 @@ $(function(){ initResizable(false); });
 <div class="line">opt.<a class="code hl_variable" href="structmumosa_1_1Options.html#a390a953ace5a6fa0a172efb8cb691929">num_threads</a> = 3;</div>
 <div class="line"> </div>
 <div class="line">std::vector&lt;std::pair&lt;double, double&gt; &gt; distances;</div>
+<div class="line">std::vector&lt;double&gt; distbuffer(nobs);</div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> m = 0; m &lt; 3; ++m) {</div>
 <div class="line">    distances[m] = <a class="code hl_function" href="namespacemumosa.html#ab9bb10478b865f21008d5b87e5d8cf4a">mumosa::compute_distance</a>(</div>
 <div class="line">        dimensions[m],</div>
 <div class="line">        nobs,</div>
 <div class="line">        embeddings[m].data(),</div>
 <div class="line">        vp_builder,</div>
+<div class="line">        distbuffer.data(),</div>
 <div class="line">        opt</div>
 <div class="line">    );</div>
 <div class="line">}</div>
